@@ -6,14 +6,20 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         updateBug: 'N',
         runJunits: 'N',
         applyFPR : 'N',
-        isDesc : '',
+        validationStatus:'notstarted',
         description : '',
         errorMsg: {
             transactionError: '',
             DBError: ''
-        }
+        },
+        transDescription : {
+    			"baseLabel":'{"name":"","value":""}',
+    			"bugNum":{"name":"","value":""},
+    			"transDesc":{"name":"","value":""}
+    			}
     };
-    $rootScope.isDesc='';
+    $rootScope.isDesc='N';
+    $rootScope.prevTransName='';
     
     
 
@@ -25,14 +31,37 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         console.log($scope.transaction.updateBug);
         console.log($scope.transaction.runJunits);
         console.log($scope.transaction.applyFPR);
-        
+        console.log($scope.transaction.validationStatus);
+      //  console.log($scope.transaction.description.baseLabel.value);
+     //   console.log($scope.transaction.description.bugNum.value);
+     //   console.log($scope.transaction.description.transDesc.value);
 
-        $http.post('/api/submit', $scope.transaction).success(function (response) {
+        if($scope.transaction.validationStatus==='completed'){
+            console.log('submit block getting execute');
+            $http.post('/api/submit', $scope.transaction).success(function (response) {
             console.log('Client : Recieved Data from server', response);
         }).error(function (err) {
             console.log('Client : Recieved Data from server', err);
             $scope.transaction.errorMsg.transactionError = err.error;
         });
+        }else if($scope.transaction.validationStatus==='notstarted' && $rootScope.isDesc==='N' && ($scope.transaction.name!=$rootScope.prevTransName)){
+                console.log('validations block getting execute and validation status',$scope.transaction.validationStatus);
+                $scope.transaction.validationStatus="inprocess";
+                $rootScope.isDesc = 'Y';
+                $rootScope.prevTransName = $scope.transaction.name;
+        		$http.post('/api/transactions/describe', $scope.transaction).success(function (response){
+                    console.log('Client : Recieved Data from server', response);
+                    $scope.transaction.description=response;
+                    $scope.transaction.validationStatus="completed";
+                    console.log('validations block execution completed and validation status',$scope.transaction.validationStatus);
+                    console.log('validations response Recieved',response);
+                    $rootScope.isDesc = 'Y';
+                }).error(function (err) {
+                    console.error('Client : Recieved Data from server', err);
+                    $rootScope.isDesc = 'Y';
+                });
+        	}
+        
     };
     
     $scope.getDBInformation = function () {
@@ -52,7 +81,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
     $scope.getDBInformation();
 
 
-    $('#transaction-name').focusout(function () {
+  /*
         if ($('#transaction-name').val() === '') {
             $('#transaction-name').css("border-color", "red");
             $scope.transaction.errorMsg.transactionError = "Transaction Name is Required";
@@ -77,10 +106,10 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         	}
     		
     	
-           /* $('#transaction-name').css("border-color", "");
-            $scope.transaction.errorMsg.transactionError = "";*/
+        //    $('#transaction-name').css("border-color", "");
+        //    $scope.transaction.errorMsg.transactionError = "";
         }
-    });
+    }); 
     
     $('#transaction-name').click(function () {
     	$scope.transaction.isDesc='';
@@ -108,5 +137,5 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                 $('#transaction-email').css("border-color", "");
             }
         }
-    });
+    });*/
 });

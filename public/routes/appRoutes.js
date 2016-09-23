@@ -8,6 +8,9 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 			controller: 'HistoryController'	
 		}).when('/about', {
 			templateUrl: '../about/about.html'
+		}).when('/history/progress', {
+			templateUrl: '../history/historyProgress.html',
+			controller : 'HistoryProgress'
 		}).otherwise({
         redirectTo: '/'
       });

@@ -34,22 +34,23 @@ module.exports = function(app) {
     	var baseLabel ='' ;
     	var bugNum ='';
     	var transDesc='';
-    	while(baseLabel==='' || bugNum==='' ||  transDesc===''){
-    	 	for(var i = 0;i < lines.length;i++){
-        	    if(lines[i].includes(bugNumKeyword)){
-        	    	bugNum = (lines[i].substring(lines[i].indexOf(':')+1)).trim();
-        	    	console.log('bugNum : ',bugNum);
-        	    }
-        	    else if(lines[i].includes(transDescKeyword)){
-        	    	transDesc = (lines[i].substring(lines[i].indexOf(':')+1)).trim();
-        	    	console.log('transDesc : ',transDesc);
-        	    }
-        	    else if(lines[i].includes(baseLabelKeyword)){
-        	    	baseLabel = lines[i].substring(lines[i].indexOf(baseLabelKeyword)+baseLabelKeyword.length+1,lines[i].indexOf('X64')+3);
-        	    	console.log('baseLabel : ',baseLabel);
-        	    }
-        	}
-    	}
+		for(var i = 0;i < lines.length;i++){
+				if(baseLabel==='' || bugNum==='' ||  transDesc===''){
+					if(lines[i].includes(bugNumKeyword)){
+				bugNum = (lines[i].substring(lines[i].indexOf(':')+1)).trim();
+				console.log('bugNum : ',bugNum);
+			}
+			else if(lines[i].includes(transDescKeyword)){
+				transDesc = (lines[i].substring(lines[i].indexOf(':')+1)).trim();
+				console.log('transDesc : ',transDesc);
+			}
+			else if(lines[i].includes(baseLabelKeyword)){
+				baseLabel = lines[i].substring(lines[i].indexOf(baseLabelKeyword)+baseLabelKeyword.length+1,lines[i].indexOf('X64')+3);
+				console.log('baseLabel : ',baseLabel);
+			}
+		}else
+			break;
+		}
     	var transDescription = {
     			"baseLabel":{"name":"Base Label for Transaction","value":baseLabel},
     			"bugNum":{"name":"Bug Number","value":bugNum},
@@ -57,7 +58,6 @@ module.exports = function(app) {
     			};
 		return transDescription;
     };
-
 
 		
     var getTransactionDetails = function(command){
@@ -115,6 +115,7 @@ module.exports = function(app) {
   				  	name: req.body.name,
   				    submittedBy : req.body.email,
   					currentStatus : 'Queued',
+					submittedtime: Date.now(),
   					DBString : req.body.dbString,
   					updateBug : req.body.updateBug,
   					runJunits : req.body.runJunits
@@ -169,7 +170,7 @@ module.exports = function(app) {
     });
     
     app.post('/api/transactions/name/output',function (req,res){
-    	var localFilePath = ".\\History\\Current\\"+req.body.name;
+    	var localFilePath = fuseConfig.transactionActiveLogLocation+req.body.name;
     	var stat = fs.statSync(localFilePath);
     	 res.writeHead(200, {
              'Content-Type': 'application/text',

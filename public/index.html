@@ -26,14 +26,14 @@
     <div class="container">
         <!-- HEADER -->
         <nav class="navbar navbar-inverse" style="background-color:black">
-            <a class="navbar-brand" href="/">
-                <span class="glyphicon glyphicon-home"></span> Fusion PRC PreMerge
+            <a class="navbar-brand" href="/" style="color:aliceblue">
+                <span style="color:aliceblue;margin-top:-1px" class="glyphicon glyphicon-home"></span> Fusion PRC PreMerge
             </a>
-            <ul class="nav navbar-nav">
-                <li><a href="/history" ng-init="getTransactionList('Running')">History</a></li>
+            <ul class="navbar-brand" >
+                <span><a style="color:aliceblue;text-decoration : none" href="/history" ng-init="getTransactionList('Running')">History</a></span>
             </ul>
-            <ul class="nav navbar-nav navbar-right ">
-                <li><a href="/about">About  &nbsp;</a></li>
+            <ul class="navbar-brand navbar-right ">
+                <div><a style="color:aliceblue;text-decoration : none" href="/about">About  &nbsp;</a></div>
             </ul>
         </nav>
         <div ng-view></div>

@@ -1,7 +1,5 @@
 angular.module('HistCtrl', [])
 .controller('HistoryController', function ($scope, $http, $sce) {    
-    
-
      $scope.transactionList = {
          "running":"",
          "queued":"",
@@ -45,9 +43,35 @@ angular.module('HistCtrl', [])
                 console.log($scope.transaction.errorMsg.transactionError);
             });
     }
-})
+}).controller('HistoryProgress', function ($scope,$rootScope, $http, $sce) {   
+  $scope.transactionOutput =   $rootScope.transactionOutput;
 
-.directive('historyList', function() {
+    $scope.displayTransactionProgress = function (name) {
+        console.log('Client : Going to display the transaction outcome', name);
+        $http.post('/api/transactions/name/output', {name: name}, {
+                responseType: 'arraybuffer'})
+            .success(function (response) {
+                console.log(response);
+                var file = new Blob([response], {
+                    type: 'text/plain'
+                });
+                var fileURL = URL.createObjectURL(file);
+                $rootScope.transactionOutput = $sce.trustAsResourceUrl(fileURL);
+            }).error(function (err) {
+                console.log('Client : Recieved Error Data from server', err);
+                $scope.transaction.errorMsg.transactionError = err.error;
+                console.log($scope.transaction.errorMsg.transactionError);
+            });
+    };
+    $scope.getProgress = function () {
+        $scope.displayTransactionProgress($rootScope.histTrans);
+    };
+   setTimeout(function(){  $scope.displayTransactionProgress($rootScope.histTrans); }, 1000); 
+
+    
+    
+    
+}).directive('historyList', function() {
   return {
     restrict: 'E',
     transclude: true,
@@ -56,12 +80,17 @@ angular.module('HistCtrl', [])
            },
     link: function(scope, element, attrs, controllers) {},
     templateUrl:  '../history/historyList.html',
-    controller : function($scope){
+    controller : function($scope,$rootScope, $http,$sce){
 
         $scope.sortType     = 'name'; // set the default sort type
         $scope.sortReverse  = false;  // set the default sort order
         $scope.search   = '';     
 
+         $scope.updateHistTrans = function (name) {
+  $rootScope.histTrans = name;
+ 
+        };
+        
     }
     
   };

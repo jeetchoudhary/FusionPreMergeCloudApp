@@ -31,10 +31,11 @@
         </thead>
         <tbody>
             <tr ng-repeat="transaction in transactionList  | orderBy:sortType:sortReverse | filter:search">
-                <td>{{ transaction.name }}</td>
+                
+                <td ><a href="/history/progress" ng-click="updateHistTrans(transaction.name)">{{ transaction.name }}</a></td>
                 <td>{{ transaction.submittedBy }}</td>
                 <td>{{ transaction.currentStatus }}</td>
-                <td>{{ transaction.startTime }}</td>
+                <td>{{ transaction.submittedtime | date: 'medium' }}</td>
             </tr>
         </tbody>
 

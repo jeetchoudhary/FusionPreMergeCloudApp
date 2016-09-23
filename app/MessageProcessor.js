@@ -11,13 +11,17 @@ var ssh = new SSH({
 });
 
 var updateTransactionStatus = function(transaction,status){
+	var updateTime ;
+	if(status==="Running")
+		updateTime = "starttime";
+	else if(status==="Archived")
+		updateTime = "endtime";
 	var query = { "name" : transaction.name };
-	TransData.findOneAndUpdate(query, { "currentStatus" : status }, {upsert:false}, function(err, doc){
+	TransData.findOneAndUpdate(query, { "currentStatus" : status , updateTime:Date.now()}, {upsert:false}, function(err, doc){
 	    if (err) 
 	    	console.error('Unable to update the row for the transaction '+transaction.name,err);
 	    else
 	    	console.log('update row for transaction , will start PreMerge process on the transaction :',transaction.name);
-	    
 	});
 };
 
@@ -88,7 +92,7 @@ amqp.connect(fuseConfig.messageQueueURL, function(err, conn) {
       console.log("Request Arrived , will not process req :", msg.content.toString());
       var transaction = JSON.parse(msg.content.toString());
       processTransaction(transaction);
-    }, {noAck: false});
+    }, {noAck: true});
   });
 });
 
