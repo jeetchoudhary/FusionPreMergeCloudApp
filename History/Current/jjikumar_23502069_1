@@ -1,0 +1,328 @@
+Determining most recent label...
+View will be created on FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64_160917.0647.S
+View jjikumar_R_13_1474278582595 in /scratch/jjikumar/.ade/view_storage/jjikumar_R_13_1474278582595 will be refreshed to
+label FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64_160917.0647.S (the server /ade_autofs/ud21_fa/FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64.rdd/160917.0647.S).
+The view jjikumar_R_13_1474278582595 in /scratch/jjikumar/.ade/view_storage/jjikumar_R_13_1474278582595 has been created.
+FRE-INFO: indl76040 [uname -m] == [x86_64]. /etc/redhat-release == [Red Hat Enterprise Linux Server release 5.10 (Tikanga)]
+
+/scratch/software/mw_local/FMWTOOLS_11.1.1.9.1_GENERIC_160712.1219_PATCHES4FA_11.1.13.0.0_PLATFORMS_JDK64/jjikumar already exists.
+FMWTOOLS_LABEL = [FMWTOOLS_11.1.1.9.1_GENERIC_160712.1219]
+Applying PATCHES4FA_11.1.13.0.0_PLATFORMS_160729.1630.1 to /ade/jjikumar_R_13_1474278582595/fmwtools/BUILD_HOME ....
+
+Type "jdev" to run $JDEV_HOME.
+
+ade WARNING: Property ALLOW_ONLY_BUG_TRANSACTIONS_ON_BEGINMERGE is set on this label.
+           Your transaction must be associated with a bug number to merge.
+Restoring label Derived Objects...
+Begin of transaction jjikumar_23502069_1_1474278582595 successfully completed.
+Connecting to Repository... Connected.
+Processing dir fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/ReviewChangesAM.java
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/ReviewChangesAM.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/ReviewChangesAM.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/ReviewChangesAM.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/ReviewChangesAMImpl.java
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/ReviewChangesAMImpl.java
+Processing dir fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/client
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/client/ReviewChangesAMClient.java
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/client/ReviewChangesAMClient.java
+Processing dir fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/common
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewBuAssignmentChangesUiVO.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewBuAssignmentChangesUiVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewDistributionChangesUiVO.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewDistributionChangesUiVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewLineChangesUiVO.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewLineChangesUiVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewNotifControlChangesUiVO.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewNotifControlChangesUiVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewScheduleChangesUiVO.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewScheduleChangesUiVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/ViewDocumentHistoryAM.java
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/ViewDocumentHistoryAM.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/ViewDocumentHistoryAM.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/ViewDocumentHistoryAM.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/ViewDocumentHistoryAMImpl.java
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/ViewDocumentHistoryAMImpl.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/client/ViewDocumentHistoryAMClient.java
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/client/ViewDocumentHistoryAMClient.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/DataBindings.cpx
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/DataBindings.cpx
+Processing dir fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal_ReviewChangesLocal_initCompareVOForAgreementPageDef.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal_ReviewChangesLocal_initCompareVOForAgreementPageDef.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal_ReviewChangesLocal_initCompareVOForOrderPageDef.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal_ReviewChangesLocal_initCompareVOForOrderPageDef.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/page/ReviewChangesMainPageDef.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/page/ReviewChangesMainPageDef.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/viewDocumentHistory/page/ViewRevisionHistoryPageDef.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/viewDocumentHistory/page/ViewRevisionHistoryPageDef.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/model/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal.adfc_diagram
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/publicUi/model/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal.adfc_diagram
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/public_html/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/publicUi/public_html/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/public_html/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesMainFlow.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/publicUi/public_html/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesMainFlow.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/src/oracle/apps/prc/po/manageDocument/publicUi/viewDocumentHistory/bean/ViewDocumentHistoryManagedBean.java
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/publicUi/src/oracle/apps/prc/po/manageDocument/publicUi/viewDocumentHistory/bean/ViewDocumentHistoryManagedBean.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVO.xml
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVOImpl.java
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVOImpl.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVORowImpl.java
+Trivial merge: /ade/jjikumar_R_13_1474278582595/fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVORowImpl.java
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view
+ade WARNING: fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/client not changed.
+Cancelled checkout of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/client
+Unbranched fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/client
+ade WARNING: fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/common not changed.
+Cancelled checkout of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/common
+Unbranched fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/common
+ade WARNING: fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow not changed.
+Cancelled checkout of fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow
+Unbranched fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow
+Transaction jjikumar_23502069_1 fetched successfully
+ade WARNING: ReviewChangesAM.java : File has no copyright information. 
+ade WARNING: ReviewChangesAM.xml : File has no copyright information. 
+ade WARNING: ReviewChangesAMImpl.java : File has no copyright information. 
+ade WARNING: ReviewChangesAMClient.java : File has no copyright information. 
+ade WARNING: ReviewHeaderChangesUiVOToReviewBuAssignmentChangesUiVO.xml : File has no copyright information. 
+ade WARNING: ReviewHeaderChangesUiVOToReviewDistributionChangesUiVO.xml : File has no copyright information. 
+ade WARNING: ReviewHeaderChangesUiVOToReviewLineChangesUiVO.xml : File has no copyright information. 
+ade WARNING: ReviewHeaderChangesUiVOToReviewNotifControlChangesUiVO.xml : File has no copyright information. 
+ade WARNING: ReviewHeaderChangesUiVOToReviewScheduleChangesUiVO.xml : File has no copyright information. 
+ade WARNING: ViewDocumentHistoryAM.java : File has no copyright information. 
+ade WARNING: ViewDocumentHistoryAM.xml : File has no copyright information. 
+ade WARNING: ViewDocumentHistoryAMImpl.java : File has no copyright information. 
+ade WARNING: ViewDocumentHistoryAMClient.java : File has no copyright information. 
+ade WARNING: DataBindings.cpx : File has no copyright information. 
+ade WARNING: ReviewChangesLocal_ReviewChangesLocal_initCompareVOForAgreementPageDef.xml : File has no copyright information. 
+ade WARNING: ReviewChangesLocal_ReviewChangesLocal_initCompareVOForOrderPageDef.xml : File has no copyright information. 
+ade WARNING: ReviewChangesMainPageDef.xml : File has no copyright information. 
+ade WARNING: ViewRevisionHistoryPageDef.xml : File has no copyright information. 
+ade WARNING: ReviewChangesLocal.adfc_diagram : File has no copyright information. 
+ade WARNING: ReviewChangesLocal.xml : File has no copyright information. 
+ade WARNING: ReviewChangesMainFlow.xml : File has no copyright information. 
+ade WARNING: ViewDocumentHistoryManagedBean.java : File has no copyright information. 
+ade WARNING: PoPreviousVersionProposalVO.xml : File has no copyright information. 
+ade WARNING: PoPreviousVersionProposalVOImpl.java : File has no copyright information. 
+ade WARNING: PoPreviousVersionProposalVORowImpl.java : File has no copyright information. 
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/ReviewChangesAM.java
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/ReviewChangesAM.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/ReviewChangesAMImpl.java
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/client/ReviewChangesAMClient.java
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewBuAssignmentChangesUiVO.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewDistributionChangesUiVO.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewLineChangesUiVO.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewNotifControlChangesUiVO.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewScheduleChangesUiVO.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/ViewDocumentHistoryAM.java
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/ViewDocumentHistoryAM.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/ViewDocumentHistoryAMImpl.java
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/client/ViewDocumentHistoryAMClient.java
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/DataBindings.cpx
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal_ReviewChangesLocal_initCompareVOForAgreementPageDef.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal_ReviewChangesLocal_initCompareVOForOrderPageDef.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/page/ReviewChangesMainPageDef.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/viewDocumentHistory/page/ViewRevisionHistoryPageDef.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/publicUi/model/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal.adfc_diagram
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/publicUi/public_html/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/publicUi/public_html/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesMainFlow.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/publicUi/src/oracle/apps/prc/po/manageDocument/publicUi/viewDocumentHistory/bean/ViewDocumentHistoryManagedBean.java
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVO.xml
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVOImpl.java
+Checked in version 1 of fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVORowImpl.java
+Processing directory fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/ReviewChangesAM.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/ReviewChangesAM.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/ReviewChangesAMImpl.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/applicationModule/client/ReviewChangesAMClient.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewBuAssignmentChangesUiVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewDistributionChangesUiVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewLineChangesUiVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewNotifControlChangesUiVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/reviewChanges/view/link/ReviewHeaderChangesUiVOToReviewScheduleChangesUiVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/ViewDocumentHistoryAM.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/ViewDocumentHistoryAM.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/ViewDocumentHistoryAMImpl.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedUiModel/src/oracle/apps/prc/po/manageDocument/protectedUiModel/viewDocumentHistory/applicationModule/client/ViewDocumentHistoryAMClient.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/DataBindings.cpx
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal_ReviewChangesLocal_initCompareVOForAgreementPageDef.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal_ReviewChangesLocal_initCompareVOForOrderPageDef.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/page/ReviewChangesMainPageDef.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/adfmsrc/oracle/apps/prc/po/manageDocument/publicUi/viewDocumentHistory/page/ViewRevisionHistoryPageDef.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/model/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal.adfc_diagram
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/public_html/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesLocal.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/public_html/WEB-INF/oracle/apps/prc/po/manageDocument/publicUi/reviewChanges/flow/ReviewChangesMainFlow.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/publicUi/src/oracle/apps/prc/po/manageDocument/publicUi/viewDocumentHistory/bean/ViewDocumentHistoryManagedBean.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVO.xml
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVOImpl.java
+Processing file fusionapps/prc/components/procurement/po/manageDocument/protectedModel/src/oracle/apps/prc/po/manageDocument/protectedModel/reviewChanges/view/PoPreviousVersionProposalVORowImpl.java
+Creating transaction branch for all objects in repos... please wait
+Processing transaction branch checkouts in repos ... please wait
+Processing transaction branch checkins in repos ... please wait
+--------------------------------------
+Transaction is saved successfully in backend
+You can use ade endtrans to end the txn or
+beginmerge to merge the txn or continue the work
+--------------------------------------
+Connecting to Repository... Connected.
+ BUG_NUM Property set to 23502069 for transaction jjikumar_23502069_1_1474278582595
+  Bug #   Subject
+  23502069 PRC108:CO DETAILS IN THE REVISION HISTORY DOESN'T DISPLAY THE FINAL IMP. VERSION
+Cleaning view jjikumar_R_13_1474278582595
+Please be patient, this will take some time ...
+view jjikumar_R_13_1474278582595 has been cleaned
+
+		Fusion Pre-merge Validation Tool (version 1.0.0.0)
+		--------------------------------------------------
+
+	Read more about the tool at https://confluence.oraclecorp.com/confluence/pages/viewpage.action?pageId=82378292
+	Issues, ERs, Suggestions? Please follow the FAQ link at the bottom of the above confluence page.
+	Note: Some Angrybird issues will only be audited in central runs, details are at
+	https://stbeehive.oracle.com/teamcollab/wiki/Fintech+Standards:All+Angrybirds+Scans
+
+
+Reading email id from /home/jjikumar/.Premerge.cfg
+Product family is identified as prc.
+Checking for view-private files...
+Checking fusionapps/prc/components/procurement
+There are no view-private files under the checked LBAs.
+Bug Connection is: bugap_adx.us.oracle.com
+Verifying if bug 23502069 belongs to Fusion family...
+Bug 23502069 belongs to Fusion family and assigned to jjikumar.
+Checking if the transaction is saved...
+*Warning - Multiple transactions saved for this bug (jjikumar_bug-23502069
+jjikumar_23502069_1
+jjikumar_23502069_1_1474274588397
+jjikumar_23502069_1_1474278582595). It is not safe to proceed if you are on an ARU transaction patching enabled branch.
+Press Control-C to exit, Enter to proceed.
+
+
+Ensuring that BUILD_HOME has the latest patches..
+FMWTOOLS_LABEL = [FMWTOOLS_11.1.1.9.1_GENERIC_160712.1219]
+Applying PATCHES4FA_11.1.13.0.0_PLATFORMS_160729.1630.1 to /ade/jjikumar_R_13_1474278582595/fmwtools/BUILD_HOME ....
+
+NDE_PRODUCT_ROOT=/ade/jjikumar_R_13_1474278582595/fusionapps
+Deleting /ade/jjikumar_R_13_1474278582595/fusionapps/patchReport.xml
+The current transaction name is jjikumar_23502069_1_1474278582595
+Deleting /ade/jjikumar_R_13_1474278582595/mrgreqInfo_jjikumar_23502069_1_1474278582595.xml
+Recreating /ade/jjikumar_R_13_1474278582595/mrgreqInfo_jjikumar_23502069_1_1474278582595.xml
+Running Incremental Build.
+Skipping JUnits. Please pass -DrunJUnits=1 if you would like run JUnits.
+Invoking fpr for Seed Data Validation.
+Running JAudits.
+Running GSCC Checker.
+Running Model String Checker.
+Running Central Files Inclusion Checker.
+Running BIP Files Header Checker.
+Running BIP Captions Checker.
+Running Excessive Passivation Scan.
+Running Invalid Jar References Scan.
+Running Deprecated Triggers Scan.
+Running Bad PL/SQL Headers Scan.
+Running Row Count Threshold Scan.
+Running SelectCount Scan.
+Running SDO Interface Scan.
+Running Unused TaskFlow Scan.
+Running ViewCriteria Scan.
+Running ViewCriteria Performance Scans.
+Running RowSetIterator Scan.
+Running BIExtenderAutomation Scan.
+Running UISearch Scan.
+Running Sysdate Scan.
+Running Enum Scan.
+Running AutoExecuteVC Scan.
+Running BIP Files Folder Checker.
+Running MethodAction with viewCriteria.
+Running ADFdi Scans.
+Running ADFdi RowLevelBinding Scans.
+Running PLSQL Autonomous Scan.
+Running ContentDelivery Scan.
+Running VONotPassivated Scan.
+Running Alta Icon Issues Scan.
+Running FndConvertNumber Scan.
+Running ADFdi Version Check.
+Running BindVarKindMismatch Scan.
+Running SeedEndDates Scan.
+Running SessionTimeout Scan.
+Running AvoidLoadingTranslatorNotes Scan.
+Running UnusedAutoSubmit & NonExistentPartialTrigger Scan.
+Invoking FRE Validations.
+Invoking Pseudo Translation.
+Invoking Hard Coded Strings Check.
+Running UTPLSQL Scan.
+Running OATS Impact Assessment.
+
+BreakOnError is unset.
+
+Please wait while the validations are progressing in the background  .
+Success - No central file found in the transaction.
+........................................................***Failure - Model String Check.
+Success - GSCC.
+Skipped - BIP Files Header Check.
+Skipped - BIP files captions check.
+Success - Passivation scan.
+Success - Invalid Jar References scan.
+Success - Deprecated Triggers scan.
+Success - SQL Headers scan.
+Success - RowCount Threshold scan.
+Success - SelectCount scan.
+Success - SDO Interface scan.
+Success - Unused TaskFlow scan.
+Success - ViewCriteria scan.
+Success - ViewCriteria  performance scans (BadViewCriteria/NoViewCriteria).
+Success - RowSetIterator  scan.
+Success - BIExtenderAutomation  scan.
+Success - UI Search scan.
+***Failure - Sysdate scan.
+Skipped - UTPLSQL execution.
+Skipped - Oats Impact Assessment.
+Skipped - BIP files folder check.
+Success - Method Action with VC.
+Success - Enum  scan.
+Success - AutoExecuteVC  scan.
+...Success - Adfdi Scan.
+Success - Adfdi RowlevelBinding Scan.
+Success - PLSql Autonomous scan.
+Success - ContentDelivery scan.
+Success - VONotPassivated scan.
+Success - Fnd ConvertNumber scan.
+.....Success - Alta Icon Issues scan.
+Success - UnusedAutoSubmit & NonExistentPartialTrigger scan.
+Success - ADFdiVersionCheck scan.
+Success - BindVariable Kind Mismatch scan.
+Success - SeedEndDates scan.
+..........................................Skipped - FRE Validations: txn has no database script files to validate using freValidate.
+Skipped - Pseudo Translation testing. Please see /ade/jjikumar_R_13_1474278582595/fusionapps/premerge/bugOutputForPseudoTranslation.txt
+Success - Hard Coded Strings Check.
+Success - SessionTimeout scan.
+Success - AvoidLoadingTranslatorNotes scan.
+***Failure - JAudit check did not complete successfully. Please check manually. Please see http://globaldc.oracle.com/perl/twiki/view/FusionSharedTools/JauditChecksinPremergetool for instructions on how to run Jaudit manually.
+If you need to request exemptions for any audit violations in this transaction please use the pre-merge exemption helper tool to request those exemptions. Details are here:
+https://stbeehive.oracle.com/teamcollab/wiki/Fusion+Applications+Technical+Architecture:Exemption+Request+Helper
+Skipped - JUnits. Please pass -DrunJUnits=1 if you would like run JUnits.
+.........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................Success - Incremental Build.
+Success - Seed data patching
+Proceeding to Full build and ear generation as necessary.
+Running VOTuning Scan.
+Please wait while the validations are progressing in the background  ......................................................................................................................................................Success - VOTuning scan.
+Skipped - Full build not necessary.
+Proceeding to build cycle checker as necessary.
+Please wait while the validations are progressing in the background  .Skipped - Build cycles check.
+
+NDE_PRODUCT_ROOT=/ade/jjikumar_R_13_1474278582595/fusionapps
+The current transaction name is jjikumar_23502069_1_1474278582595
+creating /ade/jjikumar_R_13_1474278582595/mrgreqInfo_jjikumar_23502069_1_1474278582595.xml
+Mergreq approval extracted from patchReport.xml
+<SecondLevelMrgReq>SECOND_LEVEL_APPROVAL_NOT_REQUIRED</SecondLevelMrgReq>
+setting APPROVAL NOT REQUIRED
+
+Please wait while reports are uploaded to BugFTP...
+Reports of successful validations uploaded to :
+https://bugsftp.us.oracle.com/bug/faces/BugUploadMain.jspx?bug=23502069
+Updating bug 23502069.
+Return code for CREATE_BUG_TEXT:
+Return message for CREATE_BUG_TEXT: Text line inserted successfully on 23502069
+Bug update elapsed time: 00:01:44
+Validations completed.
+Validation output files jjikumar_23502069_1_1474278582595.txt* are available at /ade/jjikumar_R_13_1474278582595/fusionapps/premerge

@@ -1,0 +1,100 @@
+<div class="jumbotron text-center ">
+    <div class="row" style="margin-left: -58px; margin-right: -58px; margin-top: -58px; margin-bottom: -68px">
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="background-color: black">
+                <h4>Transaction Details</h4>
+            </div>
+            <div class="panel-body " style="padding-top: 30px">
+                <form ng-submit="submitTransaction()" id="transactionSubmitformid" name="transactionSubmitform" class="form-horizontal " role="form">
+                    <div class="form-group">
+                        <label for="transaction-name" class="col-sm-2 col-md-2 control-label">Transaction</label>
+                        <div class="col-sm-10 col-md-10 ">
+                            <input type="text" id="transaction-name" class="form-control" name="transaction" ng-model="transaction.name" required placeholder="Enter Transaction Name"
+                                required style="cursor: auto"> <span ng-show="transactionSubmitform.transaction.$touched && transactionSubmitform.transaction.$invalid">{{transaction.errorMsg.transactionError}}</span>
+                            <!-- <span ng-show="transactionSubmitform.transaction.$touched && transactionSubmitform.transaction.$invalid">Transaction Name is Required</span> -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dbstring1" class="col-sm-2 col-md-2 control-label">DB Details</label>
+                        <div class="row">
+                            <div class="col-lg-6" style="width: 81.33333%">
+                                <div class="input-group" id="dbstring1">
+                                    <input type="text" class="form-control" id="dbstring" name="dbstring" ng-model="transaction.dbString" required placeholder="Something like.. username/password@slc09lwn.us.oracle.com:1522/jjikumar">
+                                    <!-- <span ng-show="transactionSubmitform.dbstring.$touched && transactionSubmitform.dbstring.$invalid">DB Details are Required</span> -->
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Select Seeded DB <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="#" ng-click="changeDB(db)" ng-repeat="db in dbs" ng->{{db.alias}}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transaction-email" class="col-sm-2 col-md-2 control-label">Email </label>
+                        <div class="col-sm-10 col-md-10">
+                            <input id="transaction-email" class="form-control" required type="email" ng-model="transaction.email" name="email" placeholder="abc@oracle.com">                            <span ng-show="transactionSubmitform.email.$touched && transactionSubmitform.email.$invalid">Enter a valid Email Address</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="updatebug" class="col-sm-2 col-md-2 control-label">Update Bug </label>
+
+                        <div class="col-md-7 col-sm-7 col-lg-7" id="updatebug">
+                            <div class="input-group">
+                                <div class="btn-group" id="updatebug">
+                                    <label class="btn btn-primary " ng-model="transaction.updateBug" btn-radio="'Y'">Yes</label>
+                                    <label class="btn btn-primary " ng-model="transaction.updateBug" btn-radio="'N'">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="breakonerror" class="col-sm-2 col-md-2 control-label">Run Junits</label>
+                        <div class="col-md-7 col-sm-7 col-lg-7" id="runJunits">
+                            <div class="input-group">
+                                <div class="radioBtn btn-group">
+                                    <label class="btn btn-primary not-active" ng-model="transaction.runJunits" btn-radio="'Y'">Yes</label>
+                                    <label class="btn btn-primary active" ng-model="transaction.runJunits" btn-radio="'N'">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="breakonerror" class="col-sm-2 col-md-2 control-label">Apply FPR</label>
+                        <div class="col-md-7 col-sm-7 col-lg-7" id="applyFPR">
+                            <div class="input-group">
+                                <div class="radioBtn btn-group">
+                                    <label class="btn btn-primary not-active" ng-model="transaction.applyFPR" btn-radio="'Y'">Yes</label>
+                                    <label class="btn btn-primary active" ng-model="transaction.applyFPR" btn-radio="'N'">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default" style="margin-left:80px">
+                        <div class="panel-heading" style="font-weight: bold;color: blueviolet">Please Verify the details of the transaction Mentioned below and submit for PreMerge Scan</div>
+                        <table class="table">
+                            <tbody>
+                                <tr ng-repeat="transaction in transaction.description">
+                                    <td style="text-align: left;font-weight: bold;">{{transaction.name}}</td>
+                                    <td style="text-align: left;">{{transaction.value}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-sm-4 col-lg-4 control-label text-right" style="margin-left: 300px">
+                            <input type="submit" class="btn btn-success btn-circle" id="btn-submit" value="Submit Transaction" ng-disabled="(transactionSubmitform.transaction.$dirty && transactionSubmitform.transaction.$invalid) ||
+(transactionSubmitform.email.$dirty && transactionSubmitform.email.$invalid) || (transactionSubmitform.dbstring.$dirty && transactionSubmitform.dbstring.$invalid) ">
+                        </div>
+                    </div>
+                    <!--   <span style="color:red" ng-show="transaction.isValid && !transaction.errorMsg.transactionError">Work In Progress..I am working on it right now soon you will be able to submit it</span> -->
+                    <span style="color: red" ng-show="transaction.errorMsg.transactionError">{{transaction.errorMsg.transactionError
+						}}</span>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

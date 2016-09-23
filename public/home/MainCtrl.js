@@ -1,0 +1,112 @@
+angular.module('MainCtrl', []).controller('MainController', function ($rootScope,$scope, $http) {
+	
+    $scope.transaction = {
+        name: 'jjikumar_bug-24337135',
+        email: 'jitender.k.kumar@oracle.com',
+        updateBug: 'N',
+        runJunits: 'N',
+        applyFPR : 'N',
+        isDesc : '',
+        description : '',
+        errorMsg: {
+            transactionError: '',
+            DBError: ''
+        }
+    };
+    $rootScope.isDesc='';
+    
+    
+
+    $scope.submitTransaction = function () {
+       // $scope.transaction.isValid = true;
+        console.log($scope.transaction.name);
+        console.log($scope.transaction.dbString);
+        console.log($scope.transaction.email);
+        console.log($scope.transaction.updateBug);
+        console.log($scope.transaction.runJunits);
+        console.log($scope.transaction.applyFPR);
+        
+
+        $http.post('/api/submit', $scope.transaction).success(function (response) {
+            console.log('Client : Recieved Data from server', response);
+        }).error(function (err) {
+            console.log('Client : Recieved Data from server', err);
+            $scope.transaction.errorMsg.transactionError = err.error;
+        });
+    };
+    
+    $scope.getDBInformation = function () {
+        $http.get('/api/info/dbs', $scope.transaction).success(function (response) {
+        	$scope.dbs = response;
+            console.log('Client : Recieved Data from server', response);
+        }).error(function (err) {
+            console.log('Client : Recieved Data from server', err);
+            $scope.transaction.errorMsg.transactionError = err.error;
+        });
+    };
+    
+    $scope.changeDB = function(val){
+    	$scope.transaction.dbString = val.connectionString;
+    };
+    
+    $scope.getDBInformation();
+
+
+    $('#transaction-name').focusout(function () {
+        if ($('#transaction-name').val() === '') {
+            $('#transaction-name').css("border-color", "red");
+            $scope.transaction.errorMsg.transactionError = "Transaction Name is Required";
+        } else {
+        	console.log('$scope.transaction.isDesc :',$rootScope.isDesc);
+        	if($rootScope.isDesc===''){
+        		$rootScope.isDesc='Y';
+        		console.log('$scope.transaction.isDesc : Inside ',$rootScope.isDesc);
+        		$http.post('/api/transactions/describe', $scope.transaction).success(function (response) {
+                    console.log('Client : Recieved Data from server', response);
+                    $scope.transaction.description=response;
+                    $scope.transaction.description.baseLabel.value;
+                    $scope.transaction.description.bugNum.value;
+                    $scope.transaction.description.transDesc.value;
+                    $rootScope.isDesc='';
+                }).error(function (err) {
+                    console.log('Client : Recieved Data from server', err);
+                    $scope.transaction.errorMsg.transactionError = err.error;
+                    $('#transaction-name').css("border-color", "red");
+                    $rootScope.isDesc='';
+                });
+        	}
+    		
+    	
+           /* $('#transaction-name').css("border-color", "");
+            $scope.transaction.errorMsg.transactionError = "";*/
+        }
+    });
+    
+    $('#transaction-name').click(function () {
+    	$scope.transaction.isDesc='';
+    });
+    
+
+    $('#dbstring').focusout(function () {
+        if ($('#dbstring').val() === '') {
+            $('#dbstring').css("border-color", "red");
+        } else {
+            $('#dbstring').css("border-color", "");
+        }
+    });
+
+    $('#transaction-email').focusout(function () {
+        if ($('#transaction-email').val() === '') {
+            $('#transaction-email').css("border-color", "red");
+        } else {
+            var transaction_email = $('#transaction-email').val().trim();
+            var emailRegEx = /^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4},?)+$/; // validate more than one comma separated emails, no spaces
+            if (!emailRegEx.test(transaction_email)) {
+                var errorText = (transaction_email === '' ? 'Email ID cannot be empty\n' : transaction_email + ' is not a valid Oracle email ID\n');
+                $('#transaction-email').css("border-color", "red");
+            } else {
+                $('#transaction-email').css("border-color", "");
+            }
+        }
+    });
+});

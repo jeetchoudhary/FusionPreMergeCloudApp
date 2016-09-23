@@ -1,0 +1,29 @@
+<div class="row" style="margin-right: -2px;margin-left: -1px; border: solid 1px black;border-radius: 4px;">
+    <!-- <div class="panel panel-primary"> -->
+    <ul class="nav nav-tabs">
+        <li><a data-toggle="tab" href="#active" ng-click="getTransactionList('Running')">Active Transactions</a></li>
+        <li><a data-toggle="tab" href="#queued" ng-click="getTransactionList('Queued')">Queued</a></li>
+        <li><a data-toggle="tab" href="#archived" ng-click="getTransactionList('Archived')">Archived</a></li>
+    </ul>
+    
+
+   <div class="tab-content">
+        <div id="active" class="tab-pane fade in active" >
+            <div class="panel-body">
+                <history-list data="transactionList.running"></history-list>
+            </div>
+        </div>
+        <div id="queued" class="tab-pane fade">
+            <div class="panel-body">
+               <history-list data="transactionList.queued"></history-list>
+            </div>
+
+        </div>
+        <div id="archived" class="tab-pane fade" >
+            <div class="panel-body">
+                <history-list data="transactionList.archived"></history-list>
+            </div>
+        </div>
+    </div>
+
+</div>
