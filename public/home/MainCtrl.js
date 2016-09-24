@@ -7,12 +7,11 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         runJunits: 'N',
         applyFPR : 'N',
         validationStatus:'notstarted',
-        description : '',
         errorMsg: {
             transactionError: '',
             DBError: ''
         },
-        transDescription : {
+        description : {
     			"baseLabel":'{"name":"","value":""}',
     			"bugNum":{"name":"","value":""},
     			"transDesc":{"name":"","value":""}
@@ -49,15 +48,29 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                 $scope.transaction.validationStatus="inprocess";
                 $rootScope.isDesc = 'Y';
                 $rootScope.prevTransName = $scope.transaction.name;
-        		$http.post('/api/transactions/describe', $scope.transaction).success(function (response){
-                    console.log('Client : Recieved Data from server', response);
-                    $scope.transaction.description=response;
+        		// $http.post('/api/transactions/describe', $scope.transaction).success(function (response){
+                //     console.log('Client : Recieved Data from server', response);
+                //     $scope.transaction.description=response;
+                //     $scope.transaction.validationStatus="completed";
+                //     console.log('validations block execution completed and validation status',$scope.transaction.validationStatus);
+                //     console.log('validations response Recieved',response);
+                //     $rootScope.isDesc = 'Y';
+                // }).error(function (err) {
+                //     console.error('Client : Recieved Data from server', err);
+                //     $rootScope.isDesc = 'Y';
+                // });
+
+
+
+                $http.post('/api/transactions/describe', $scope.transaction).then(function(response){
+                        console.log('Client : Recieved Data from server', response);
+                    $scope.transaction.description=response.data;
                     $scope.transaction.validationStatus="completed";
                     console.log('validations block execution completed and validation status',$scope.transaction.validationStatus);
                     console.log('validations response Recieved',response);
                     $rootScope.isDesc = 'Y';
-                }).error(function (err) {
-                    console.error('Client : Recieved Data from server', err);
+                }, function(err){
+                     console.error('Client : Recieved Data from server', err);
                     $rootScope.isDesc = 'Y';
                 });
         	}

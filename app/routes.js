@@ -69,7 +69,7 @@ module.exports = function(app) {
    		            op = op + stdout;
    		        },
    		        err: function(stderr) {
-   		            console.error(stderr); 
+   		            console.error('failed to execute command desc',stderr); 
    		            return;
    		        }
    		    }).exec('echo', {
@@ -79,7 +79,7 @@ module.exports = function(app) {
 					deferred.resolve(transactionDescData);
    		        },
    		        err: function(stderr) {
-   		            console.error(stderr);
+   		            console.error('failed to execute command echo',stderr);
    		        }
    		    }).start();
 		return deferred.promise;
@@ -188,14 +188,5 @@ module.exports = function(app) {
 			console.log('new Response',newResponse);
 			res.status(200).send(newResponse);
 		});
-    });
-    
-    
-    
-    // frontend routes =========================================================
-    // route to handle all angular requests
-    app.get('*', function(req, res) {
-        res.sendfile('./public/index.html'); // load our public/index.html file
-    });
-    
+    });    
 };

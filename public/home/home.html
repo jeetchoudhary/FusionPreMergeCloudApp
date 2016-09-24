@@ -79,9 +79,9 @@
                             <div class="panel-heading" style="font-weight: bold;color: blueviolet">Please Verify the details of the transaction Mentioned below and submit for PreMerge Scan</div>
                             <table class="table">
                                 <tbody>
-                                    <tr ng-repeat="transaction in transaction.description">
-                                        <td style="text-align: left;font-weight: bold;">{{transaction.name}}</td>
-                                        <td style="text-align: left;">{{transaction.value}}</td>
+                                    <tr ng-repeat="transProperty in transaction.description">
+                                        <td style="text-align: left;font-weight: bold;">{{transProperty.name}}</td>
+                                        <td style="text-align: left;">{{transProperty.value}}</td>
                                     </tr>
                                 </tbody>
                             </table>
