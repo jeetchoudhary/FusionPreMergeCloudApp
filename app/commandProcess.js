@@ -25,14 +25,14 @@ var updateTransactionStatus = function(transaction,status){
 	});
 };
 
-var processTransaction = function(trans){
-	//TO DO : get data from DB && save premerge result on history server
-    var series =  'FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64';
-    var seriesName = 'R_13';
+var processTransaction = function(transData){
+	var trans = JSON.parse(transData);
+	console.log('transaction data recived in the child process ',trans);
+    var series =  trans.description.baseLabel.value;
+	var bugNo = trans.description.bugNum.value;
     var logStream = fs.createWriteStream(fuseConfig.transactionActiveLogLocation+trans.name, {'flags': 'a'});
 	var date = new Date();
-    var viewName = fuseConfig.adeServerUser+'_R_13_'+date.getTime();
-    var bugNo = '23502069';
+    var viewName = fuseConfig.adeServerUser+'_cloud_'+date.getTime();
     updateTransactionStatus(trans,'Running');
     var createViewCommand = 'ade createview '+ viewName + ' -series '+series+' -latest';
     var useViewCommand = 'ade useview -silent '+viewName+' -exec \"ade begintrans '+trans.name+'_'+date.getTime()+' && ';
@@ -84,6 +84,3 @@ var processTransaction = function(trans){
     .start();
 };
 processTransaction(process.argv[2]);
-
-
-

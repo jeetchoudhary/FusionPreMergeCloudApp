@@ -9,8 +9,7 @@ amqp.connect(fuseConfig.messageQueueURL, function (err, conn) {
         console.log("Waiting for messages in : ", fuseConfig.transactionMessageQueue);
         ch.consume(fuseConfig.transactionMessageQueue, function (msg) {
             console.log("Request Arrived , will now process request :", msg.content.toString());
-            var transaction = JSON.parse(msg.content.toString());
-            child_process.fork(__dirname+"/commandProcess.js", [transaction],{ execArgv: ['--debug=5859'] });
+            child_process.fork(__dirname+"/commandProcess.js", [msg.content.toString()],{ execArgv: ['--debug=5859'] });
         }, { noAck: true });
     });
 });

@@ -84,10 +84,7 @@ module.exports = function(app) {
    		    }).start();
 		return deferred.promise;
 	};
-
-    
-    
-    
+        
 	var getTransactionLogFileName = function (transactionName){
 		var path = transactionLogLocation+transactionName+'_1';
 		console.log('logLocation :',path);
