@@ -16,8 +16,8 @@ var updateTransactionStatus = function(transaction,status){
 		updateTime = "starttime";
 	else if(status==="Archived")
 		updateTime = "endtime";
-	var query = { "name" : transaction.name };
-	TransData.findOneAndUpdate(query, { "currentStatus" : status , updateTime:Date.now()}, {upsert:false}, function(err, doc){
+	var query = {"name" : transaction.name};
+	TransData.findOneAndUpdate(query,{ "currentStatus" : status , updateTime : Date.now()}, {upsert:false}, function(err, doc){
 	    if (err) 
 	    	console.error('Unable to update the row for the transaction '+transaction.name,err);
 	    else
@@ -27,6 +27,7 @@ var updateTransactionStatus = function(transaction,status){
 
 var processTransaction = function(transData){
 	var trans = JSON.parse(transData);
+	var transName = "jjikumar"+trans.name.substring(trans.name.indexOf('_'));
 	console.log('transaction data recived in the child process ',trans);
     var series =  trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
@@ -35,11 +36,11 @@ var processTransaction = function(transData){
     var viewName = fuseConfig.adeServerUser+'_cloud_'+date.getTime();
     updateTransactionStatus(trans,'Running');
     var createViewCommand = 'ade createview '+ viewName + ' -series '+series+' -latest';
-    var useViewCommand = 'ade useview -silent '+viewName+' -exec \"ade begintrans '+trans.name+'_'+date.getTime()+' && ';
+    var useViewCommand = 'ade useview -silent '+viewName+' -exec \"ade begintrans '+transName+'_'+date.getTime()+' && ';
     var fetchTransCommand = useViewCommand+'ade fetchtrans '+trans.name+' &&  ';
     var checkInCommand = fetchTransCommand+'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v '+bugNo+' && cd &&  ade cleanview  && yes n | /ade/'+viewName+'/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh ';
     var finScriptParams = checkInCommand+' -d '+trans.dbString+' -DupdateBug='+trans.updateBug+' -DrunJUnits='+(trans.runJunits==='Y'?1:0)+' -DapplyPackages='+(trans.applyFPR==='Y'?1:0);
-    var destroyTransParam = finScriptParams+' && ade destroytrans -force '+trans.name +' && exit ';
+    var destroyTransParam = finScriptParams+' && ade destroytrans -force '+transName +' && exit ';
     var endDelimeter = ' \"';
     var exeCommand = finScriptParams+endDelimeter;
     console.log('command to be executed',exeCommand);
@@ -61,7 +62,7 @@ var processTransaction = function(transData){
 	            console.log(stderr); 
 	            return false;
 	        }
-	    }).exec('yes n | ade destroyview -force'+viewName, {
+	    }).exec('yes n | ade destroyview -force '+viewName, {
 	        out: function(stdout) {
 	        	logStream.write(stdout);
 	            console.log(stdout);

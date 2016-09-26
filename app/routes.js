@@ -113,6 +113,8 @@ module.exports = function(app) {
   				    submittedBy : req.body.email,
   					currentStatus : 'Queued',
 					submittedtime: Date.now(),
+					starttime:'',
+					endtime : '',
   					DBString : req.body.dbString,
   					updateBug : req.body.updateBug,
   					runJunits : req.body.runJunits
