@@ -16,7 +16,6 @@ module.exports = function(app) {
 	    pass: fuseConfig.adeServerPass
 	});
 	
-	
 // Helper Methods ================================================================================================================================================================================================
     
 
@@ -58,8 +57,6 @@ module.exports = function(app) {
     			};
 		return transDescription;
     };
-
-		
     var getTransactionDetails = function(command){
     	var op ="";
 		var deferred = q.defer();
@@ -183,7 +180,7 @@ module.exports = function(app) {
     app.post('/api/transactions/describe',function (req,res){
     	var command = 'ade describetrans '+req.body.name;
     	var op ="";
-    	getTransactionDetails(command,res,parseTransactionData).then(function(newResponse){
+    	getTransactionDetails(command).then(function(newResponse){
 			console.log('new Response',newResponse);
 			res.status(200).send(newResponse);
 		});

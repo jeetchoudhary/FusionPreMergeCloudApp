@@ -20,62 +20,70 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
     $rootScope.isDesc='N';
     $rootScope.prevTransName='';
     
-    
-
-    $scope.submitTransaction = function () {
-       // $scope.transaction.isValid = true;
-        console.log($scope.transaction.name);
-        console.log($scope.transaction.dbString);
-        console.log($scope.transaction.email);
-        console.log($scope.transaction.updateBug);
-        console.log($scope.transaction.runJunits);
-        console.log($scope.transaction.applyFPR);
-        console.log($scope.transaction.validationStatus);
-      //  console.log($scope.transaction.description.baseLabel.value);
-     //   console.log($scope.transaction.description.bugNum.value);
-     //   console.log($scope.transaction.description.transDesc.value);
-
-        if($scope.transaction.validationStatus==='completed'){
-            console.log('submit block getting execute');
-            $http.post('/api/submit', $scope.transaction).success(function (response) {
+     $scope.submitTransaction = function () {
+         var trans = $scope.transaction;
+         $scope.transaction="";
+            $http.post('/api/submit', trans).success(function (response) {
             console.log('Client : Recieved Data from server', response);
         }).error(function (err) {
             console.log('Client : Recieved Data from server', err);
             $scope.transaction.errorMsg.transactionError = err.error;
         });
-        }else if($scope.transaction.validationStatus==='notstarted' && $rootScope.isDesc==='N' && ($scope.transaction.name!=$rootScope.prevTransName)){
-                console.log('validations block getting execute and validation status',$scope.transaction.validationStatus);
-                $scope.transaction.validationStatus="inprocess";
-                $rootScope.isDesc = 'Y';
-                $rootScope.prevTransName = $scope.transaction.name;
-        		// $http.post('/api/transactions/describe', $scope.transaction).success(function (response){
-                //     console.log('Client : Recieved Data from server', response);
-                //     $scope.transaction.description=response;
-                //     $scope.transaction.validationStatus="completed";
-                //     console.log('validations block execution completed and validation status',$scope.transaction.validationStatus);
-                //     console.log('validations response Recieved',response);
-                //     $rootScope.isDesc = 'Y';
-                // }).error(function (err) {
-                //     console.error('Client : Recieved Data from server', err);
-                //     $rootScope.isDesc = 'Y';
-                // });
-
-
-
-                $http.post('/api/transactions/describe', $scope.transaction).then(function(response){
-                        console.log('Client : Recieved Data from server', response);
-                    $scope.transaction.description=response.data;
-                    $scope.transaction.validationStatus="completed";
-                    console.log('validations block execution completed and validation status',$scope.transaction.validationStatus);
-                    console.log('validations response Recieved',response);
-                    $rootScope.isDesc = 'Y';
-                }, function(err){
-                     console.error('Client : Recieved Data from server', err);
-                    $rootScope.isDesc = 'Y';
-                });
-        	}
-        
+     
     };
+    
+
+    // $scope.submitTransaction = function () {
+    //    // $scope.transaction.isValid = true;
+    //     console.log($scope.transaction.name);
+    //     console.log($scope.transaction.dbString);
+    //     console.log($scope.transaction.email);
+    //     console.log($scope.transaction.updateBug);
+    //     console.log($scope.transaction.runJunits);
+    //     console.log($scope.transaction.applyFPR);
+    //     console.log($scope.transaction.validationStatus);
+    //   //  console.log($scope.transaction.description.baseLabel.value);
+    //  //   console.log($scope.transaction.description.bugNum.value);
+    //  //   console.log($scope.transaction.description.transDesc.value);
+
+    //     if($scope.transaction.validationStatus==='completed'){
+    //         console.log('submit block getting execute');
+    //         $http.post('/api/submit', $scope.transaction).success(function (response) {
+    //         console.log('Client : Recieved Data from server', response);
+    //     }).error(function (err) {
+    //         console.log('Client : Recieved Data from server', err);
+    //         $scope.transaction.errorMsg.transactionError = err.error;
+    //     });
+    //     }else if($scope.transaction.validationStatus==='notstarted' && $rootScope.isDesc==='N' && ($scope.transaction.name!=$rootScope.prevTransName)){
+    //             console.log('validations block getting execute and validation status',$scope.transaction.validationStatus);
+    //             $scope.transaction.validationStatus="inprocess";
+    //             $rootScope.isDesc = 'Y';
+    //             $rootScope.prevTransName = $scope.transaction.name;
+    //     		// $http.post('/api/transactions/describe', $scope.transaction).success(function (response){
+    //             //     console.log('Client : Recieved Data from server', response);
+    //             //     $scope.transaction.description=response;
+    //             //     $scope.transaction.validationStatus="completed";
+    //             //     console.log('validations block execution completed and validation status',$scope.transaction.validationStatus);
+    //             //     console.log('validations response Recieved',response);
+    //             //     $rootScope.isDesc = 'Y';
+    //             // }).error(function (err) {
+    //             //     console.error('Client : Recieved Data from server', err);
+    //             //     $rootScope.isDesc = 'Y';
+    //             // });
+
+    //             $http.post('/api/transactions/describe', $scope.transaction).then(function(response){
+    //                     console.log('Client : Recieved Data from server', response);
+    //                 $scope.transaction.description=response.data;
+    //                 $scope.transaction.validationStatus="completed";
+    //                 console.log('validations block execution completed and validation status',$scope.transaction.validationStatus);
+    //                 console.log('validations response Recieved',response);
+    //                 $rootScope.isDesc = 'Y';
+    //             }, function(err){
+    //                  console.error('Client : Recieved Data from server', err);
+    //                 $rootScope.isDesc = 'Y';
+    //             });
+    //     	}
+    // };
     
     $scope.getDBInformation = function () {
         $http.get('/api/info/dbs', $scope.transaction).success(function (response) {

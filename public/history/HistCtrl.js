@@ -68,9 +68,7 @@ angular.module('HistCtrl', [])
     };
    setTimeout(function(){  $scope.displayTransactionProgress($rootScope.histTrans); }, 1000); 
 
-    
-    
-    
+     
 }).directive('historyList', function() {
   return {
     restrict: 'E',

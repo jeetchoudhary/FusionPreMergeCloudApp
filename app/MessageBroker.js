@@ -4,19 +4,14 @@
 	
 	exports.serve = function(transaction){
 		console.log('MessageClient:',transaction.name);
-		console.log('MessageClient:',transaction.email);
-		console.log("***************************");
-
 		amqp.connect(fuseConfig.messageQueueURL, function(err, conn) {
 		  conn.createChannel(function(err, ch) {
 		    var q = 'fusionPremerge';
-		    var msg = 'Hello Jitender Here :)';
-
 		    ch.assertQueue(q, {durable: true});
 		    ch.sendToQueue(q, new Buffer(JSON.stringify(transaction)), {persistent: true});
-		    console.log(" [x] Sent '%s'", msg);
+		    console.log(" Message Posted to queue ", transaction);
 		  });
-		  setTimeout(function() { conn.close();  }, 500);
+		  // setTimeout(function() { conn.close();  }, 500);
 		});
 	};
 	

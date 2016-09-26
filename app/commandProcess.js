@@ -4,25 +4,37 @@ var SSH = require('simple-ssh');
 var fuseConfig = require('../config/configuration');
 var fs = require('fs');
 var TransData = require('../app/models/TransData');
+var mongoose       = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect(fuseConfig.dburl);
+var db = mongoose.connection;
 var ssh = new SSH({
     host: fuseConfig.historyServerUrl,
     user: fuseConfig.adeServerUser,
     pass: fuseConfig.adeServerPass
 });
 
+db.once('open', function() {
+ console.log('Server : Child process is connected to the database ');
+});
+
 var updateTransactionStatus = function(transaction,status){
-	var updateTime ;
-	if(status==="Running")
-		updateTime = "starttime";
-	else if(status==="Archived")
-		updateTime = "endtime";
-	var query = {"name" : transaction.name};
-	TransData.findOneAndUpdate(query,{ "currentStatus" : status , updateTime : Date.now()}, {upsert:false}, function(err, doc){
-	    if (err) 
-	    	console.error('Unable to update the row for the transaction '+transaction.name,err);
-	    else
-	    	console.log('update row for transaction , will start PreMerge process on the transaction :',transaction.name);
-	});
+	var query = { "name": transaction.name };
+	if (status === "Running") {
+        TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now() }, { upsert: false }, function (err, doc) {
+			if (err)
+				console.error('Unable to update the row for the transaction ' + transaction.name, err);
+			else
+				console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
+		});
+    } else if (status === "Archived") {
+		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now() }, { upsert: false }, function (err, doc) {
+			if (err)
+				console.error('Unable to update the row for the transaction ' + transaction.name, err);
+			else
+				console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
+		});
+    }
 };
 
 var processTransaction = function(transData){

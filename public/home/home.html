@@ -74,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div ng-show="transaction.validationStatus==='completed'">
+                    <!--<div ng-show="transaction.validationStatus==='completed'">
                         <div class="panel panel-default" style="margin-left:80px">
                             <div class="panel-heading" style="font-weight: bold;color: blueviolet">Please Verify the details of the transaction Mentioned below and submit for PreMerge Scan</div>
                             <table class="table">
@@ -92,16 +92,24 @@
                                     (transactionSubmitform.email.$dirty && transactionSubmitform.email.$invalid) || (transactionSubmitform.dbstring.$dirty && transactionSubmitform.dbstring.$invalid) ">
                             </div>
                         </div>
+                    </div>-->
+                      <div>
+                        <div class="form-group">
+                            <div class="col-md-4 col-sm-4 col-lg-4 control-label text-right" style="margin-left: 300px">
+                                <input type="submit" class="btn btn-success btn-circle" id="btn-submit" value="Submit Transaction" ng-disabled="(transactionSubmitform.transaction.$dirty && transactionSubmitform.transaction.$invalid) ||
+                                    (transactionSubmitform.email.$dirty && transactionSubmitform.email.$invalid) || (transactionSubmitform.dbstring.$dirty && transactionSubmitform.dbstring.$invalid) ">
+                            </div>
+                        </div>
                     </div>
-                    <div ng-show="transaction.validationStatus==='inprocess'" class="panel panel-default" style="margin-left:80px">
+                    <!--<div ng-show="transaction.validationStatus==='inprocess'" class="panel panel-default" style="margin-left:80px">
                             <div class="panel-heading" style="font-weight: bold;color: blueviolet">Please wait while we Verify the details of your transaction </div>
-                    </div>
+                    </div>-->
 
-                    <div ng-show="transaction.validationStatus==='notstarted'" class="form-group">
+                    <!--<div ng-show="transaction.validationStatus==='notstarted'" class="form-group">
                         <div class="col-md-4 col-sm-4 col-lg-4 control-label text-right" style="margin-left: 300px">
                             <input type="submit" class="btn btn-success btn-circle" id="btn-submit" value="Validate Transaction">
                         </div>
-                    </div>
+                    </div>-->
                     <!--   <span style="color:red" ng-show="transaction.isValid && !transaction.errorMsg.transactionError">Work In Progress..I am working on it right now soon you will be able to submit it</span> -->
                     <span style="color: red" ng-show="transaction.errorMsg.transactionError">{{transaction.errorMsg.transactionError
 						}}</span>
