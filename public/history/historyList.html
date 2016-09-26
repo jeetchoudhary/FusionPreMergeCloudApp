@@ -3,7 +3,6 @@
         <div class="input-group">
             <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
             <input type="text" class="form-control" placeholder="Search Transactions.." ng-model="search">
-
         </div>
     </div>
 </form>
@@ -31,13 +30,11 @@
         </thead>
         <tbody>
             <tr ng-repeat="transaction in transactionList  | orderBy:sortType:sortReverse | filter:search">
-                
                 <td ><a href="/history/progress" ng-click="updateHistTrans(transaction.name)">{{ transaction.name }}</a></td>
                 <td>{{ transaction.submittedBy }}</td>
                 <td>{{ transaction.currentStatus }}</td>
                 <td>{{ transaction.submittedtime | date: 'medium' }}</td>
             </tr>
         </tbody>
-
     </table>
 </div>

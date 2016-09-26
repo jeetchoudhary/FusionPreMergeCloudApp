@@ -17,8 +17,6 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
     			"transDesc":{"name":"","value":""}
     			}
     };
-    $rootScope.isDesc='N';
-    $rootScope.prevTransName='';
     
      $scope.submitTransaction = function () {
          var trans = $scope.transaction;
@@ -29,7 +27,6 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
             console.log('Client : Recieved Data from server', err);
             $scope.transaction.errorMsg.transactionError = err.error;
         });
-     
     };
     
 

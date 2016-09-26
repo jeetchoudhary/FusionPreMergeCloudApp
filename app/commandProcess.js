@@ -8,7 +8,6 @@ var mongoose       = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect(fuseConfig.dburl);
 var db = mongoose.connection;
-var ssh ;
 
 db.once('open', function() {
  console.log('Server : Child process is connected to the database ');
@@ -34,7 +33,7 @@ var updateTransactionStatus = function(transaction,status){
 };
 
 var processTransaction = function(transData){
-	ssh = new SSH({
+	var ssh = new SSH({
 			host: fuseConfig.historyServerUrl,
 			user: fuseConfig.adeServerUser,
 			pass: fuseConfig.adeServerPass
