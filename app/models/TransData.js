@@ -8,7 +8,8 @@ var TransDataSchema = mongoose.Schema({
 	endtime : Date,
 	DBString : String,
 	updateBug : String,
-	runJunits : String
+	runJunits : String,
+	premergeOutput : String
 });
 
 var Trans = mongoose.model('Trans', TransDataSchema);

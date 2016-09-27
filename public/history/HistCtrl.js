@@ -5,7 +5,11 @@ angular.module('HistCtrl', [])
             "queued": "",
             "archived": ""
         };
+        $scope.running="running";
+        $scope.queued="queued";
+        $scope.archived="archived";
         $scope.getTransactionList = function (transState) {
+            $scope.tabType = transState;
             console.log('getting list for transactions with state :', transState);
             $http.post('/api/transactions/list', { 'transState': transState }).success(function (response) {
                 console.log('Client : Recieved Data from server', response);
@@ -55,7 +59,8 @@ angular.module('HistCtrl', [])
             restrict: 'E',
             transclude: true,
             scope: {
-                transactionList: '=data'
+                transactionList: '=data',
+                currentTab : '=tab'
             },
             link: function (scope, element, attrs, controllers) { },
             templateUrl: '../history/historyList.html',

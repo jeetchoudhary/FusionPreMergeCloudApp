@@ -11,29 +11,35 @@
         <thead>
             <tr>
                 <td>
-                    <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                    <a style="cursor: pointer" ng-click="sortType = 'name'; sortReverse = !sortReverse">
                         Transaction Name
                         <span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
                         <span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
                     </a>
                 </td>
                 <td>
-                    <a href="#" ng-click="sortType = 'submittedBy'; sortReverse = !sortReverse">
-                        Submitted By
+                    <a style="cursor: pointer" ng-click="sortType = 'submittedBy'; sortReverse = !sortReverse">
+                        Transaction Owner
                         <span ng-show="sortType == 'submittedBy' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
                         <span ng-show="sortType == 'submittedBy' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
                     </a>
                 </td>
-                <td>Transaction Status</td>
-                <td>Submitted Time</td>
+                <td ng-hide="currentTab=='archived'">Submitted Time</td>
+                <td ng-hide="currentTab=='queued'">Start Time</td>
+                <td ng-show="currentTab=='archived'">Finished Time</td>
+                <td ng-show="currentTab=='archived'">Validation Status</td>
+                
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="transaction in transactionList  | orderBy:sortType:sortReverse | filter:search">
                 <td ><a href="/history/progress" ng-click="updateHistTrans(transaction.name)">{{ transaction.name }}</a></td>
                 <td>{{ transaction.submittedBy }}</td>
-                <td>{{ transaction.currentStatus }}</td>
-                <td>{{ transaction.submittedtime | date: 'medium' }}</td>
+                <td ng-hide="currentTab=='archived'">{{ transaction.submittedtime | date: 'medium' }}</td>
+                <td ng-hide="currentTab=='queued'">{{ transaction.starttime | date: 'medium' }}</td>
+                <td ng-show="currentTab=='archived'">{{ transaction.endtime | date: 'medium' }}</td>
+                <td ng-show="currentTab=='archived'">{{ transaction.premergeOutput }}</td>
+                
             </tr>
         </tbody>
     </table>

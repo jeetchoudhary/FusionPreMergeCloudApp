@@ -17,15 +17,17 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
     			"transDesc":{"name":"","value":""}
     			}
     };
+    $scope.errorMsg="";
     
      $scope.submitTransaction = function () {
          var trans = $scope.transaction;
          $scope.transaction="";
+         $scope.errorMsg="";
             $http.post('/api/submit', trans).success(function (response) {
             console.log('Client : Recieved Data from server', response);
         }).error(function (err) {
             console.log('Client : Recieved Data from server', err);
-            $scope.transaction.errorMsg.transactionError = err.error;
+            $scope.errorMsg = err.error;
         });
     };
     
