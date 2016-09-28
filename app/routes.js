@@ -83,28 +83,24 @@ module.exports = function(app) {
 	};
         
 	var getTransactionLogFileName = function (transactionName){
-		var path = transactionLogLocation+transactionName+'_1';
+		var newPath = transactionLogLocation+transactionName+'_1';
+		var path = newPath.replace(/\\/g,"/");
 		console.log('logLocation :',path);
-		while(true){
-		fs.exists(path, function(exists) {
-			  if (exists) {
-				  console.log('log file already exist',path);
-				   var version = parseInt(path.substring(path.length - 1))+1;
-				   path = path.substring(0, path.length - 1)+version;
-			  }
-			  else{
-				  console.log('returning file ',path);
-			       return path;
-			  }
-		});
-		}
-	};
+//		while(true){
+	fs.open(newPath, 'r', function(error, fd) {
+    if (error) {
+        throw new Error("ERROR - failed to open file : " + newPath);
+    }
+
+    console.log('hello');
+});
+};
 	
 		
 // server routes ================================================================================================================================================================================================
 	
     app.post('/api/submit',function (req,res){
-    		//  var name =  getTransactionLogFileName(req.body.name);
+    		  //var name =  getTransactionLogFileName(req.body.name);
     			var currentTransactionData = new TransData({
   				  	name: req.body.name,
   				    submittedBy : req.body.email,
@@ -116,7 +112,7 @@ module.exports = function(app) {
   					updateBug : req.body.updateBug,
   					runJunits : req.body.runJunits
     			});
-    			var logStream ;
+
     			var queryResult = TransData.find({ $or: [ { name: req.body.name , currentStatus : 'Running'}, { name: req.body.name , currentStatus : 'Queued'} ] }, function(err, transData) {
     				  if (err){
     					  console.error('error occured while fetching running transactions');
@@ -133,7 +129,6 @@ module.exports = function(app) {
     	    					  console.log('Transaction saved successfully and pre merge will run soon on the transaction');
     	    				  }
     	    				});
-    					  logStream = fs.createWriteStream(transactionLogLocation+req.body.name, {'flags': 'a'});
     					  messageClient.serve(req.body);
     				  }
     				});
@@ -164,9 +159,9 @@ module.exports = function(app) {
 			  }
 			});
     });
-    
-    app.post('/api/transactions/name/output',function (req,res){
-    	var localFilePath = fuseConfig.transactionActiveLogLocation+req.body.name;
+
+	  app.post('/api/transactions/name/output',function (req,res){
+    	var localFilePath = req.body.histTrans.logFileName;
     	var stat = fs.statSync(localFilePath);
     	 res.writeHead(200, {
              'Content-Type': 'application/text',
@@ -175,6 +170,17 @@ module.exports = function(app) {
     	 var readStream = fs.createReadStream(localFilePath);
          readStream.pipe(res);
     });
+    
+    // app.post('/api/transactions/name/output',function (req,res){
+    // 	var localFilePath = fuseConfig.transactionActiveLogLocation+req.body.name;
+    // 	var stat = fs.statSync(localFilePath);
+    // 	 res.writeHead(200, {
+    //          'Content-Type': 'application/text',
+    //          'Content-Length': stat.size
+    //      });
+    // 	 var readStream = fs.createReadStream(localFilePath);
+    //      readStream.pipe(res);
+    // });
     
     
     app.post('/api/transactions/describe',function (req,res){

@@ -9,7 +9,8 @@ var TransDataSchema = mongoose.Schema({
 	DBString : String,
 	updateBug : String,
 	runJunits : String,
-	premergeOutput : String
+	premergeOutput : String,
+	logFileName : String
 });
 
 var Trans = mongoose.model('Trans', TransDataSchema);

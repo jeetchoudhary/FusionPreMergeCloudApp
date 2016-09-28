@@ -24,16 +24,16 @@
                         <span ng-show="sortType == 'submittedBy' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
                     </a>
                 </td>
-                <td ng-hide="currentTab=='archived'">Submitted Time</td>
-                <td ng-hide="currentTab=='queued'">Start Time</td>
-                <td ng-show="currentTab=='archived'">Finished Time</td>
-                <td ng-show="currentTab=='archived'">Validation Status</td>
+                <td ng-hide="currentTab=='archived'" style="color:#337ab7">Submitted Time</td>
+                <td ng-hide="currentTab=='queued'" style="color:#337ab7">Start Time</td>
+                <td ng-show="currentTab=='archived'" style="color:#337ab7">Finished Time</td>
+                <td ng-show="currentTab=='archived'" style="color:#337ab7">Validation Status</td>
                 
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="transaction in transactionList  | orderBy:sortType:sortReverse | filter:search">
-                <td ><a href="/history/progress" ng-click="updateHistTrans(transaction.name)">{{ transaction.name }}</a></td>
+                <td ><a href="/history/progress" ng-click="updateHistTrans(transaction)">{{ transaction.name }}</a></td>
                 <td>{{ transaction.submittedBy }}</td>
                 <td ng-hide="currentTab=='archived'">{{ transaction.submittedtime | date: 'medium' }}</td>
                 <td ng-hide="currentTab=='queued'">{{ transaction.starttime | date: 'medium' }}</td>

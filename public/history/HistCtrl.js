@@ -32,9 +32,9 @@ angular.module('HistCtrl', [])
 
     }).controller('HistoryProgress', function ($scope, $rootScope, $http, $sce) {
         $scope.transactionOutput = $rootScope.transactionOutput;
-        $scope.displayTransactionProgress = function (name) {
+        $scope.displayTransactionProgress = function (histTrans) {
             console.log('Client : Going to display the transaction outcome', name);
-            $http.post('/api/transactions/name/output', { name: name }, {
+            $http.post('/api/transactions/name/output', { histTrans: histTrans }, {
                 responseType: 'arraybuffer'
             })
                 .success(function (response) {
@@ -68,8 +68,8 @@ angular.module('HistCtrl', [])
                 $scope.sortType = 'name'; // set the default sort type
                 $scope.sortReverse = false;  // set the default sort order
                 $scope.search = '';
-                $scope.updateHistTrans = function (name) {
-                    $rootScope.histTrans = name;
+                $scope.updateHistTrans = function (histtrans) {
+                    $rootScope.histTrans = histtrans;
                 };
             }
         };

@@ -13,17 +13,17 @@ db.once('open', function() {
  console.log('Server : Child process is connected to the database ');
 });
 
-var updateTransactionStatus = function(transaction,status){
+var updateTransactionStatus = function(transaction,status,logFile){
 	var query = { "name": transaction.name };
 	if (status === "Running") {
-        TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now() }, { upsert: false }, function (err, doc) {
+        TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now(),"logFileName": logFile}, { upsert: false }, function (err, doc) {
 			if (err)
 				console.error('Unable to update the row for the transaction ' + transaction.name, err);
 			else
 				console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
 		});
     } else if (status === "Archived") {
-		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now() }, { upsert: false }, function (err, doc) {
+		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now() ,"logFileName": logFile}, { upsert: false }, function (err, doc) {
 			if (err)
 				console.error('Unable to update the row for the transaction ' + transaction.name, err);
 			else
@@ -43,10 +43,11 @@ var processTransaction = function(transData){
 	console.log('transaction data recived in the child process ',trans);
     var series =  trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
-    var logStream = fs.createWriteStream(fuseConfig.transactionActiveLogLocation+trans.name, {'flags': 'a'});
 	var date = new Date();
+	var logFile = trans.name+'_'+date.getTime(); 
+    var logStream = fs.createWriteStream(fuseConfig.transactionActiveLogLocation+logFile, {'flags': 'a'});
     var viewName = fuseConfig.adeServerUser+'_cloud_'+date.getTime();
-    updateTransactionStatus(trans,'Running');
+    updateTransactionStatus(trans,'Running',fuseConfig.transactionActiveLogLocation+logFile);
     var createViewCommand = 'ade createview '+ viewName + ' -series '+series+' -latest';
     var useViewCommand = 'ade useview -silent '+viewName+' -exec \"ade begintrans '+transName+'_'+date.getTime()+' && ';
     var fetchTransCommand = useViewCommand+'ade fetchtrans '+trans.name+' &&  ';
@@ -87,7 +88,20 @@ var processTransaction = function(transData){
 	        out: function(stdout) {
 	        	logStream.write('Premerge Process completed');
 	            console.log('Premerge Process completed');
-	            updateTransactionStatus(trans,'Archived');
+				logStream.end();
+				var source = fs.createReadStream(fuseConfig.transactionActiveLogLocation+logFile);
+				var dest = fs.createWriteStream(fuseConfig.transactionArchivedLogLocation+logFile);
+				source.pipe(dest);
+				source.on('end', function() { 
+					console.log('transaction logs moved to Archived');
+					fs.unlink(fuseConfig.transactionActiveLogLocation+logFile);
+					dest.end();
+					source.end();
+				 });
+				source.on('error', function(err) { 
+					console.error('failed to move transaction logs to Archived');	
+				});
+	            updateTransactionStatus(trans,'Archived',fuseConfig.transactionArchivedLogLocation+logFile);
 	        },
 	        err: function(stderr) {
 	            console.log(stderr); 
