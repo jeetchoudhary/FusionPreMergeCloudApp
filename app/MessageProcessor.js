@@ -5,7 +5,6 @@ const child_process = require('child_process');
 var TransData = require('../app/models/TransData');
 var q = require('q');
 var SSH = require('simple-ssh');
-var ssh;
 
 var parseTransactionData = function (input) {
 	console.log('parsing transaction description data');
@@ -47,17 +46,47 @@ var parseTransactionData = function (input) {
 };
 
 
+// var getTransactionDetails = function (command) {
+// 	var op = "";
+// 	var deferred = q.defer();
+// 	command = "ade describetrans " + command;
+// 	ssh = new SSH({
+// 		host: fuseConfig.historyServerUrl,
+// 		user: fuseConfig.adeServerUser,
+// 		pass: fuseConfig.adeServerPass
+// 	});
+// 	console.log('Server : Above to describe transaction', command);
+// 		  ssh.exec(command, {
+// 		out: function (stdout) {
+// 			op = op + stdout;
+// 		},
+// 		err: function (stderr) {
+// 			console.error('failed to execute command desc', stderr);
+// 			return;
+// 		}
+// 	}).exec('echo', {
+// 		out: function (stdout) {
+// 			ssh.end();
+// 			var transactionDescData = parseTransactionData(op);
+// 			deferred.resolve(transactionDescData);
+// 		},
+// 		err: function (stderr) {
+// 			console.error('failed to execute command echo', stderr);
+// 		}
+// 	}).start();
+// 	return deferred.promise;
+// };
+
 var getTransactionDetails = function (command) {
 	var op = "";
 	var deferred = q.defer();
 	command = "ade describetrans " + command;
-	ssh = new SSH({
+	console.log('Server : Above to describe transaction', command);
+new SSH({
 		host: fuseConfig.historyServerUrl,
 		user: fuseConfig.adeServerUser,
 		pass: fuseConfig.adeServerPass
-	});
-	console.log('Server : Above to describe transaction', command);
-		  ssh.exec(command, {
+	}).exec(command, {
 		out: function (stdout) {
 			op = op + stdout;
 		},
@@ -67,7 +96,6 @@ var getTransactionDetails = function (command) {
 		}
 	}).exec('echo', {
 		out: function (stdout) {
-			ssh.end();
 			var transactionDescData = parseTransactionData(op);
 			deferred.resolve(transactionDescData);
 		},
@@ -88,7 +116,7 @@ amqp.connect(fuseConfig.messageQueueURL, function (err, conn) {
             var transaction = JSON.parse(msg.content.toString());
 			getTransactionDetails(transaction.name).then(function (newResponse) {
 				console.log('new Response', newResponse);
-				transaction.description = newResponse;
+						transaction.description = newResponse;
 				//			  Need to uncomment it to debug the server  
 				//            child_process.fork(__dirname+"/commandProcess.js", [JSON.stringify(transaction)],{ execArgv: ['--debug=5859'] });
 				child_process.fork(__dirname + "/commandProcess.js", [JSON.stringify(transaction)], {});

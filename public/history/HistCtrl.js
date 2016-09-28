@@ -10,9 +10,9 @@ angular.module('HistCtrl', [])
         $scope.archived="archived";
         $scope.getTransactionList = function (transState) {
             $scope.tabType = transState;
-            console.log('getting list for transactions with state :', transState);
+           // console.log('getting list for transactions with state :', transState);
             $http.post('/api/transactions/list', { 'transState': transState }).success(function (response) {
-                console.log('Client : Recieved Data from server', response);
+               // console.log('Client : Recieved Data from server', response);
                 if (transState === 'Running')
                     $scope.transactionList.running = response;
                 else if (transState === 'Queued')
@@ -22,7 +22,6 @@ angular.module('HistCtrl', [])
             }).error(function (err) {
                 console.log('Client : Recieved Data from server', err);
                 $scope.transaction.errorMsg.transactionError = err.error;
-                console.log($scope.transaction.errorMsg.transactionError);
             });
         };
 
@@ -33,7 +32,7 @@ angular.module('HistCtrl', [])
     }).controller('HistoryProgress', function ($scope, $rootScope, $http, $sce) {
         $scope.transactionOutput = $rootScope.transactionOutput;
         $scope.displayTransactionProgress = function (histTrans) {
-            console.log('Client : Going to display the transaction outcome', name);
+           // console.log('Client : Going to display the transaction outcome', name);
             $http.post('/api/transactions/name/output', { histTrans: histTrans }, {
                 responseType: 'arraybuffer'
             })
@@ -47,7 +46,6 @@ angular.module('HistCtrl', [])
                 }).error(function (err) {
                     console.log('Client : Recieved Error Data from server', err);
                     $scope.transaction.errorMsg.transactionError = err.error;
-                    console.log($scope.transaction.errorMsg.transactionError);
                 });
         };
         $scope.getProgress = function () {

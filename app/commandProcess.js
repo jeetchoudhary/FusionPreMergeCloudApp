@@ -32,13 +32,22 @@ var updateTransactionStatus = function(transaction,status,logFile){
     }
 };
 
-var processTransaction = function(transData){
-	var ssh = new SSH({
-			host: fuseConfig.historyServerUrl,
-			user: fuseConfig.adeServerUser,
-			pass: fuseConfig.adeServerPass
+var updateTransactionErrorStatus = function(transaction){
+	var query = { "name": transaction.name };
+        TransData.findOneAndUpdate(query, { "currentStatus": "Archived", "starttime": Date.now(),"endtime": Date.now(),"premergeOutput":transaction.error}, { upsert: false }, function (err, doc) {
+			if (err)
+				console.error('Unable to update the row for the transaction ' + transaction.name, err);
+			else
+				console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
 		});
+};
+
+var processTransaction = function(transData){
 	var trans = JSON.parse(transData);
+	if(trans.description.error){
+		updateTransactionErrorStatus(trans);
+		return;
+	}
 	var transName = "jjikumar"+trans.name.substring(trans.name.indexOf('_'));
 	console.log('transaction data recived in the child process ',trans);
     var series =  trans.description.baseLabel.value;
@@ -57,7 +66,11 @@ var processTransaction = function(transData){
     var endDelimeter = ' \"';
     var exeCommand = finScriptParams+endDelimeter;
     console.log('command to be executed',exeCommand);
-	ssh.exec(createViewCommand, {
+	new SSH({
+			host: fuseConfig.historyServerUrl,
+			user: fuseConfig.adeServerUser,
+			pass: fuseConfig.adeServerPass
+	}).exec(createViewCommand, {
         out: function(stdout) {
         	logStream.write(stdout);
             console.log(stdout);
@@ -96,12 +109,12 @@ var processTransaction = function(transData){
 					console.log('transaction logs moved to Archived');
 					fs.unlink(fuseConfig.transactionActiveLogLocation+logFile);
 					dest.end();
-					source.end();
 				 });
 				source.on('error', function(err) { 
 					console.error('failed to move transaction logs to Archived');	
 				});
 	            updateTransactionStatus(trans,'Archived',fuseConfig.transactionArchivedLogLocation+logFile);
+				return;
 	        },
 	        err: function(stderr) {
 	            console.log(stderr); 
