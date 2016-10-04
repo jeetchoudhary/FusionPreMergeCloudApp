@@ -44,8 +44,8 @@
                         <div class="col-md-7 col-sm-7 col-lg-7" id="updatebug">
                             <div class="input-group">
                                 <div class="btn-group">
-                                    <label class="btn btn-primary" ng-model="transaction.updateBug" uib-btn-radio="'Y'" uncheckable>Yes</label>
-                                    <label class="btn btn-primary" ng-model="transaction.updateBug" uib-btn-radio="'N'" uncheckable>No</label>
+                                    <label class="btn btn-success" ng-model="transaction.updateBug" uib-btn-radio="'Y'">Yes</label>
+                                    <label class="btn btn-success" ng-model="transaction.updateBug" uib-btn-radio="'N'">No</label>
                                 </div>
                             </div>
                         </div>
@@ -55,8 +55,8 @@
                         <div class="col-md-7 col-sm-7 col-lg-7" id="runJunits">
                             <div class="input-group">
                                 <div class="btn-group">
-                                    <label class="btn btn-primary" ng-model="transaction.runJunits" uib-btn-radio="'Y'" uncheckable>Yes</label>
-                                    <label class="btn btn-primary" ng-model="transaction.runJunits" uib-btn-radio="'N'" uncheckable>No</label>
+                                    <label class="btn btn-success" ng-model="transaction.runJunits" uib-btn-radio="'Y'">Yes</label>
+                                    <label class="btn btn-success" ng-model="transaction.runJunits" uib-btn-radio="'N'">No</label>
                                 </div>
                             </div>
                         </div>
@@ -66,8 +66,8 @@
                         <div class="col-md-7 col-sm-7 col-lg-7" id="applyFPR">
                             <div class="input-group">
                                 <div class="btn-group">
-                                    <label class="btn btn-primary" ng-model="transaction.applyFPR" uib-btn-radio="'Y'" uncheckable>Yes</label>
-                                    <label class="btn btn-primary" ng-model="transaction.applyFPR" uib-btn-radio="'N'" uncheckable>No</label>
+                                    <label class="btn btn-success" ng-model="transaction.applyFPR" uib-btn-radio="'Y'">Yes</label>
+                                    <label class="btn btn-success" ng-model="transaction.applyFPR" uib-btn-radio="'N'">No</label>
                                 </div>
                             </div>
                         </div>
@@ -80,6 +80,13 @@
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <div ng-show='transactionSubmitform.$submitted && !(transactionSubmitform.email.$dirty || transactionSubmitform.dbstring.$dirty || transactionSubmitform.transaction.$dirty)'
+                            class="form-group">
+                            <div class="alert alert-success" role="alert">Transaction Submitted Successfully</div>
+                        </div>
+                    </div>
+
                     <span style="color: red" ng-show="errorMsg">{{errorMsg}}</span>
                     <!--<div ng-show="transaction.validationStatus==='completed'">
                         <div class="panel panel-default" style="margin-left:80px">
