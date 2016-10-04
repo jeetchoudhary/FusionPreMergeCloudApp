@@ -1,7 +1,7 @@
 angular.module('MainCtrl', []).controller('MainController', function ($rootScope, $scope, $http) {
 
     $scope.transaction = {
-        name: 'jjikumar_bug-24337135',
+        name: '',
         email: 'jitender.k.kumar@oracle.com',
         updateBug: 'N',
         runJunits: 'N',
