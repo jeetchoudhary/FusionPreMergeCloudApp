@@ -39,14 +39,41 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
             }
         };
         $scope.errorMsg = "";
+       
         $http.post('/api/submit', trans).success(function (response) {
-            $scope.transactionSubmitform.$setPristine();
             console.log('Client : Recieved Data from server', response);
         }).error(function (err) {
             console.log('Client : Recieved Data from server', err);
             $scope.errorMsg = err.error;
         });
     };
+
+
+       $scope.getDBInformation = function () {
+        $http.get('/api/info/dbs', $scope.transaction).success(function (response) {
+            $scope.dbs = response;
+            console.log('Client : Recieved Data from server', response);
+        }).error(function (err) {
+            console.log('Client : Recieved Data from server', err);
+            $scope.transaction.errorMsg.transactionError = err.error;
+        });
+    };
+
+    $scope.changeDB = function (val) {
+        $scope.transaction.dbString = val.connectionString;
+         $scope.transactionSubmitform.dbstring.$setDirty();
+    };
+
+    $scope.getDBInformation();
+
+    $('#transactionname').click(function () {
+        var value=$('#transactionname').val();
+        if(value){
+            $scope.transactionSubmitform.transaction.$setDirty();
+        }else{
+            $scope.transactionSubmitform.$setPristine();
+        }
+    });
 
 
     // $scope.submitTransaction = function () {
@@ -101,22 +128,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
     //     	}
     // };
 
-    $scope.getDBInformation = function () {
-        $http.get('/api/info/dbs', $scope.transaction).success(function (response) {
-            $scope.dbs = response;
-            console.log('Client : Recieved Data from server', response);
-        }).error(function (err) {
-            console.log('Client : Recieved Data from server', err);
-            $scope.transaction.errorMsg.transactionError = err.error;
-        });
-    };
-
-    $scope.changeDB = function (val) {
-        $scope.transaction.dbString = val.connectionString;
-        // $scope.transactionSubmitform.dbstring.$setDirty();
-    };
-
-    $scope.getDBInformation();
+ 
 
 
     /*

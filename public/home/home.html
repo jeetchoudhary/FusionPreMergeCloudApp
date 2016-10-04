@@ -5,12 +5,12 @@
                 <h4>Transaction Details</h4>
             </div>
             <div class="panel-body " style="padding-top: 30px">
-                <form ng-submit="submitTransaction()" id="transactionSubmitformid" name="transactionSubmitform" class="form-horizontal "
+                <form ng-submit="submitTransaction()" id="transactionSubmitform" name="transactionSubmitform" class="form-horizontal "
                     role="form">
                     <div class="form-group">
                         <label for="transaction-name" class="col-sm-2 col-md-2 control-label">Transaction</label>
                         <div class="col-sm-10 col-md-10 ">
-                            <input type="text" id="transaction-name" class="form-control" name="transaction" ng-model="transaction.name" required placeholder="Enter Transaction Name"
+                            <input type="text" id="transactionname" class="form-control" name="transaction" ng-model="transaction.name" required placeholder="Enter Transaction Name"
                                 required style="cursor: auto">
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div>
-                        <div ng-show='transactionSubmitform.$submitted && !(transactionSubmitform.email.$dirty || transactionSubmitform.dbstring.$dirty || transactionSubmitform.transaction.$dirty)'
+                        <div ng-show='transactionSubmitform.$submitted && (transactionSubmitform.email.$dirty && transactionSubmitform.dbstring.$dirty && transactionSubmitform.transaction.$dirty)'
                             class="form-group">
                             <div class="alert alert-success" role="alert">Transaction Submitted Successfully</div>
                         </div>
