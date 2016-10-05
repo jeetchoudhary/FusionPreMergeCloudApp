@@ -8,14 +8,16 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect(fuseConfig.dburl);
 var db = mongoose.connection;
+var mailSubject = '"FusionPrcCloud-premerge Validation Complete"';
 
 db.once('open', function () {
 	console.log('Server : Child process is connected to the database ');
 });
 
 var updateTransactionStatus = function (transaction, status, logFile) {
-	var query = { "name": transaction.name };
+	var query = '';
 	if (status === "Running") {
+		query = { "name": transaction.name ,"currentStatus": "Queued" };
         TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now(), "logFileName": logFile }, { upsert: false }, function (err, doc) {
 			if (err)
 				console.error('Unable to update the row for the transaction ' + transaction.name, err);
@@ -23,6 +25,7 @@ var updateTransactionStatus = function (transaction, status, logFile) {
 				console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
 		});
     } else if (status === "Archived") {
+		query = { "name": transaction.name,"currentStatus": "Running" };
 		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile }, { upsert: false }, function (err, doc) {
 			if (err)
 				console.error('Unable to update the row for the transaction ' + transaction.name, err);
@@ -32,9 +35,10 @@ var updateTransactionStatus = function (transaction, status, logFile) {
     }
 };
 
-var updateTransactionErrorStatus = function (transaction) {
-	var query = { "name": transaction.name };
-	TransData.findOneAndUpdate(query, { "currentStatus": "Archived", "starttime": Date.now(), "endtime": Date.now(), "premergeOutput": transaction.error }, { upsert: false }, function (err, doc) {
+var updateTransactionErrorStatus = function (transaction,logFile) {
+	logFile = fuseConfig.transactionArchivedLogLocation + logFile;
+	var query = { "name": transaction.name , "currentStatus": "Queued" };
+	TransData.findOneAndUpdate(query, { "currentStatus": "Archived", "starttime": Date.now(), "endtime": Date.now(), "premergeOutput": transaction.description.error , "logFileName": logFile }, { upsert: false }, function (err, doc) {
 		if (err)
 			console.error('Unable to update the row for the transaction ' + transaction.name, err);
 		else
@@ -42,20 +46,54 @@ var updateTransactionErrorStatus = function (transaction) {
 	});
 };
 
+var updateErroredTransation = function(trans,logStream,logFile){
+			var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Error :"+trans.description.error;
+			var errorMailCommand = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' '+trans.email;
+			logStream.write("Problem Occured while running Validation script on transaction : "+trans.name+" Error :"+trans.description.error);
+			logStream.end();
+			var source = fs.createReadStream(fuseConfig.transactionActiveLogLocation + logFile);
+			var dest = fs.createWriteStream(fuseConfig.transactionArchivedLogLocation + logFile);
+			source.pipe(dest);
+			source.on('end', function () {
+				console.log('transaction logs moved to Archived');
+				fs.unlink(fuseConfig.transactionActiveLogLocation + logFile);
+				dest.end();
+			});
+			source.on('error', function (err) {
+				console.error('failed to move transaction logs to Archived');
+			});
+			updateTransactionErrorStatus(trans,logFile);
+			new SSH({
+				host: fuseConfig.historyServerUrl,
+				user: fuseConfig.adeServerUser,
+				pass: fuseConfig.adeServerPass
+			}).exec(errorMailCommand, {
+				out: function (stdout) {
+					console.log(stdout);
+					return false;
+			},
+			err: function (stderr) {
+				console.log(stderr);
+				return false;
+			}
+		}).start();
+}
+
 var processTransaction = function (transData) {
 	var trans = JSON.parse(transData);
-	if (trans.description.error) {
-		updateTransactionErrorStatus(trans);
-		return;
-	}
 	var date = new Date();
+	var logFile = trans.name + '_' + date.getTime();
+    var logStream = fs.createWriteStream(fuseConfig.transactionActiveLogLocation + logFile, { 'flags': 'a' });
+	if (trans.description.error) {
+			updateErroredTransation(trans,logStream,logFile)
+			return;
+	}
 	var transName = ("jjikumar" + trans.name.substring(trans.name.indexOf('_')))+'_' + date.getTime();
 	console.log('transaction data recived in the child process ', trans);
     var series = trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
-	var logFile = trans.name + '_' + date.getTime();
-    var logStream = fs.createWriteStream(fuseConfig.transactionActiveLogLocation + logFile, { 'flags': 'a' });
     var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
+	var transactionLogFile = '/ade/'+viewName+'/fusionapps/premerge/'+transName+'.txt';
     updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile);
     var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
@@ -66,6 +104,13 @@ var processTransaction = function (transData) {
     var endDelimeter = ' \"';
 	var destroyTransCommand = useViewCommand + ' \" ade destroytrans -force ' + transName + endDelimeter;
     var exeCommand = finScriptParams + endDelimeter;
+	var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' '+trans.email ;
+
+	var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Pleas view the logs and validate your result ";
+	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' '+trans.email;
+
+	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
+	console.log('send mail command',sendmailCommand);
     console.log('command to be executed', exeCommand);
 	new SSH({
 		host: fuseConfig.historyServerUrl,
@@ -89,9 +134,16 @@ var processTransaction = function (transData) {
 			console.log(stderr);
 			return false;
 		}
+	}).exec(sendmailCommand, {
+		out: function (stdout) {
+			console.log(stdout);
+		},
+		err: function (stderr) {
+			console.log(stderr);
+			return false;
+		}
 	}).exec(destroyTransCommand, {
 		out: function (stdout) {
-			logStream.write(stdout);
 			console.log(stdout);
 		},
 		err: function (stderr) {
@@ -100,7 +152,6 @@ var processTransaction = function (transData) {
 		}
 	}).exec('yes n | ade destroyview -force ' + viewName, {
 		out: function (stdout) {
-			logStream.write(stdout);
 			console.log(stdout);
 		},
 		err: function (stderr) {

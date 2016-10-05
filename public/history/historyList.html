@@ -10,7 +10,14 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <td>
+                <td ng-show="!(currentTab=='queued')" >
+                    <a style="cursor: pointer" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                        Transaction Name
+                        <span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                        <span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+                    </a>
+                </td>
+                <td ng-show="currentTab=='queued'">
                     <a style="cursor: pointer" ng-click="sortType = 'name'; sortReverse = !sortReverse">
                         Transaction Name
                         <span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
@@ -33,13 +40,13 @@
         </thead>
         <tbody>
             <tr ng-repeat="transaction in transactionList  | orderBy:sortType:sortReverse | filter:search">
-                <td ><a href="/history/progress" ng-click="updateHistTrans(transaction)">{{ transaction.name }}</a></td>
+                <td ng-show="!(currentTab=='queued')"><a href="/history/progress" ng-click="updateHistTrans(transaction)">{{ transaction.name }}</a></td>
+                <td ng-show="currentTab=='queued'"><a>{{ transaction.name }}</a></td>
                 <td>{{ transaction.submittedBy }}</td>
                 <td ng-hide="currentTab=='archived'">{{ transaction.submittedtime | date: 'medium' }}</td>
                 <td ng-hide="currentTab=='queued'">{{ transaction.starttime | date: 'medium' }}</td>
                 <td ng-show="currentTab=='archived'">{{ transaction.endtime | date: 'medium' }}</td>
                 <td ng-show="currentTab=='archived'">{{ transaction.premergeOutput }}</td>
-                
             </tr>
         </tbody>
     </table>

@@ -51,8 +51,8 @@ angular.module('HistCtrl', [])
         $scope.getProgress = function () {
             $scope.displayTransactionProgress($rootScope.histTrans);
         };
-        //setTimeout(function () { $scope.transactionOutput = $scope.getProgress() }, 1000);
-         $scope.transactionOutput = $scope.getProgress() ;
+        setTimeout(function () { $scope.transactionOutput = $scope.getProgress() }, 5000);
+         $scope.transactionOutput = $scope.getProgress();
     }).directive('historyList', function () {
         return {
             restrict: 'E',
