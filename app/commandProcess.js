@@ -5,6 +5,8 @@ var fuseConfig = require('../config/configuration');
 var fs = require('fs');
 var TransData = require('../app/models/TransData');
 var mongoose = require('mongoose');
+var scpClient = require('scp2');
+var CC = 'jitender.k.kumar@oracle.com';
 mongoose.Promise = global.Promise;
 mongoose.connect(fuseConfig.dburl);
 var db = mongoose.connection;
@@ -94,6 +96,8 @@ var processTransaction = function (transData) {
 	var bugNo = trans.description.bugNum.value;
     var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
 	var transactionLogFile = '/ade/'+viewName+'/fusionapps/premerge/'+transName+'.txt';
+	var transactionIncrBuildFile = '/ade/'+viewName+'/fusionapps/premerge/'+transName+'_incrbld.out';
+	var transactionIncrBuildLog = '/ade/'+viewName+'/fusionapps/premerge/'+transName+'_incrbld.log';
     updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile);
     var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
@@ -104,10 +108,9 @@ var processTransaction = function (transData) {
     var endDelimeter = ' \"';
 	var destroyTransCommand = useViewCommand + ' \" ade destroytrans -force ' + transName + endDelimeter;
     var exeCommand = finScriptParams + endDelimeter;
-	var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' '+trans.email ;
-
+	var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -c '+CC+' '+trans.email ;
 	var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Pleas view the logs and validate your result ";
-	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' '+trans.email;
+	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -c '+CC+' '+trans.email;
 
 	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
 	console.log('send mail command',sendmailCommand);

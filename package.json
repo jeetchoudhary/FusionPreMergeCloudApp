@@ -9,9 +9,10 @@
     "express": "^4.14.0",
     "method-override": "~2.0.2",
     "mongoose": "^4.5.7",
-    "simple-ssh": "^0.9.0",
-    "scripts":{
-      "start" : "node server.js"
-    }
+    "scp2": "^0.5.0",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "simple-ssh": "^0.9.0"
   }
 }
