@@ -95,8 +95,8 @@ var processTransaction = function (transData) {
 	console.log('transaction data recived in the child process ', trans);
     var series = trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
+	var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
 	var premergeOutLoc = '/ade/'+viewName+'/fusionapps/premerge/';
-    var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
 	var transactionLogFile = premergeOutLoc+transName+'.txt';
 	var transactionIncrBuildFile = premergeOutLoc+transName+'_incrbld.out';
 	var transactionIncrBuildLog = premergeOutLoc+transName+'_incrbld.log';
@@ -112,7 +112,7 @@ var processTransaction = function (transData) {
     var exeCommand = finScriptParams + endDelimeter;
 	var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -b '+CC+' '+trans.email ;
 	var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Pleas view the logs and validate your result ";
-	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -c '+CC+' '+trans.email;
+	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -b '+CC+' '+trans.email;
 	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
 	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.adeServerUrl+':'+premergeOutLoc+' '+__dirname+'\\History\\Archived\\'+trans.name+'\\';;
 	console.log('command to copy data : ',preMergeResCopyCommand);
