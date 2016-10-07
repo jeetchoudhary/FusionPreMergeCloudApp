@@ -5,7 +5,6 @@ var fuseConfig = require('../config/configuration');
 var fs = require('fs');
 var TransData = require('../app/models/TransData');
 var mongoose = require('mongoose');
-var scpClient = require('scp2');
 var CC = 'jitender.k.kumar@oracle.com';
 const exec = require('child_process').exec;
 mongoose.Promise = global.Promise;
