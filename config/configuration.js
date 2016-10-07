@@ -9,5 +9,6 @@ module.exports = {
 	fetchTrans : 'ade fetchtrans ',
 	describeTrans : 'ade describetrans',
 	transactionActiveLogLocation:'.\\History\\Current\\',
-	transactionArchivedLogLocation:'.\\History\\Archived\\'
+	transactionArchivedLogLocation:'.\\History\\Archived\\',
+	sshPublicKeyLocation : 'C:\\.ssh\\id_rsa'
 };

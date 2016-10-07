@@ -7,6 +7,7 @@ var TransData = require('../app/models/TransData');
 var mongoose = require('mongoose');
 var scpClient = require('scp2');
 var CC = 'jitender.k.kumar@oracle.com';
+const exec = require('child_process').exec;
 mongoose.Promise = global.Promise;
 mongoose.connect(fuseConfig.dburl);
 var db = mongoose.connection;
@@ -94,10 +95,11 @@ var processTransaction = function (transData) {
 	console.log('transaction data recived in the child process ', trans);
     var series = trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
+	var premergeOutLoc = '/ade/'+viewName+'/fusionapps/premerge/';
     var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
-	var transactionLogFile = '/ade/'+viewName+'/fusionapps/premerge/'+transName+'.txt';
-	var transactionIncrBuildFile = '/ade/'+viewName+'/fusionapps/premerge/'+transName+'_incrbld.out';
-	var transactionIncrBuildLog = '/ade/'+viewName+'/fusionapps/premerge/'+transName+'_incrbld.log';
+	var transactionLogFile = premergeOutLoc+transName+'.txt';
+	var transactionIncrBuildFile = premergeOutLoc+transName+'_incrbld.out';
+	var transactionIncrBuildLog = premergeOutLoc+transName+'_incrbld.log';
     updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile);
     var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
@@ -108,11 +110,12 @@ var processTransaction = function (transData) {
     var endDelimeter = ' \"';
 	var destroyTransCommand = useViewCommand + ' \" ade destroytrans -force ' + transName + endDelimeter;
     var exeCommand = finScriptParams + endDelimeter;
-	var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -c '+CC+' '+trans.email ;
+	var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -b '+CC+' '+trans.email ;
 	var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Pleas view the logs and validate your result ";
 	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -c '+CC+' '+trans.email;
-
 	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
+	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.adeServerUrl+':'+premergeOutLoc+' '+__dirname+'\\History\\Archived\\'+trans.name+'\\';;
+	console.log('command to copy data : ',preMergeResCopyCommand);
 	console.log('send mail command',sendmailCommand);
     console.log('command to be executed', exeCommand);
 	new SSH({
@@ -139,6 +142,14 @@ var processTransaction = function (transData) {
 		}
 	}).exec(sendmailCommand, {
 		out: function (stdout) {
+		var child = exec(preMergeResCopyCommand,
+			(error, stdout, stderr) => {
+				console.log(`stdout: ${stdout}`);
+				console.log(`stderr: ${stderr}`);
+				if (error !== null) {
+					console.log(`exec error: ${error}`);
+				}
+		});
 			console.log(stdout);
 		},
 		err: function (stderr) {

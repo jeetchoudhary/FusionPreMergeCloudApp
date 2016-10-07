@@ -1,7 +1,7 @@
 "use strict";
 var amqp = require('amqplib/callback_api');
 var fuseConfig = require('../config/configuration');
-const child_process = require('child_process');
+var child_process = require('child_process');
 var TransData = require('../app/models/TransData');
 var q = require('q');
 var SSH = require('simple-ssh');

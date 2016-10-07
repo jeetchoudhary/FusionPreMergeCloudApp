@@ -1,7 +1,7 @@
 <div class="jumbotron text-center ">
     <div class="row" style="margin-left: -58px; margin-right: -58px; margin-top: -58px; margin-bottom: -68px">
         <div class="panel panel-primary">
-            <div class="panel-heading" style="background-color: black">
+            <div class="panel-heading" style="background-color: #337ab7">
                 <h4>Transaction Details</h4>
             </div>
             <div class="panel-body " style="padding-top: 30px">
@@ -21,7 +21,7 @@
                                 <div class="input-group" id="dbstring1">
                                     <input type="text" class="form-control" id="dbstring" name="dbstring" ng-model="transaction.dbString" required placeholder="Something like.. username/password@slc09lwn.us.oracle.com:1522/jjikumar">
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Select Seeded DB <span class="caret"></span>
+                                        <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Select Seeded DB <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <li><a href="#" ng-click="changeDB(db)" ng-repeat="db in dbs" ng->{{db.alias}}</a></li>
