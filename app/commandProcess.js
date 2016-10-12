@@ -113,7 +113,7 @@ var processTransaction = function (transData) {
 	var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Pleas view the logs and validate your result ";
 	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -b '+CC+' '+trans.email;
 	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
-	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.adeServerUrl+':'+premergeOutLoc+' '+__dirname+'\\History\\Archived\\'+trans.name+'\\';;
+	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.adeServerUrl+':'+premergeOutLoc+' '+__dirname+'..\\History\\Archived\\'+transName+'\\';;
 	console.log('command to copy data : ',preMergeResCopyCommand);
 	console.log('send mail command',sendmailCommand);
     console.log('command to be executed', exeCommand);

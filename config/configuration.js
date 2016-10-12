@@ -10,5 +10,5 @@ module.exports = {
 	describeTrans : 'ade describetrans',
 	transactionActiveLogLocation:'.\\History\\Current\\',
 	transactionArchivedLogLocation:'.\\History\\Archived\\',
-	sshPublicKeyLocation : 'C:\\.ssh\\id_rsa'
+	sshPublicKeyLocation : 'C:\\Users\\jjikumar\\.ssh\\id_rsa'
 };

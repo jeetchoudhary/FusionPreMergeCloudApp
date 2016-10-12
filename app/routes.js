@@ -139,7 +139,7 @@ module.exports = function (app) {
 	});
 
     app.post('/api/transactions/list', function (req, res) {
-		console.log('above to receive data for transaction in state :', req.body.transState);
+		//console.log('about to receive data for transaction in state :', req.body.transState);
 		TransData.find({ "currentStatus": req.body.transState }, function (err, transData) {
 			if (err) {
 				console.error('error occured while fetching running transactions: ',err);
