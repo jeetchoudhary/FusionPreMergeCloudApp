@@ -95,7 +95,8 @@ var processTransaction = function (transData) {
     var series = trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
 	var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
-	var premergeOutLoc = '/ade/'+viewName+'/fusionapps/premerge/';
+	//var premergeOutLoc = '/ade/'+viewName+'/fusionapps/premerge/';
+	var premergeOutLoc = '/scratch/jjikumar/view_storage/'+viewName+'/fusionapps/premerge/';
 	var transactionLogFile = premergeOutLoc+transName+'.txt';
 	var transactionIncrBuildFile = premergeOutLoc+transName+'_incrbld.out';
 	var transactionIncrBuildLog = premergeOutLoc+transName+'_incrbld.log';
@@ -110,10 +111,10 @@ var processTransaction = function (transData) {
 	var destroyTransCommand = useViewCommand + ' \" ade destroytrans -force ' + transName + endDelimeter;
     var exeCommand = finScriptParams + endDelimeter;
 	var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -b '+CC+' '+trans.email ;
-	var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Pleas view the logs and validate your result ";
+	var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Please view the logs and validate your result ";
 	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -b '+CC+' '+trans.email;
 	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
-	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.adeServerUrl+':'+premergeOutLoc+' '+__dirname+'..\\History\\Archived\\'+transName+'\\';;
+	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.adeServerUrl+':'+premergeOutLoc+' '+__dirname+'\\..\\History\\Archived\\'+transName+'_1\\';;
 	console.log('command to copy data : ',preMergeResCopyCommand);
 	console.log('send mail command',sendmailCommand);
     console.log('command to be executed', exeCommand);

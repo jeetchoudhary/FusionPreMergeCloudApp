@@ -2,7 +2,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
 
     $scope.transaction = {
         name: '',
-        email: 'jitender.k.kumar@oracle.com',
+        email: '',
         updateBug: 'N',
         runJunits: 'N',
         applyFPR: 'N',
