@@ -34,8 +34,10 @@ var parseTransactionData = function (input) {
 				baseLabel = lines[i].substring(lines[i].indexOf(baseLabelKeyword) + baseLabelKeyword.length + 1, lines[i].indexOf('X64') + 3);
 				console.log('baseLabel : ', baseLabel);
 			}
-		} else
+		} else{
 			break;
+		}
+			
 	}
 	var transDescription = {
 		"baseLabel": { "name": "Base Label for Transaction", "value": baseLabel },

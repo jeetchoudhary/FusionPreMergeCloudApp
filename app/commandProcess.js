@@ -6,7 +6,7 @@ var fs = require('fs');
 var TransData = require('../app/models/TransData');
 var mongoose = require('mongoose');
 var CC = 'jitender.k.kumar@oracle.com';
-const exec = require('child_process').exec;
+var exec = require('child_process').exec;
 mongoose.Promise = global.Promise;
 mongoose.connect(fuseConfig.dburl);
 var db = mongoose.connection;
@@ -21,18 +21,22 @@ var updateTransactionStatus = function (transaction, status, logFile) {
 	if (status === "Running") {
 		query = { "name": transaction.name ,"currentStatus": "Queued" };
         TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now(), "logFileName": logFile }, { upsert: false }, function (err, doc) {
-			if (err)
+			if (err){
 				console.error('Unable to update the row for the transaction ' + transaction.name, err);
-			else
+			}else{
 				console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
+			}	
 		});
     } else if (status === "Archived") {
 		query = { "name": transaction.name,"currentStatus": "Running" };
 		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile }, { upsert: false }, function (err, doc) {
-			if (err)
+			if (err){
 				console.error('Unable to update the row for the transaction ' + transaction.name, err);
-			else
+			}
+			else{
 				console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
+			}
+				
 		});
     }
 };
@@ -41,10 +45,11 @@ var updateTransactionErrorStatus = function (transaction,logFile) {
 	logFile = fuseConfig.transactionArchivedLogLocation + logFile;
 	var query = { "name": transaction.name , "currentStatus": "Queued" };
 	TransData.findOneAndUpdate(query, { "currentStatus": "Archived", "starttime": Date.now(), "endtime": Date.now(), "premergeOutput": transaction.description.error , "logFileName": logFile }, { upsert: false }, function (err, doc) {
-		if (err)
+		if (err){
 			console.error('Unable to update the row for the transaction ' + transaction.name, err);
-		else
+		}else{
 			console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
+		}
 	});
 };
 
@@ -79,7 +84,7 @@ var updateErroredTransation = function(trans,logStream,logFile){
 				return false;
 			}
 		}).start();
-}
+};
 
 var processTransaction = function (transData) {
 	var trans = JSON.parse(transData);
@@ -87,7 +92,7 @@ var processTransaction = function (transData) {
 	var logFile = trans.name + '_' + date.getTime();
     var logStream = fs.createWriteStream(fuseConfig.transactionActiveLogLocation + logFile, { 'flags': 'a' });
 	if (trans.description.error) {
-			updateErroredTransation(trans,logStream,logFile)
+			updateErroredTransation(trans,logStream,logFile);
 			return;
 	}
 	var transName = ("jjikumar" + trans.name.substring(trans.name.indexOf('_')))+'_' + date.getTime();
@@ -114,7 +119,7 @@ var processTransaction = function (transData) {
 	var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Please view the logs and validate your result ";
 	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -b '+CC+' '+trans.email;
 	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
-	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.adeServerUrl+':'+premergeOutLoc+' '+__dirname+'\\..\\History\\Archived\\'+transName+'_1\\';;
+	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.adeServerUrl+':'+premergeOutLoc+' '+__dirname+'\\..\\History\\Archived\\'+transName+'_1\\';
 	console.log('command to copy data : ',preMergeResCopyCommand);
 	console.log('send mail command',sendmailCommand);
     console.log('command to be executed', exeCommand);
@@ -142,13 +147,10 @@ var processTransaction = function (transData) {
 		}
 	}).exec(sendmailCommand, {
 		out: function (stdout) {
-		var child = exec(preMergeResCopyCommand,
-			(error, stdout, stderr) => {
-				console.log(`stdout: ${stdout}`);
-				console.log(`stderr: ${stderr}`);
-				if (error !== null) {
-					console.log(`exec error: ${error}`);
-				}
+		var child = exec(preMergeResCopyCommand,function(error, stdout, stderr){
+			if (error) {
+				console.error('Error occured while coping premerge result files : ',error);
+			}
 		});
 			console.log(stdout);
 		},

@@ -13,12 +13,14 @@ angular.module('HistCtrl', [])
            // console.log('getting list for transactions with state :', transState);
             $http.post('/api/transactions/list', { 'transState': transState }).success(function (response) {
                // console.log('Client : Recieved Data from server', response);
-                if (transState === 'Running')
-                    $scope.transactionList.running = response;
-                else if (transState === 'Queued')
-                    $scope.transactionList.queued = response;
-                else
-                    $scope.transactionList.archived = response;
+                if (transState === 'Running'){
+                	$scope.transactionList.running = response;
+                }else if (transState === 'Queued'){
+                	$scope.transactionList.queued = response;
+                }else{
+                	$scope.transactionList.archived = response;
+                }
+                    
             }).error(function (err) {
                 console.log('Client : Recieved Data from server', err);
                 $scope.transaction.errorMsg.transactionError = err.error;
