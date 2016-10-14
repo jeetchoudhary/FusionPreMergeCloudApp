@@ -10,6 +10,7 @@ module.exports = function (app) {
 	var transactionLogLocation = ".\\History\\Current\\";
 	var amqp = require('amqplib/callback_api');
 	var SSH = require('simple-ssh');
+	var adeServerMap = new Object();
 	var ssh = new SSH({
 		host: fuseConfig.historyServerUrl,
 		user: fuseConfig.adeServerUser,
@@ -17,6 +18,29 @@ module.exports = function (app) {
 	});
 
 // Helper Methods ================================================================================================================================================================================================
+
+	var initilizeADEServerMap = function(){
+		var adeServerList = fuseConfig.adeServerUrl.split(';');
+		for (var adeServer of adeServerList) {
+				adeServerMap[adeServer] = 0;
+		}
+	};
+	initilizeADEServerMap();
+
+	var getADEServerName = function(){
+		var serverName = '';
+		var count = 1000;
+		for (var server in adeServerMap) {
+				if (adeServerMap[server] < count ) {
+					count = adeServerMap[server];
+					serverName = server;
+				}
+		}
+		adeServerMap[serverName] = adeServerMap[serverName]+1;
+		return serverName;
+	};
+
+	
 
     var parseTransactionData = function (input) {
 		console.log('parsing transaction description data');
@@ -58,6 +82,7 @@ module.exports = function (app) {
 		};
 		return transDescription;
     };
+
     var getTransactionDetails = function (command) {
 		var op = "";
 		var deferred = q.defer();
@@ -92,7 +117,7 @@ module.exports = function (app) {
 	};
 
 
-	// server routes ================================================================================================================================================================================================
+// server routes ================================================================================================================================================================================================
 
     app.post('/api/submit', function (req, res) {
 		var currentTransactionData = new TransData({
@@ -123,6 +148,7 @@ module.exports = function (app) {
 						console.log('Transaction saved successfully and pre merge will run soon on the transaction: ',req.body.name);
 					}
 				});
+				req.body.adeServerUsed = getADEServerName();
 				messageClient.serve(req.body);
 			}
     	});
@@ -141,7 +167,6 @@ module.exports = function (app) {
 	});
 
     app.post('/api/transactions/list', function (req, res) {
-		//console.log('about to receive data for transaction in state :', req.body.transState);
 		TransData.find({ "currentStatus": req.body.transState }, function (err, transData) {
 			if (err) {
 				console.error('error occured while fetching running transactions: ',err);

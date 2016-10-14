@@ -71,7 +71,7 @@ var updateErroredTransation = function(trans,logStream,logFile){
 			});
 			updateTransactionErrorStatus(trans,logFile);
 			new SSH({
-				host: fuseConfig.historyServerUrl,
+				host: trans.adeServerUsed,
 				user: fuseConfig.adeServerUser,
 				pass: fuseConfig.adeServerPass
 			}).exec(errorMailCommand, {
@@ -124,7 +124,7 @@ var processTransaction = function (transData) {
 	console.log('send mail command',sendmailCommand);
     console.log('command to be executed', exeCommand);
 	new SSH({
-		host: fuseConfig.historyServerUrl,
+		host: trans.adeServerUsed,
 		user: fuseConfig.adeServerUser,
 		pass: fuseConfig.adeServerPass
 	}).exec(createViewCommand, {

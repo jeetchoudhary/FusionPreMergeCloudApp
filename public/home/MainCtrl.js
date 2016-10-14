@@ -1,12 +1,12 @@
 angular.module('MainCtrl', []).controller('MainController', function ($rootScope, $scope, $http) {
 
     $scope.transaction = {
-        name: '',
-        email: '',
+        name: 'jjikumar_bug-24806188',
+        email: 'jitender.k.kumar@oracle.com',
         updateBug: 'N',
         runJunits: 'N',
         applyFPR: 'N',
-        validationStatus: 'notstarted',
+        allowDBOverride:'Y',
         errorMsg: {
             transactionError: '',
             DBError: ''
@@ -27,7 +27,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
             updateBug: 'N',
             runJunits: 'N',
             applyFPR: 'N',
-            validationStatus: 'notstarted',
+            allowDBOverride:'Y',
             errorMsg: {
                 transactionError: '',
                 DBError: ''

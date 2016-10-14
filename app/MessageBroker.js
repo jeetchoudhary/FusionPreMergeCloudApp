@@ -11,7 +11,6 @@
 		    ch.sendToQueue(q, new Buffer(JSON.stringify(transaction)), {persistent: true});
 		    console.log(" Message Posted to queue ", transaction);
 		  });
-		  // setTimeout(function() { conn.close();  }, 500);
 		});
 	};
 	

@@ -10,7 +10,11 @@ var TransDataSchema = mongoose.Schema({
 	updateBug : String,
 	runJunits : String,
 	premergeOutput : String,
-	logFileName : String
+	logFileName : String,
+	adeServerUsed : String,
+	DBServerUsed : String,
+	allowDBOverride : String,
+	remark : String
 });
 
 var Trans = mongoose.model('Trans', TransDataSchema);
