@@ -11,6 +11,7 @@ module.exports = function (app) {
 	var amqp = require('amqplib/callback_api');
 	var SSH = require('simple-ssh');
 	var adeServerMap = new Object();
+	var child_process = require('child_process');
 	var ssh = new SSH({
 		host: fuseConfig.historyServerUrl,
 		user: fuseConfig.adeServerUser,
@@ -40,7 +41,10 @@ module.exports = function (app) {
 		return serverName;
 	};
 
-	
+	 var processSubmitRequest = function(transaction){
+	 	child_process.fork(__dirname + "/ProcessRequest.js", [JSON.stringify(transaction)], {});
+		
+	};
 
     var parseTransactionData = function (input) {
 		console.log('parsing transaction description data');
@@ -149,7 +153,7 @@ module.exports = function (app) {
 					}
 				});
 				req.body.adeServerUsed = getADEServerName();
-				messageClient.serve(req.body);
+				processSubmitRequest(req.body);
 			}
     	});
 	});
