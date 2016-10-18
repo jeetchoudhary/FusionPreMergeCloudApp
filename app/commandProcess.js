@@ -4,6 +4,7 @@ var SSH = require('simple-ssh');
 var fuseConfig = require('../config/configuration');
 var fs = require('fs');
 var TransData = require('../app/models/TransData');
+var Databases = require('../app/models/DBData');
 var mongoose = require('mongoose');
 var CC = 'jitender.k.kumar@oracle.com';
 var exec = require('child_process').exec;
@@ -16,11 +17,23 @@ db.once('open', function () {
 	console.log('Server : Child process is connected to the database ');
 });
 
+var releaseDBLock = function(dbServer){
+	console.log('about to release lock for database  :', dbServer);
+	var query = { "connectionString" : dbServer , "currentStatus" : "USED"};
+    Databases.findOneAndUpdate(query, { "currentStatus": "UNUSED" }, { upsert: false }, function (err, doc) {
+			if (err){
+				console.error('Unable to release lock on db :' + dbServer , err);
+			}else{
+				console.log('Released lock on db  :', dbServer);
+			}	
+	});
+};
+
 var updateTransactionStatus = function (transaction, status, logFile) {
 	var query = '';
 	if (status === "Running") {
 		query = { "name": transaction.name ,"currentStatus": "Queued" };
-        TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now(), "logFileName": logFile }, { upsert: false }, function (err, doc) {
+        TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now(), "logFileName": logFile ,"DBServerUsed" : transaction.DBServerUsed ,"adeServerUsed" : transaction.adeServerUsed}, { upsert: false }, function (err, doc) {
 			if (err){
 				console.error('Unable to update the row for the transaction ' + transaction.name, err);
 			}else{
@@ -36,7 +49,9 @@ var updateTransactionStatus = function (transaction, status, logFile) {
 			else{
 				console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
 			}
-				
+			if(transaction.runJunits==='Y'){
+				releaseDBLock(transaction.DBServerUsed);
+			}
 		});
     }
 };
@@ -145,13 +160,35 @@ var processTransaction = function (transData) {
 			console.log(stderr);
 			return false;
 		}
+	}).exec('echo', {
+		out: function (stdout) {
+			var copyFiles = exec(preMergeResCopyCommand,function(error, stdout, stderr){
+			if (error) {
+					console.error('Error occured while coping premerge result files : ',error);
+				}
+			});
+			logStream.write('Premerge Process completed');
+			console.log('Premerge Process completed');
+			logStream.end();
+			var source = fs.createReadStream(fuseConfig.transactionActiveLogLocation + logFile);
+			var dest = fs.createWriteStream(fuseConfig.transactionArchivedLogLocation + logFile);
+			source.pipe(dest);
+			source.on('end', function () {
+				console.log('transaction logs moved to Archived');
+				fs.unlink(fuseConfig.transactionActiveLogLocation + logFile);
+				dest.end();
+			});
+			source.on('error', function (err) {
+				console.error('failed to move transaction logs to Archived');
+			});
+			updateTransactionStatus(trans, 'Archived', fuseConfig.transactionArchivedLogLocation + logFile);
+		},
+		err: function (stderr) {
+			console.log(stderr);
+			return false;
+		}
 	}).exec(sendmailCommand, {
 		out: function (stdout) {
-		var child = exec(preMergeResCopyCommand,function(error, stdout, stderr){
-			if (error) {
-				console.error('Error occured while coping premerge result files : ',error);
-			}
-		});
 			console.log(stdout);
 		},
 		err: function (stderr) {
@@ -169,29 +206,6 @@ var processTransaction = function (transData) {
 	}).exec('yes n | ade destroyview -force ' + viewName, {
 		out: function (stdout) {
 			console.log(stdout);
-		},
-		err: function (stderr) {
-			console.log(stderr);
-			return false;
-		}
-	}).exec('echo', {
-		out: function (stdout) {
-			logStream.write('Premerge Process completed');
-			console.log('Premerge Process completed');
-			logStream.end();
-			var source = fs.createReadStream(fuseConfig.transactionActiveLogLocation + logFile);
-			var dest = fs.createWriteStream(fuseConfig.transactionArchivedLogLocation + logFile);
-			source.pipe(dest);
-			source.on('end', function () {
-				console.log('transaction logs moved to Archived');
-				fs.unlink(fuseConfig.transactionActiveLogLocation + logFile);
-				dest.end();
-			});
-			source.on('error', function (err) {
-				console.error('failed to move transaction logs to Archived');
-			});
-			updateTransactionStatus(trans, 'Archived', fuseConfig.transactionArchivedLogLocation + logFile);
-			return;
 		},
 		err: function (stderr) {
 			console.log(stderr);

@@ -2,7 +2,14 @@
 var amqp = require('amqplib/callback_api');
 var fuseConfig = require('../config/configuration');
 var processTimeout;
+var mongoose = require('mongoose');
 var Databases = require('../app/models/DBData');
+mongoose.Promise = global.Promise;
+mongoose.connect(fuseConfig.dburl);
+var db = mongoose.connection;
+db.once('open', function () {
+	console.log('Server : Process Request is connected to the database ');
+});
 
 var serveRequest = function (transaction) {
     console.log('Posting request to process premerge for transaction :', transaction.name);
@@ -27,7 +34,7 @@ var checkParticularDBAvaliablityandProcess = function (transaction) {
         else if (dbData.length > 0) {
             var db = dbData[0];
             if (db.currentStatus !== 'USED') {
-                Databases.findOneAndUpdate(query, { "currentStatus": 'USED' }, { upsert: false }, function (err, doc) {
+                Databases.findOneAndUpdate({ 'alias': db.alias }, { "currentStatus": 'USED' }, { upsert: false }, function (err, doc) {
                     if (err) {
                         console.error('Unable to update the row for the DB String  ' + transaction.dbString, err);
                     } else {
@@ -48,9 +55,11 @@ var checkParticularDBAvaliablityandProcess = function (transaction) {
 var checkAnyDBAvaliablityandProcess = function (transaction) {
     var query = { "currentStatus" : "UNUSED"};
     console.log('checkAnyDBAvaliablityandProcess() request received');
-    Databases.find(query).lean().exec(function (err, dbData) {
-        if (err) { console.error('error occured while fetching Currently avaliable Databases : ', err); }
-        else if (dbData.length > 0) {
+    Databases.find(query, function (err, dbData) {
+       console.log('call back from db received : ',dbData);
+		if (err) { console.error('error occured while fetching Currently avaliable Databases : ', err); }
+        else if (dbData.length > 0)
+         {
             var db = dbData[0];
             console.log('updating status for the database : ',db.connectionString);
             Databases.findOneAndUpdate({ 'alias': db.alias }, { "currentStatus": 'USED' }, { upsert: false }, function (err, doc) {
@@ -64,7 +73,7 @@ var checkAnyDBAvaliablityandProcess = function (transaction) {
                 }
             });
         }
-    });
+		});
 };
 
 var processSubmitRequest = function (transaction) {
@@ -79,10 +88,10 @@ var processSubmitRequest = function (transaction) {
     console.log('transaction.allowDBOverride : ',transaction.allowDBOverride );
     if (transaction.runJunits === 'Y') {
         if (transaction.allowDBOverride === 'N'){
-        	processTimeout = setInterval(checkParticularDBAvaliablityandProcess, 1000*60 , transaction);
+        	processTimeout = setInterval(checkParticularDBAvaliablityandProcess, 1000*30 , transaction);
         }         
         else{
-        	processTimeout = setInterval(checkAnyDBAvaliablityandProcess, 1000*60 , transaction);
+        	processTimeout = setInterval(checkAnyDBAvaliablityandProcess, 1000*30 , transaction);
         }     
     }
     else {
