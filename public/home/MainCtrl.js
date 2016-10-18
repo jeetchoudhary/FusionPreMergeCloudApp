@@ -1,8 +1,8 @@
 angular.module('MainCtrl', []).controller('MainController', function ($rootScope, $scope, $http) {
 
     $scope.transaction = {
-        name: 'jjikumar_bug-24806188',
-        email: 'jitender.k.kumar@oracle.com',
+        name: '',
+        email: '',
         updateBug: 'N',
         runJunits: 'N',
         applyFPR: 'N',

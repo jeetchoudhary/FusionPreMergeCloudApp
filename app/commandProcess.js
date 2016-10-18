@@ -63,7 +63,7 @@ var updateTransactionErrorStatus = function (transaction,logFile) {
 		if (err){
 			console.error('Unable to update the row for the transaction ' + transaction.name, err);
 		}else{
-			console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
+			console.log('update row for transaction , no more processing required for the transaction :', transaction.name);
 		}
 	});
 };
@@ -115,7 +115,6 @@ var processTransaction = function (transData) {
     var series = trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
 	var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
-	//var premergeOutLoc = '/ade/'+viewName+'/fusionapps/premerge/';
 	var premergeOutLoc = '/scratch/jjikumar/view_storage/'+viewName+'/fusionapps/premerge/';
 	var transactionLogFile = premergeOutLoc+transName+'.txt';
 	var transactionIncrBuildFile = premergeOutLoc+transName+'_incrbld.out';
@@ -134,7 +133,7 @@ var processTransaction = function (transData) {
 	var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Please view the logs and validate your result ";
 	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -b '+CC+' '+trans.email;
 	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
-	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.adeServerUrl+':'+premergeOutLoc+' '+__dirname+'\\..\\History\\Archived\\'+transName+'_1\\';
+	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+trans.adeServerUsed+':'+premergeOutLoc+' '+__dirname+'\\..\\History\\Archived\\'+transName+'_1\\';
 	console.log('command to copy data : ',preMergeResCopyCommand);
 	console.log('send mail command',sendmailCommand);
     console.log('command to be executed', exeCommand);
