@@ -22,11 +22,11 @@ module.exports = function (app) {
 
 // Helper Methods ================================================================================================================================================================================================
 
-	var parseProjectListandUpdateDB = function(listLocationLocal){
-		console.log('about to parse projectList and update DB');
+	var parseProjectListandUpdateDB = function(series,listLocationLocal){
+		console.log('about to parse projectList and update DB with series : ',series);
 		var projectNames = [];
 				try {
-					var fileData = fs.readFileSync(listLocationLocal+'Procurement.jws');
+					var fileData = fs.readFileSync(listLocationLocal+'Procurement.jws').toString();
 					var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
 					var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
 					var aFileNameParts = childrenList.split(".jpr");
@@ -76,7 +76,7 @@ module.exports = function (app) {
 				}
 			}).exec('echo', {
 				out: function (stdout) {
-					setTimeout(function() { parseProjectListandUpdateDB(listLocationLocal); }, 5000);
+					setTimeout(function() { parseProjectListandUpdateDB(series,listLocationLocal); }, 5000);
 				},
 				err: function (stderr) {
 					console.error('failed to execute command echo :', stderr);
