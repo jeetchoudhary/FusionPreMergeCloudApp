@@ -63,7 +63,9 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
          $scope.transactionSubmitform.dbstring.$setDirty();
     };
 
-    $scope.updateProjectList = function (val) {
+    $scope.updateProjectList = function () {
+        var val = 'FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64';
+        console.log('updating list of procects for series :',val);
         $http.get('/api/updateProjectList', val).success(function (response) {
             console.log('Client : ProjectList Updated Successfully', response);
         }).error(function (err) {
