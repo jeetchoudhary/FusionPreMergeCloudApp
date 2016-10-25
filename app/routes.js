@@ -43,14 +43,8 @@ module.exports = function (app) {
 			if (error) {
 					console.error('Failed to copy projectList file from server : ',error);
 				}
-			});
-			},
-			err: function (stderr) {
-				console.error('failed to execute command echo :', stderr);
-			}
-		}).exec('echo', {
-			out: function (stdout) {
-				var projectNames = [];
+				else{
+					var projectNames = [];
 				try {
 					var fileData = fs.readFileSync(listLocationLocal+'Procurement.jws');
 					var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
@@ -73,20 +67,26 @@ module.exports = function (app) {
 						console.log('ProjectList saved successfully : ',projectNames);
 					}
 				});
-				
+				}
+			});
+			},
+			err: function (stderr) {
+				console.error('failed to execute command echo :', stderr);
+			}
+		}).exec('echo', {
+			out: function (stdout) {
+			},
+			err: function (stderr) {
+				console.error('failed to execute command echo :', stderr);
+			}
+		}).exec('yes n | ade destroyview -force ' + viewName, {
+			out: function (stdout) {
+				ssh.end();
 			},
 			err: function (stderr) {
 				console.error('failed to execute command echo :', stderr);
 			}
 		}).start();
-		// exec('yes n | ade destroyview -force ' + viewName, {
-		// 	out: function (stdout) {
-		// 		ssh.end();
-		// 	},
-		// 	err: function (stderr) {
-		// 		console.error('failed to execute command echo :', stderr);
-		// 	}
-		// }).start();
 	};
 
 	var initilizeADEServerMap = function(){
