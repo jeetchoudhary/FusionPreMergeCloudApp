@@ -67,6 +67,19 @@
                                     <label class="btn btn-success" ng-model="transaction.runJunits" uib-btn-radio="'Y'">Yes</label>
                                     <label class="btn btn-success" ng-model="transaction.runJunits" uib-btn-radio="'N'">No</label>
                                 </div>
+                                <span >
+                                    <select ng-hide="transaction.runJunits=='N'" id="projectList" multiple="multiple">
+                                        <option  ng-repeat="project in projectList" value="{{project}}">{{operator.displayName}}</option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2" selected="selected">Option 2</option>
+                                        <option value="3" selected="selected">Option 3</option>
+                                        <option value="4">Option 4</option>
+                                        <option value="5">Option 5</option>
+                                        <option value="6">Option 6</option>
+                                    </select>
+                                </span>
+                                
+                              
                             </div>
                         </div>
                     </div>
@@ -84,6 +97,7 @@
                             <div class="alert alert-success" role="alert">Transaction Submitted Successfully</div>
                         </div>
                     </div>
+                
 
                     <span style="color: red" ng-show="errorMsg">{{errorMsg}}</span>
                     <!--<div ng-show="transaction.validationStatus==='completed'">

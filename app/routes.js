@@ -20,104 +20,102 @@ module.exports = function (app) {
 		pass: fuseConfig.adeServerPass
 	});
 
-// Helper Methods ================================================================================================================================================================================================
+	// Helper Methods ================================================================================================================================================================================================
 
-	var parseProjectListandUpdateDB = function(series,listLocationLocal){
-		console.log('about to parse projectList and update DB with series : ',series);
+	var parseProjectListandUpdateDB = function (series, listLocationLocal, viewName) {
+		console.log('about to parse projectList and update DB with series : ', series);
 		var projectNames = [];
-				try {
-					var fileData = fs.readFileSync(listLocationLocal+'Procurement.jws').toString();
-					var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
-					var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
-					var aFileNameParts = childrenList.split(".jpr");
-					for (var i in aFileNameParts) {
-						projectNames.push(aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('/') + 1));
-						console.log(aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('/') + 1));
-					}
-				} catch (ex) { console.log('Failed to parse projectNames from fileList',ex) }
+		try {
+			var fileData = fs.readFileSync(listLocationLocal + 'Procurement.jws').toString();
+			var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
+			var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
+			var aFileNameParts = childrenList.split(".jpr");
+			for (var i in aFileNameParts) {
+				projectNames.push(aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('/') + 1));
+				console.log(aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('/') + 1));
+			}
+		} catch (ex) { console.log('Failed to parse projectNames from fileList', ex) }
 
-				var projectListData = new ProjectList({
-					name: series,
-					list: projectNames,
-				});
-				projectListData.save(function (err) {
-					if (err) {
-						console.error('failed to save ProjectList data to the database : ', err);
-					} else {
-						console.log('ProjectList saved successfully : ',projectNames);
+		var projectListData = new ProjectList({
+			name: series,
+			list: projectNames,
+		});
+		projectListData.save(function (err) {
+			if (err) {
+				console.error('failed to save ProjectList data to the database : ', err);
+			} else {
+				console.log('ProjectList saved successfully : ', projectNames);
+				ssh.exec('yes n | ade destroyview -force ' + viewName, {
+					out: function (stdout) {
+						ssh.end();
+					},
+					err: function (stderr) {
+						console.error('failed to destroyview:', stderr);
 					}
-				});
+				}).start();
+			}
+		});
 	};
-	var updateProjectNameList = function(series){
+	var updateProjectNameList = function (series) {
 		var viewName = 'cloudupdateProjects';
 		var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
-		var listLocationOnServer = '/scratch/'+fuseConfig.adeServerUser+'_'+viewName+'/fusionapps/prc/components/procurement/Procurement.jws';
-		var listLocationLocal = __dirname+'\\ProjectList\\';
-		var projectListCopyCommand = 'scp '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.historyServerUrl+':'+listLocationOnServer+' '+listLocationLocal;
-		console.log('command to copy file : ',projectListCopyCommand);
+		var listLocationOnServer = '/scratch/' + fuseConfig.adeServerUser + '_' + viewName + '/fusionapps/prc/components/procurement/Procurement.jws';
+		var listLocationLocal = __dirname + '\\ProjectList\\';
+		var projectListCopyCommand = 'scp ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + fuseConfig.historyServerUrl + ':' + listLocationOnServer + ' ' + listLocationLocal;
+		console.log('command to copy file : ', projectListCopyCommand);
 		ssh.exec(createViewCommand, {
-				out: function (stdout) {
-					console.log(stdout);
-				},
-				err: function (stderr) {
-					console.error('failed to execute command desc :', stderr);
-					return;
-				}
+			out: function (stdout) {
+				console.log(stdout);
+			},
+			err: function (stderr) {
+				console.error('failed to execute command desc :', stderr);
+				return;
+			}
 		}).exec('echo', {
-				out: function (stdout) {
-				var copyFiles = exec(projectListCopyCommand,function(error, stdout, stderr){
-				if (error) {
-						console.error('Failed to copy projectList file from server : ',error);
+			out: function (stdout) {
+				var copyFiles = exec(projectListCopyCommand, function (error, stdout, stderr) {
+					if (error) {
+						console.error('Failed to copy projectList file from server : ', error);
 					}
 				});
-				},
-				err: function (stderr) {
-					console.error('failed to execute command echo :', stderr);
-				}
-			}).exec('echo', {
-				out: function (stdout) {
-					setTimeout(function() { parseProjectListandUpdateDB(series,listLocationLocal); }, 5000);
-				},
-				err: function (stderr) {
-					console.error('failed to execute command echo :', stderr);
-				}
-			}).start();
-			// exec('yes n | ade destroyview -force ' + viewName, {
-			// 	out: function (stdout) {
-			// 		ssh.end();
-			// 	},
-			// 	err: function (stderr) {
-			// 		console.error('failed to execute command echo :', stderr);
-			// 	}
-			// }).start();
+			},
+			err: function (stderr) {
+				console.error('failed to execute command echo :', stderr);
+			}
+		}).exec('echo', {
+			out: function (stdout) {
+				setTimeout(function () { parseProjectListandUpdateDB(series, listLocationLocal, viewName); }, 5000);
+			},
+			err: function (stderr) {
+				console.error('failed to execute command echo :', stderr);
+			}
+		}).start();
 	};
 
-	var initilizeADEServerMap = function(){
-		var series = 'FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64';
-		updateProjectNameList(series);
+	var initilizeADEServerMap = function () {
 		var adeServerList = fuseConfig.adeServerUrl.split(';');
 		for (var adeServer of adeServerList) {
-				adeServerMap[adeServer] = 0;
+			adeServerMap[adeServer] = 0;
 		}
 	};
 	initilizeADEServerMap();
 
-	var getADEServerName = function(){
+	var getADEServerName = function () {
 		var serverName = '';
 		var count = 1000;
 		for (var server in adeServerMap) {
-				if (adeServerMap[server] < count ) {
-					count = adeServerMap[server];
-					serverName = server;
-				}
+			if (adeServerMap[server] < count) {
+				count = adeServerMap[server];
+				serverName = server;
+			}
 		}
-		adeServerMap[serverName] = adeServerMap[serverName]+1;
+		adeServerMap[serverName] = adeServerMap[serverName] + 1;
 		return serverName;
 	};
 
-	 var processSubmitRequest = function(transaction){
-	 	child_process.fork(__dirname + "/ProcessRequest.js", [JSON.stringify(transaction)], {});
-		
+	var processSubmitRequest = function (transaction) {
+		child_process.fork(__dirname + "/ProcessRequest.js", [JSON.stringify(transaction)], {});
+
 	};
 
     var parseTransactionData = function (input) {
@@ -148,10 +146,10 @@ module.exports = function (app) {
 					baseLabel = lines[i].substring(lines[i].indexOf(baseLabelKeyword) + baseLabelKeyword.length + 1, lines[i].indexOf('X64') + 3);
 					console.log('baseLabel : ', baseLabel);
 				}
-			} else{
+			} else {
 				break;
 			}
-				
+
 		}
 		var transDescription = {
 			"baseLabel": { "name": "Base Label for Transaction", "value": baseLabel },
@@ -190,12 +188,17 @@ module.exports = function (app) {
 		var newPath = transactionLogLocation + transactionName + '_1';
 		var path = newPath.replace(/\\/g, "/");
 		fs.open(newPath, 'r', function (error, fd) {
-			if (error) {throw new Error("ERROR - failed to open file : " + newPath);}
+			if (error) { throw new Error("ERROR - failed to open file : " + newPath); }
 		});
 	};
 
 
-// server routes ================================================================================================================================================================================================
+	// server routes ================================================================================================================================================================================================
+
+	 app.get('/api/updateProjectList', function (req, res) {
+		var seriesName = req.body.name;
+		updateProjectNameList(seriesName);
+	});
 
     app.post('/api/submit', function (req, res) {
 		var currentTransactionData = new TransData({
@@ -212,10 +215,10 @@ module.exports = function (app) {
 
 		var queryResult = TransData.find({ $or: [{ name: req.body.name, currentStatus: 'Running' }, { name: req.body.name, currentStatus: 'Queued' }] }, function (err, transData) {
 			if (err) {
-				console.error('error occured while fetching running transactions :',err);
+				console.error('error occured while fetching running transactions :', err);
 			}
 			else if (transData.length > 0) {
-				console.log('Another Request for the Transaction is Already in process :',req.body.name);
+				console.log('Another Request for the Transaction is Already in process :', req.body.name);
 				res.status(450).send({ error: "Another Request for the Transaction is Already in process , multiple request for the same transaction can not be submitted" });
 			}
 			else if (transData.length === 0) {
@@ -223,13 +226,13 @@ module.exports = function (app) {
 					if (err) {
 						console.error('failed to save transaction data to the database : ', err);
 					} else {
-						console.log('Transaction saved successfully and pre merge will run soon on the transaction: ',req.body.name);
+						console.log('Transaction saved successfully and pre merge will run soon on the transaction: ', req.body.name);
 					}
 				});
 				req.body.adeServerUsed = getADEServerName();
 				processSubmitRequest(req.body);
 			}
-    	});
+		});
 	});
 
     app.get('/api/info/dbs', function (req, res) {
@@ -247,7 +250,7 @@ module.exports = function (app) {
     app.post('/api/transactions/list', function (req, res) {
 		TransData.find({ "currentStatus": req.body.transState }, function (err, transData) {
 			if (err) {
-				console.error('error occured while fetching running transactions: ',err);
+				console.error('error occured while fetching running transactions: ', err);
 				throw err;
 			}
 			else {

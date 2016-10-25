@@ -63,6 +63,14 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
          $scope.transactionSubmitform.dbstring.$setDirty();
     };
 
+    $scope.updateProjectList = function (val) {
+        $http.get('/api/updateProjectList', val).success(function (response) {
+            console.log('Client : ProjectList Updated Successfully', response);
+        }).error(function (err) {
+            console.log('Client : Failed To update projectlist', err);
+        });
+    };
+
     $scope.getDBInformation();
 
     $('#transactionname').click(function () {
@@ -73,4 +81,5 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
             $scope.transactionSubmitform.$setPristine();
         }
     });
+    $('#projectList').multiselect();
 });
