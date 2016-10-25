@@ -22,29 +22,9 @@ module.exports = function (app) {
 
 // Helper Methods ================================================================================================================================================================================================
 
-	var updateProjectNameList = function(series){
-	var viewName = 'cloudupdateProjects';
-    var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
-	var listLocationOnServer = '/scratch/'+fuseConfig.adeServerUser+'_'+viewName+'/fusionapps/prc/components/procurement/Procurement.jws';
-	var listLocationLocal = __dirname+'\\ProjectList\\';
-	var projectListCopyCommand = 'scp '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.historyServerUrl+':'+listLocationOnServer+' '+listLocationLocal;
-	console.log('command to copy file : ',projectListCopyCommand);
-	ssh.exec(createViewCommand, {
-			out: function (stdout) {
-				console.log(stdout);
-			},
-			err: function (stderr) {
-				console.error('failed to execute command desc :', stderr);
-				return;
-			}
-	}).exec('echo', {
-			out: function (stdout) {
-			var copyFiles = exec(projectListCopyCommand,function(error, stdout, stderr){
-			if (error) {
-					console.error('Failed to copy projectList file from server : ',error);
-				}
-				else{
-					var projectNames = [];
+	var parseProjectListandUpdateDB = function(listLocationLocal){
+		console.log('about to parse projectList and update DB');
+		var projectNames = [];
 				try {
 					var fileData = fs.readFileSync(listLocationLocal+'Procurement.jws');
 					var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
@@ -67,26 +47,49 @@ module.exports = function (app) {
 						console.log('ProjectList saved successfully : ',projectNames);
 					}
 				});
+	};
+	var updateProjectNameList = function(series){
+		var viewName = 'cloudupdateProjects';
+		var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
+		var listLocationOnServer = '/scratch/'+fuseConfig.adeServerUser+'_'+viewName+'/fusionapps/prc/components/procurement/Procurement.jws';
+		var listLocationLocal = __dirname+'\\ProjectList\\';
+		var projectListCopyCommand = 'scp '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.historyServerUrl+':'+listLocationOnServer+' '+listLocationLocal;
+		console.log('command to copy file : ',projectListCopyCommand);
+		ssh.exec(createViewCommand, {
+				out: function (stdout) {
+					console.log(stdout);
+				},
+				err: function (stderr) {
+					console.error('failed to execute command desc :', stderr);
+					return;
 				}
-			});
-			},
-			err: function (stderr) {
-				console.error('failed to execute command echo :', stderr);
-			}
 		}).exec('echo', {
-			out: function (stdout) {
-			},
-			err: function (stderr) {
-				console.error('failed to execute command echo :', stderr);
-			}
-		}).exec('yes n | ade destroyview -force ' + viewName, {
-			out: function (stdout) {
-				ssh.end();
-			},
-			err: function (stderr) {
-				console.error('failed to execute command echo :', stderr);
-			}
-		}).start();
+				out: function (stdout) {
+				var copyFiles = exec(projectListCopyCommand,function(error, stdout, stderr){
+				if (error) {
+						console.error('Failed to copy projectList file from server : ',error);
+					}
+				});
+				},
+				err: function (stderr) {
+					console.error('failed to execute command echo :', stderr);
+				}
+			}).exec('echo', {
+				out: function (stdout) {
+					setTimeout(function() { parseProjectListandUpdateDB(listLocationLocal); }, 5000);
+				},
+				err: function (stderr) {
+					console.error('failed to execute command echo :', stderr);
+				}
+			}).start();
+			// exec('yes n | ade destroyview -force ' + viewName, {
+			// 	out: function (stdout) {
+			// 		ssh.end();
+			// 	},
+			// 	err: function (stderr) {
+			// 		console.error('failed to execute command echo :', stderr);
+			// 	}
+			// }).start();
 	};
 
 	var initilizeADEServerMap = function(){
