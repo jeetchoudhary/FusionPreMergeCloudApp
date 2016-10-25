@@ -5,6 +5,7 @@ module.exports = function (app) {
 	var messageClient = require('./MessageBroker');
 	var TransData = require('../app/models/TransData');
 	var Databases = require('../app/models/DBData');
+	var ProjectList = require('../app/models/ProjectListData');
 	var fs = require('fs');
 	var q = require('q');
 	var transactionLogLocation = ".\\History\\Current\\";
@@ -12,6 +13,7 @@ module.exports = function (app) {
 	var SSH = require('simple-ssh');
 	var adeServerMap = new Object();
 	var child_process = require('child_process');
+	var exec = require('child_process').exec;
 	var ssh = new SSH({
 		host: fuseConfig.historyServerUrl,
 		user: fuseConfig.adeServerUser,
@@ -20,7 +22,74 @@ module.exports = function (app) {
 
 // Helper Methods ================================================================================================================================================================================================
 
+	var updateProjectNameList = function(series){
+	var viewName = 'cloudupdateProjects';
+    var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
+	var listLocationOnServer = '/scratch/'+fuseConfig.adeServerUser+'/view_storage/'+fuseConfig.adeServerUser+'_'+viewName+'/fusionapps/prc/components/procurement/Procurement.jws';
+	var listLocationLocal = __dirname+'\\..\\ProjectList\\Procurement.jws';
+	var projectListCopyCommand = 'scp '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.historyServerUrl+':'+listLocationOnServer+' '+listLocationLocal;
+	ssh.exec(createViewCommand, {
+			out: function (stdout) {
+				console.log(stdout);
+			},
+			err: function (stderr) {
+				console.error('failed to execute command desc :', stderr);
+				return;
+			}
+	}).exec('echo', {
+			out: function (stdout) {
+			var copyFiles = exec(projectListCopyCommand,function(error, stdout, stderr){
+			if (error) {
+					console.error('Failed to copy projectList file from server : ',error);
+				}
+			});
+			},
+			err: function (stderr) {
+				console.error('failed to execute command echo :', stderr);
+			}
+		}).exec('echo', {
+			out: function (stdout) {
+				var projectNames = [];
+				try {
+					var fileData = fs.readFileSync(listLocationLocal);
+					var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
+					var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
+					var aFileNameParts = childrenList.split(".jpr");
+					for (var i in aFileNameParts) {
+						projectNames.push(aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('/') + 1));
+						console.log(aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('/') + 1));
+					}
+				} catch (ex) { console.log('Failed to parse projectNames from fileList',ex) }
+
+				var projectListData = new ProjectList({
+					name: series,
+					list: projectNames,
+				});
+				projectListData.save(function (err) {
+					if (err) {
+						console.error('failed to save ProjectList data to the database : ', err);
+					} else {
+						console.log('ProjectList saved successfully : ',projectNames);
+					}
+				});
+				
+			},
+			err: function (stderr) {
+				console.error('failed to execute command echo :', stderr);
+			}
+		}).exec('yes n | ade destroyview -force ' + viewName, {
+			out: function (stdout) {
+				ssh.end();
+			},
+			err: function (stderr) {
+				console.error('failed to execute command echo :', stderr);
+			}
+		}).start();
+	};
+
 	var initilizeADEServerMap = function(){
+		var series = 'FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64';
+		updateProjectNameList(series);
 		var adeServerList = fuseConfig.adeServerUrl.split(';');
 		for (var adeServer of adeServerList) {
 				adeServerMap[adeServer] = 0;
