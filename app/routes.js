@@ -25,8 +25,8 @@ module.exports = function (app) {
 	var updateProjectNameList = function(series){
 	var viewName = 'cloudupdateProjects';
     var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
-	var listLocationOnServer = '/scratch/'+fuseConfig.adeServerUser+'/view_storage/'+fuseConfig.adeServerUser+'_'+viewName+'/fusionapps/prc/components/procurement/Procurement.jws';
-	var listLocationLocal = __dirname+'\\..\\ProjectList\\Procurement.jws';
+	var listLocationOnServer = '/scratch/'+fuseConfig.adeServerUser+'_'+viewName+'/fusionapps/prc/components/procurement/Procurement.jws';
+	var listLocationLocal = __dirname+'\\..\\ProjectList\\';
 	var projectListCopyCommand = 'scp '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.historyServerUrl+':'+listLocationOnServer+' '+listLocationLocal;
 	console.log('command to copy file : ',projectListCopyCommand);
 	ssh.exec(createViewCommand, {
@@ -52,7 +52,7 @@ module.exports = function (app) {
 			out: function (stdout) {
 				var projectNames = [];
 				try {
-					var fileData = fs.readFileSync(listLocationLocal);
+					var fileData = fs.readFileSync(listLocationLocal+'Procurement.jws');
 					var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
 					var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
 					var aFileNameParts = childrenList.split(".jpr");
