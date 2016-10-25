@@ -26,7 +26,7 @@ module.exports = function (app) {
 	var viewName = 'cloudupdateProjects';
     var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var listLocationOnServer = '/scratch/'+fuseConfig.adeServerUser+'_'+viewName+'/fusionapps/prc/components/procurement/Procurement.jws';
-	var listLocationLocal = __dirname+'\\..\\ProjectList\\';
+	var listLocationLocal = __dirname+'\\ProjectList\\';
 	var projectListCopyCommand = 'scp '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.historyServerUrl+':'+listLocationOnServer+' '+listLocationLocal;
 	console.log('command to copy file : ',projectListCopyCommand);
 	ssh.exec(createViewCommand, {
@@ -78,14 +78,15 @@ module.exports = function (app) {
 			err: function (stderr) {
 				console.error('failed to execute command echo :', stderr);
 			}
-		}).exec('yes n | ade destroyview -force ' + viewName, {
-			out: function (stdout) {
-				ssh.end();
-			},
-			err: function (stderr) {
-				console.error('failed to execute command echo :', stderr);
-			}
 		}).start();
+		// exec('yes n | ade destroyview -force ' + viewName, {
+		// 	out: function (stdout) {
+		// 		ssh.end();
+		// 	},
+		// 	err: function (stderr) {
+		// 		console.error('failed to execute command echo :', stderr);
+		// 	}
+		// }).start();
 	};
 
 	var initilizeADEServerMap = function(){
