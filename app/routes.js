@@ -28,6 +28,7 @@ module.exports = function (app) {
 	var listLocationOnServer = '/scratch/'+fuseConfig.adeServerUser+'/view_storage/'+fuseConfig.adeServerUser+'_'+viewName+'/fusionapps/prc/components/procurement/Procurement.jws';
 	var listLocationLocal = __dirname+'\\..\\ProjectList\\Procurement.jws';
 	var projectListCopyCommand = 'scp '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+fuseConfig.historyServerUrl+':'+listLocationOnServer+' '+listLocationLocal;
+	console.log('command to copy file : ',projectListCopyCommand);
 	ssh.exec(createViewCommand, {
 			out: function (stdout) {
 				console.log(stdout);
