@@ -127,6 +127,11 @@ var processTransaction = function (transData) {
     var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
     var checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd &&  ade cleanview  && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh '+'-Dfamily=prc ';
     var finScriptParams = checkInCommand + ' -d ' + trans.dbString + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) + ' -DapplyPackages=' + (trans.applyFPR === 'Y' ? 1 : 0);
+	if(trans.junitSelectedList){
+		for (var i in trans.junitSelectedList) {
+				finScriptParams += ' -j '+ trans.junitSelectedList[i].id;
+			}
+	}
     var endDelimeter = ' \"';
 	var destroyTransCommand = useViewCommand + ' \" ade destroytrans -force ' + transName + endDelimeter;
     var exeCommand = finScriptParams + endDelimeter;
