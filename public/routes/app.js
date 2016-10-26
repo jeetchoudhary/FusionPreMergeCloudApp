@@ -1,1 +1,1 @@
-angular.module('fusionApp', ['ngRoute','ngAnimate', 'ui.bootstrap','appRoutes','MainCtrl','HistCtrl']);
+angular.module('fusionApp', ['ngRoute','ngAnimate', 'angularjs-dropdown-multiselect','ui.bootstrap','appRoutes','MainCtrl','HistCtrl']);

@@ -67,22 +67,12 @@
                                     <label class="btn btn-success" ng-model="transaction.runJunits" uib-btn-radio="'Y'">Yes</label>
                                     <label class="btn btn-success" ng-model="transaction.runJunits" uib-btn-radio="'N'">No</label>
                                 </div>
-                                <span >
-                                    <select ng-hide="transaction.runJunits=='N'" id="projectList" multiple="multiple">
-                                        <option  ng-repeat="project in projectList" value="{{project}}">{{operator.displayName}}</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2" selected="selected">Option 2</option>
-                                        <option value="3" selected="selected">Option 3</option>
-                                        <option value="4">Option 4</option>
-                                        <option value="5">Option 5</option>
-                                        <option value="6">Option 6</option>
-                                    </select>
-                                </span>
                                 <span ng-hide="transaction.runJunits=='N'">
-                                    <button type="button" class="btn btn-default" ng-click="updateProjectList()" >Update Project List</button>
+                                    <span ng-dropdown-multiselect="" options="projectList" selected-model="junitSelectedList" extra-settings="projectListConfigParams" checkboxes="true" translation-texts="projectListDisplayText"></span>
                                 </span>
-                                
-                              
+                                <!--<span ng-hide="transaction.runJunits=='N'">
+                                    <button type="button" class="btn btn-default" ng-click="updateProjectList()" >Update Project List</button>
+                                </span>-->
                             </div>
                         </div>
                     </div>
@@ -100,8 +90,6 @@
                             <div class="alert alert-success" role="alert">Transaction Submitted Successfully</div>
                         </div>
                     </div>
-                
-
                     <span style="color: red" ng-show="errorMsg">{{errorMsg}}</span>
                     <!--<div ng-show="transaction.validationStatus==='completed'">
                         <div class="panel panel-default" style="margin-left:80px">

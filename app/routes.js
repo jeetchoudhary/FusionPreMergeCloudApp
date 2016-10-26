@@ -195,9 +195,21 @@ module.exports = function (app) {
 
 	// server routes ================================================================================================================================================================================================
 
-	 app.get('/api/updateProjectList', function (req, res) {
-		var seriesName = req.body.name;
+	 app.post('/api/updateProjectList', function (req, res) {
+		var seriesName = req.body.val;
 		updateProjectNameList(seriesName);
+	});
+
+	app.get('/api/getProjectList', function (req, res) {
+		ProjectList.find({}, function (err, projectList) {
+			if (err) {
+				console.error('error occured while projectlist from the db : ', err);
+			}
+			else {
+				console.log('projectList retrieved from db ', projectList);
+				res.status(200).json(projectList);
+			}
+		});
 	});
 
     app.post('/api/submit', function (req, res) {
