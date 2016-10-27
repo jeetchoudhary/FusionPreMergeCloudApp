@@ -115,7 +115,6 @@ var processTransaction = function (transData) {
     var series = trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
 	var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
-	//var premergeOutLoc = '/scratch/jjikumar/view_storage/'+viewName+'/fusionapps/premerge/';
 	var premergeOutLoc = '/scratch/'+viewName+'/fusionapps/premerge/';
 	var transactionLogFile = premergeOutLoc+transName+'.txt';
 	var transactionIncrBuildFile = premergeOutLoc+transName+'_incrbld.out';

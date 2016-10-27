@@ -23,86 +23,65 @@ module.exports = function (app) {
 	// Helper Methods ================================================================================================================================================================================================
 
 
-/**This Method is just to dump project list data in to the database , for the production sys need to comment this method and use only method written below it to update project list */
-   var updateListinDbStandalone = function(){
-	   var projectNames = [];
-	   var listLocationLocal = __dirname + '\\ProjectList\\Procurement.jws';
+	/**This Method is just to dump project list data in to the database , for the production sys need to comment this method and use only method written below it to update project list */
+	var updateListinDbStandalone = function () {
+		var projectNames = [];
+		var listLocationLocal = __dirname + '\\ProjectList\\Procurement.jws';
 		try {
 			var fileData = fs.readFileSync(listLocationLocal).toString();
 			var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
 			var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
 			var aFileNameParts = childrenList.split(".jpr");
 			for (var i in aFileNameParts) {
-				if(aFileNameParts[i].lastIndexOf('path=') != -1){
-					var projectPath = 'fusionapps/prc/components/procurement/'+aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
-					if(projectPath.substring(projectPath.length-4)=='Test'){
-							projectNames.push(projectPath);
-					console.log('project updated in the db : ',projectPath);
+				if (aFileNameParts[i].lastIndexOf('path=') != -1) {
+					var projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
+					if (projectPath.substring(projectPath.length - 4) == 'Test') {
+						projectNames.push(projectPath);
+						console.log('project updated in the db : ', projectPath);
 					}
 				}
 			}
-		} catch (ex)
-		 { 
-			 console.log('Failed to parse projectNames from fileList', ex) ;
+		} catch (ex) {
+			console.log('Failed to parse projectNames from fileList', ex);
 		}
-	   var query = { "name": "FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64" };
-	   ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
-			if (err){
-				console.error('failed to save list in db :'  , err);
-			}else{
+		var query = { "name": "FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64" };
+		ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
+			if (err) {
+				console.error('failed to save list in db :', err);
+			} else {
 				console.log('saved list in db  :');
-			}	
-	});
-   };
-   updateListinDbStandalone();
-
-   var parseProjectListandUpdateDB = function (series, listLocationLocal, viewName) {
-	   console.log('about to parse projectList and update DB with series : ', series);
-	   var projectNames = [];
-	   try {
-		   var fileData = fs.readFileSync(listLocationLocal + 'Procurement.jws').toString();
-		   var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
-		   var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
-		   var aFileNameParts = childrenList.split(".jpr");
-		   for (var i in aFileNameParts) {
-			   if (aFileNameParts[i].lastIndexOf('path=') != -1) {
-				   var projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
-				   if (projectPath.substring(projectPath.length - 4) == 'Test') {
-					   projectNames.push(projectPath);
-					   console.log('project updated in the db : ', projectPath);
-				   }
-			   }
-		   }
-	   } catch (ex) { console.log('Failed to parse projectNames from fileList', ex) }
-
-	   var query = { "name": "FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64" };
-	   ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
-		   if (err) {
-			   console.error('failed to save list in db :', err);
-		   } else {
-			   console.log('saved list in db  :');
 			}
 		});
+	};
+	// updateListinDbStandalone();
 
-		// var projectListData = new ProjectList({
-		// 	name: series,
-		// 	list: projectNames,
-		// });
-		// projectListData.save(function (err) {
-		// 	if (err) {
-		// 		console.error('failed to save ProjectList data to the database : ', err);
-		// 	} else {
-		// 		console.log('ProjectList saved successfully : ', projectNames);
-		// 		ssh.exec('yes n | ade destroyview -force ' + viewName, {
-		// 			out: function (stdout) {
-		// 				ssh.end();
-		// 			},
-		// 			err: function (stderr) {
-		// 				console.error('failed to destroyview:', stderr);
-		// 			}
-		// 		}).start();
-		// 	}
-		// });
+	var parseProjectListandUpdateDB = function (series, listLocationLocal, viewName) {
+		console.log('about to parse projectList and update DB with series : ', series);
+		var projectNames = [];
+		try {
+			var fileData = fs.readFileSync(listLocationLocal + 'Procurement.jws').toString();
+			var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
+			var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
+			var aFileNameParts = childrenList.split(".jpr");
+			for (var i in aFileNameParts) {
+				if (aFileNameParts[i].lastIndexOf('path=') != -1) {
+					var projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
+					if (projectPath.substring(projectPath.length - 4) == 'Test') {
+						projectNames.push(projectPath);
+						console.log('project updated in the db : ', projectPath);
+					}
+				}
+			}
+		} catch (ex) { console.log('Failed to parse projectNames from fileList', ex) }
+
+		var query = { "name": "FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64" };
+		ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
+			if (err) {
+				console.error('failed to save list in db :', err);
+			} else {
+				console.log('saved list in db  :');
+			}
+		});
 	};
 	var updateProjectNameList = function (series) {
 		var viewName = 'cloudupdateProjects';
@@ -240,10 +219,9 @@ module.exports = function (app) {
 		});
 	};
 
+// server routes ================================================================================================================================================================================================
 
-	// server routes ================================================================================================================================================================================================
-
-	 app.post('/api/updateProjectList', function (req, res) {
+	app.post('/api/updateProjectList', function (req, res) {
 		var seriesName = req.body.val;
 		updateProjectNameList(seriesName);
 	});
