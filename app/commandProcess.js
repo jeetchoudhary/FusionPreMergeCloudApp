@@ -129,6 +129,7 @@ var processTransaction = function (transData) {
     var finScriptParams = checkInCommand + ' -d ' + trans.dbString + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) + ' -DapplyPackages=' + (trans.applyFPR === 'Y' ? 1 : 0);
 	if(trans.junitSelectedList){
 		for (var i in trans.junitSelectedList) {
+				finScriptParams += ' -j '+ trans.junitSelectedList[i].id+'.jpr';
 			}
 	}
     var endDelimeter = ' \"';
