@@ -94,7 +94,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
     $scope.getProjectList = function(){
           $http.get('/api/getProjectList', $scope.transaction).success(function (response) {
               for (var i in  response[0].list) {
-				$scope.projectList.push({id: response[0].list[i],"label" : response[0].list[i]});
+				$scope.projectList.push({id: response[0].list[i],"label" : response[0].list[i].substring(response[0].list[i].lastIndexOf('/')+1)});
 			}
            // console.log('Client : ProjectList Received from server', $scope.projectList);
         }).error(function (err) {
