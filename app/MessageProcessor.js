@@ -6,6 +6,7 @@ var amqp = require('amqplib/callback_api');
 var fuseConfig = require('../config/configuration');
 var child_process = require('child_process');
 var TransData = require('../app/models/TransData');
+var logger = require('./LoggingConfig');
 var q = require('q');
 var SSH = require('simple-ssh');
 

@@ -17,6 +17,8 @@ module.exports = function (app) {
 	var adeServerMap = new Object();
 	var child_process = require('child_process');
 	var exec = require('child_process').exec;
+	var logger = require('./LoggingConfig');
+	
 	var ssh = new SSH({
 		host: fuseConfig.historyServerUrl,
 		user: fuseConfig.adeServerUser,

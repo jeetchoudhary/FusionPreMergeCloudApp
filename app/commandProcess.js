@@ -9,6 +9,7 @@ var fs = require('fs');
 var TransData = require('../app/models/TransData');
 var Databases = require('../app/models/DBData');
 var mongoose = require('mongoose');
+var logger = require('./LoggingConfig');
 var CC = 'jitender.k.kumar@oracle.com';
 var exec = require('child_process').exec;
 mongoose.Promise = global.Promise;

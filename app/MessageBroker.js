@@ -4,6 +4,7 @@
 	var amqp = require('amqplib/callback_api');	
 	var exports = module.exports = {};
 	var fuseConfig = require('../config/configuration');
+	var logger = require('./LoggingConfig');
 	
 	exports.serve = function(transaction){
 		console.log('MessageClient:',transaction.name);

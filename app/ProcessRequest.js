@@ -8,6 +8,7 @@ var fuseConfig = require('../config/configuration');
 var processTimeout;
 var mongoose = require('mongoose');
 var Databases = require('../app/models/DBData');
+var logger = require('./LoggingConfig');
 mongoose.Promise = global.Promise;
 mongoose.connect(fuseConfig.dburl);
 var db = mongoose.connection;
