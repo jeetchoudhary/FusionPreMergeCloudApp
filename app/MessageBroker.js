@@ -1,3 +1,6 @@
+/**
+ * Created by jitender choudhary on 10/28/2016.
+ */
 	var amqp = require('amqplib/callback_api');	
 	var exports = module.exports = {};
 	var fuseConfig = require('../config/configuration');

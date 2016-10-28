@@ -1,3 +1,7 @@
+/**
+ * Created by jitender choudhary on 10/28/2016.
+ */
+
 angular.module('HistCtrl', [])
     .controller('HistoryController', function ($scope, $http, $sce) {
         $scope.transactionList = {

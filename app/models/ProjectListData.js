@@ -1,3 +1,6 @@
+/**
+ * Created by jitender choudhary on 10/28/2016.
+ */
 var mongoose = require('mongoose');
 var ProjectListSchema = mongoose.Schema({
     name: String,

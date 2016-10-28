@@ -1,3 +1,6 @@
+/**
+ * Created by jitender choudhary on 10/28/2016.
+ */
 angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {

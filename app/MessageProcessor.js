@@ -1,3 +1,6 @@
+/**
+ * Created by jitender choudhary on 10/28/2016.
+ */
 "use strict";
 var amqp = require('amqplib/callback_api');
 var fuseConfig = require('../config/configuration');

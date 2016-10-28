@@ -1,3 +1,7 @@
+/**
+ * Created by jitender choudhary on 10/28/2016.
+ */
+
 angular.module('MainCtrl', []).controller('MainController', function ($rootScope, $scope, $http) {
 
     $scope.transaction = {
@@ -43,6 +47,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         $scope.errorMsg = "";
          if($scope.junitSelectedList.length!==0){
             trans.junitSelectedList = $scope.junitSelectedList;
+            $scope.junitSelectedList = [];
         }
        
         $http.post('/api/submit', trans).success(function (response) {

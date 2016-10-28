@@ -1,3 +1,7 @@
+/**
+ * Created by jitender choudhary on 10/28/2016.
+ */
+
 module.exports = {
 	dburl : 'mongodb://localhost/fusionTransactions',
 	messageQueueURL : 'amqp://localhost',

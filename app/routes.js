@@ -1,3 +1,6 @@
+/**
+ * Created by jitender choudhary on 10/28/2016.
+ */
 "use strict";
 module.exports = function (app) {
 	var fuseConfig = require('../config/configuration');
