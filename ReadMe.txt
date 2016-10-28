@@ -41,6 +41,6 @@
 
 
 ## To Use Monitor RabbingMQ for the application :
-rabbitmqctl.bat stop_app
-rabbitmqctl.bat reset
-rabbitmqctl.bat start_app
+1. 'rabbitmqctl.bat stop_app' : to stop message queuing service.
+2. 'rabbitmqctl.bat reset' : to reset message queuing service , this will also remove all the messages from the queues.
+3. 'rabbitmqctl.bat start_app' : to start message queuing service.
