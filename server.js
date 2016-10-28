@@ -10,6 +10,7 @@ var fs = require('fs');
 // configuration ===========================================
 
 var fuseConfig = require('./config/configuration');
+var logger = require('./app/LoggingConfig');
 var logStream = fs.createWriteStream('log.txt', {'flags': 'a'});
 var port = process.env.PORT || 80;
 mongoose.Promise = global.Promise;
@@ -23,7 +24,7 @@ var ssh = new SSH({
 
 db.on('error', console.error.bind(console, 'Server : Could not connect to database, Please check if your database is up and running '));
 db.once('open', function() {
- console.log('Server : Application connected to database , server is about to start ');
+ logger.info('Server : Application connected to database , server is about to start ');
 });
 
 app.use(bodyParser.json()); 
@@ -36,5 +37,5 @@ app.use(express.static(__dirname + '/public'));
 // routes ==================================================
 require('./app/routes')(app); // pass our application into our routes
 var server = app.listen(port);
-console.log('Fusion Server Started on port ' + port);
+logger.info('Fusion Server Started on port ' + port);
 exports = module.exports = app;
