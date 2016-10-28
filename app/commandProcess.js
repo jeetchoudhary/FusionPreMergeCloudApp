@@ -18,17 +18,17 @@ var db = mongoose.connection;
 var mailSubject = '"FusionPrcCloud-premerge Validation Complete"';
 
 db.once('open', function () {
-	console.log('Server : Child process is connected to the database ');
+	logger.info('Server : Child process is connected to the database ');
 });
 
 var releaseDBLock = function(dbServer){
-	console.log('about to release lock for database  :', dbServer);
+	logger.info('about to release lock for database  :', dbServer);
 	var query = { "connectionString" : dbServer , "currentStatus" : "USED"};
     Databases.findOneAndUpdate(query, { "currentStatus": "UNUSED" }, { upsert: false }, function (err, doc) {
 			if (err){
-				console.error('Unable to release lock on db :' + dbServer , err);
+				logger.error('Unable to release lock on db :' + dbServer , err);
 			}else{
-				console.log('Released lock on db  :', dbServer);
+				logger.info('Released lock on db  :', dbServer);
 			}	
 	});
 };
@@ -39,19 +39,19 @@ var updateTransactionStatus = function (transaction, status, logFile) {
 		query = { "name": transaction.name ,"currentStatus": "Queued" };
         TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now(), "logFileName": logFile ,"DBServerUsed" : transaction.DBServerUsed ,"adeServerUsed" : transaction.adeServerUsed}, { upsert: false }, function (err, doc) {
 			if (err){
-				console.error('Unable to update the row for the transaction ' + transaction.name, err);
+				logger.error('Unable to update the row for the transaction ' + transaction.name, err);
 			}else{
-				console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
+				logger.info('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
 			}	
 		});
     } else if (status === "Archived") {
 		query = { "name": transaction.name,"currentStatus": "Running" };
 		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile }, { upsert: false }, function (err, doc) {
 			if (err){
-				console.error('Unable to update the row for the transaction ' + transaction.name, err);
+				logger.error('Unable to update the row for the transaction ' + transaction.name, err);
 			}
 			else{
-				console.log('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
+				logger.info('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
 			}
 			if(transaction.runJunits==='Y'){
 				releaseDBLock(transaction.DBServerUsed);
@@ -65,9 +65,9 @@ var updateTransactionErrorStatus = function (transaction,logFile) {
 	var query = { "name": transaction.name , "currentStatus": "Queued" };
 	TransData.findOneAndUpdate(query, { "currentStatus": "Archived", "starttime": Date.now(), "endtime": Date.now(), "premergeOutput": transaction.description.error , "logFileName": logFile }, { upsert: false }, function (err, doc) {
 		if (err){
-			console.error('Unable to update the row for the transaction ' + transaction.name, err);
+			logger.error('Unable to update the row for the transaction ' + transaction.name, err);
 		}else{
-			console.log('update row for transaction , no more processing required for the transaction :', transaction.name);
+			logger.info('update row for transaction , no more processing required for the transaction :', transaction.name);
 		}
 	});
 };
@@ -81,12 +81,12 @@ var updateErroredTransation = function(trans,logStream,logFile){
 			var dest = fs.createWriteStream(fuseConfig.transactionArchivedLogLocation + logFile);
 			source.pipe(dest);
 			source.on('end', function () {
-				console.log('transaction logs moved to Archived');
+				logger.info('transaction logs moved to Archived');
 				fs.unlink(fuseConfig.transactionActiveLogLocation + logFile);
 				dest.end();
 			});
 			source.on('error', function (err) {
-				console.error('failed to move transaction logs to Archived');
+				logger.error('failed to move transaction logs to Archived');
 			});
 			updateTransactionErrorStatus(trans,logFile);
 			new SSH({
@@ -95,11 +95,11 @@ var updateErroredTransation = function(trans,logStream,logFile){
 				pass: fuseConfig.adeServerPass
 			}).exec(errorMailCommand, {
 				out: function (stdout) {
-					console.log(stdout);
+					logger.info(stdout);
 					return false;
 			},
 			err: function (stderr) {
-				console.log(stderr);
+				logger.info(stderr);
 				return false;
 			}
 		}).start();
@@ -115,7 +115,7 @@ var processTransaction = function (transData) {
 			return;
 	}
 	var transName = ("jjikumar" + trans.name.substring(trans.name.indexOf('_')))+'_' + date.getTime();
-	console.log('transaction data recived in the child process ', trans);
+	logger.info('transaction data recived in the child process ', trans);
     var series = trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
 	var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
@@ -143,9 +143,9 @@ var processTransaction = function (transData) {
 	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -b '+CC+' '+trans.email;
 	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
 	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+trans.adeServerUsed+':'+premergeOutLoc+' '+__dirname+'\\..\\History\\Archived\\'+transName+'_1\\';
-	console.log('command to copy data : ',preMergeResCopyCommand);
-	console.log('send mail command',sendmailCommand);
-    console.log('command to be executed', exeCommand);
+	logger.info('command to copy data : ',preMergeResCopyCommand);
+	logger.info('send mail command',sendmailCommand);
+    logger.info('command to be executed', exeCommand);
 	new SSH({
 		host: trans.adeServerUsed,
 		user: fuseConfig.adeServerUser,
@@ -153,70 +153,70 @@ var processTransaction = function (transData) {
 	}).exec(createViewCommand, {
         out: function (stdout) {
 			logStream.write(stdout);
-            console.log(stdout);
+            logger.info(stdout);
         },
         err: function (stderr) {
-            console.log(stderr);
+            logger.info(stderr);
             return false;
         }
 	}).exec(exeCommand, {
 		out: function (stdout) {
 			logStream.write(stdout);
-			console.log(stdout);
+			logger.info(stdout);
 		},
 		err: function (stderr) {
-			console.log(stderr);
+			logger.info(stderr);
 			return false;
 		}
 	}).exec('echo', {
 		out: function (stdout) {
 			var copyFiles = exec(preMergeResCopyCommand,function(error, stdout, stderr){
 			if (error) {
-					console.error('Error occured while coping premerge result files : ',error);
+					logger.error('Error occured while coping premerge result files : ',error);
 				}
 			});
 			logStream.write('Premerge Process completed');
-			console.log('Premerge Process completed');
+			logger.info('Premerge Process completed');
 			logStream.end();
 			var source = fs.createReadStream(fuseConfig.transactionActiveLogLocation + logFile);
 			var dest = fs.createWriteStream(fuseConfig.transactionArchivedLogLocation + logFile);
 			source.pipe(dest);
 			source.on('end', function () {
-				console.log('transaction logs moved to Archived');
+				logger.info('transaction logs moved to Archived');
 				fs.unlink(fuseConfig.transactionActiveLogLocation + logFile);
 				dest.end();
 			});
 			source.on('error', function (err) {
-				console.error('failed to move transaction logs to Archived');
+				logger.error('failed to move transaction logs to Archived');
 			});
 			updateTransactionStatus(trans, 'Archived', fuseConfig.transactionArchivedLogLocation + logFile);
 		},
 		err: function (stderr) {
-			console.log(stderr);
+			logger.info(stderr);
 			return false;
 		}
 	}).exec(sendmailCommand, {
 		out: function (stdout) {
-			console.log(stdout);
+			logger.info(stdout);
 		},
 		err: function (stderr) {
-			console.log(stderr);
+			logger.info(stderr);
 			return false;
 		}
 	}).exec(destroyTransCommand, {
 		out: function (stdout) {
-			console.log(stdout);
+			logger.info(stdout);
 		},
 		err: function (stderr) {
-			console.log(stderr);
+			logger.info(stderr);
 			return false;
 		}
 	}).exec('yes n | ade destroyview -force ' + viewName, {
 		out: function (stdout) {
-			console.log(stdout);
+			logger.info(stdout);
 		},
 		err: function (stderr) {
-			console.log(stderr);
+			logger.info(stderr);
 			return false;
 		}
 	}).start();

@@ -11,7 +11,7 @@ var q = require('q');
 var SSH = require('simple-ssh');
 
 var parseTransactionData = function (input) {
-	console.log('parsing transaction description data');
+	logger.info('parsing transaction description data');
 	var index = input.lastIndexOf("not found in ADE");
 	if (index > 0) {
 		var error = { "error": "Transaction Does Not exist" };
@@ -28,15 +28,15 @@ var parseTransactionData = function (input) {
 		if (baseLabel === '' || bugNum === '' || transDesc === '') {
 			if (lines[i].includes(bugNumKeyword)) {
 				bugNum = (lines[i].substring(lines[i].indexOf(':') + 1)).trim();
-				console.log('bugNum : ', bugNum);
+				logger.info('bugNum : ', bugNum);
 			}
 			else if (lines[i].includes(transDescKeyword)) {
 				transDesc = (lines[i].substring(lines[i].indexOf(':') + 1)).trim();
-				console.log('transDesc : ', transDesc);
+				logger.info('transDesc : ', transDesc);
 			}
 			else if (lines[i].includes(baseLabelKeyword)) {
 				baseLabel = lines[i].substring(lines[i].indexOf(baseLabelKeyword) + baseLabelKeyword.length + 1, lines[i].indexOf('X64') + 3);
-				console.log('baseLabel : ', baseLabel);
+				logger.info('baseLabel : ', baseLabel);
 			}
 		} else{
 			break;
@@ -55,7 +55,7 @@ var getTransactionDetails = function (command) {
 	var op = "";
 	var deferred = q.defer();
 	command = "ade describetrans " + command;
-	console.log('Server : Above to describe transaction', command);
+	logger.info('Server : Above to describe transaction', command);
 	new SSH({
 		host: fuseConfig.historyServerUrl,
 		user: fuseConfig.adeServerUser,
@@ -65,7 +65,7 @@ var getTransactionDetails = function (command) {
 			op = op + stdout;
 		},
 		err: function (stderr) {
-			console.error('failed to execute command desc', stderr);
+			logger.error('failed to execute command desc', stderr);
 			return;
 		}
 	}).exec('echo', {
@@ -74,7 +74,7 @@ var getTransactionDetails = function (command) {
 			deferred.resolve(transactionDescData);
 		},
 		err: function (stderr) {
-			console.error('failed to execute command echo', stderr);
+			logger.error('failed to execute command echo', stderr);
 		}
 	}).start();
 	return deferred.promise;
@@ -83,12 +83,12 @@ var getTransactionDetails = function (command) {
 amqp.connect(fuseConfig.messageQueueURL, function (err, conn) {
     conn.createChannel(function (err, ch) {
         ch.assertQueue(fuseConfig.transactionMessageQueue, { durable: true });
-        console.log("Waiting for messages in : ", fuseConfig.transactionMessageQueue);
+        logger.info("Waiting for messages in : ", fuseConfig.transactionMessageQueue);
         ch.consume(fuseConfig.transactionMessageQueue, function (msg) {
-            console.log("Request Arrived , will now process request :", msg.content.toString());
+            logger.info("Request Arrived , will now process request :", msg.content.toString());
             var transaction = JSON.parse(msg.content.toString());
 			getTransactionDetails(transaction.name).then(function (newResponse) {
-				console.log('new Response', newResponse);
+				logger.info('new Response', newResponse);
 				transaction.description = newResponse;
 				//			  Need to uncomment it to debug the server  
 				//            child_process.fork(__dirname+"/commandProcess.js", [JSON.stringify(transaction)],{ execArgv: ['--debug=5859'] });

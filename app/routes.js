@@ -42,26 +42,26 @@ module.exports = function (app) {
 					var projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
 					if (projectPath.substring(projectPath.length - 4) == 'Test') {
 						projectNames.push(projectPath);
-						console.log('project updated in the db : ', projectPath);
+						logger.info('project updated in the db : ', projectPath);
 					}
 				}
 			}
 		} catch (ex) {
-			console.log('Failed to parse projectNames from fileList', ex);
+			logger.info('Failed to parse projectNames from fileList', ex);
 		}
 		var query = { "name": "FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64" };
 		ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
 			if (err) {
-				console.error('failed to save list in db :', err);
+				logger.error('failed to save list in db :', err);
 			} else {
-				console.log('saved list in db  :');
+				logger.info('saved list in db  :');
 			}
 		});
 	};
 	// updateListinDbStandalone();
 
 	var parseProjectListandUpdateDB = function (series, listLocationLocal, viewName) {
-		console.log('about to parse projectList and update DB with series : ', series);
+		logger.info('about to parse projectList and update DB with series : ', series);
 		var projectNames = [];
 		try {
 			var fileData = fs.readFileSync(listLocationLocal + 'Procurement.jws').toString();
@@ -73,18 +73,18 @@ module.exports = function (app) {
 					var projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
 					if (projectPath.substring(projectPath.length - 4) == 'Test') {
 						projectNames.push(projectPath);
-						console.log('project updated in the db : ', projectPath);
+						logger.info('project updated in the db : ', projectPath);
 					}
 				}
 			}
-		} catch (ex) { console.log('Failed to parse projectNames from fileList', ex) }
+		} catch (ex) { logger.info('Failed to parse projectNames from fileList', ex) }
 
 		var query = { "name": "FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64" };
 		ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
 			if (err) {
-				console.error('failed to save list in db :', err);
+				logger.error('failed to save list in db :', err);
 			} else {
-				console.log('saved list in db  :');
+				logger.info('saved list in db  :');
 			}
 		});
 	};
@@ -94,32 +94,32 @@ module.exports = function (app) {
 		var listLocationOnServer = '/scratch/' + fuseConfig.adeServerUser + '_' + viewName + '/fusionapps/prc/components/procurement/Procurement.jws';
 		var listLocationLocal = __dirname + '\\ProjectList\\';
 		var projectListCopyCommand = 'scp ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + fuseConfig.historyServerUrl + ':' + listLocationOnServer + ' ' + listLocationLocal;
-		console.log('command to copy file : ', projectListCopyCommand);
+		logger.info('command to copy file : ', projectListCopyCommand);
 		ssh.exec(createViewCommand, {
 			out: function (stdout) {
-				console.log(stdout);
+				logger.info(stdout);
 			},
 			err: function (stderr) {
-				console.error('failed to execute command desc :', stderr);
+				logger.error('failed to execute command desc :', stderr);
 				return;
 			}
 		}).exec('echo', {
 			out: function (stdout) {
 				var copyFiles = exec(projectListCopyCommand, function (error, stdout, stderr) {
 					if (error) {
-						console.error('Failed to copy projectList file from server : ', error);
+						logger.error('Failed to copy projectList file from server : ', error);
 					}
 				});
 			},
 			err: function (stderr) {
-				console.error('failed to execute command echo :', stderr);
+				logger.error('failed to execute command echo :', stderr);
 			}
 		}).exec('echo', {
 			out: function (stdout) {
 				setTimeout(function () { parseProjectListandUpdateDB(series, listLocationLocal, viewName); }, 5000);
 			},
 			err: function (stderr) {
-				console.error('failed to execute command echo :', stderr);
+				logger.error('failed to execute command echo :', stderr);
 			}
 		}).start();
 	};
@@ -151,7 +151,7 @@ module.exports = function (app) {
 	};
 
     var parseTransactionData = function (input) {
-		console.log('parsing transaction description data');
+		logger.info('parsing transaction description data');
 		var index = input.lastIndexOf("not found in ADE");
 		if (index > 0) {
 			var error = { "error": "Transaction Does Not exist" };
@@ -168,15 +168,15 @@ module.exports = function (app) {
 			if (baseLabel === '' || bugNum === '' || transDesc === '') {
 				if (lines[i].includes(bugNumKeyword)) {
 					bugNum = (lines[i].substring(lines[i].indexOf(':') + 1)).trim();
-					console.log('bugNum : ', bugNum);
+					logger.info('bugNum : ', bugNum);
 				}
 				else if (lines[i].includes(transDescKeyword)) {
 					transDesc = (lines[i].substring(lines[i].indexOf(':') + 1)).trim();
-					console.log('transDesc : ', transDesc);
+					logger.info('transDesc : ', transDesc);
 				}
 				else if (lines[i].includes(baseLabelKeyword)) {
 					baseLabel = lines[i].substring(lines[i].indexOf(baseLabelKeyword) + baseLabelKeyword.length + 1, lines[i].indexOf('X64') + 3);
-					console.log('baseLabel : ', baseLabel);
+					logger.info('baseLabel : ', baseLabel);
 				}
 			} else {
 				break;
@@ -194,13 +194,13 @@ module.exports = function (app) {
     var getTransactionDetails = function (command) {
 		var op = "";
 		var deferred = q.defer();
-		console.log('Server : Above to describe transaction :', command);
+		logger.info('Server : Above to describe transaction :', command);
 		ssh.exec(command, {
 			out: function (stdout) {
 				op = op + stdout;
 			},
 			err: function (stderr) {
-				console.error('failed to execute command desc :', stderr);
+				logger.error('failed to execute command desc :', stderr);
 				return;
 			}
 		}).exec('echo', {
@@ -210,7 +210,7 @@ module.exports = function (app) {
 				deferred.resolve(transactionDescData);
 			},
 			err: function (stderr) {
-				console.error('failed to execute command echo :', stderr);
+				logger.error('failed to execute command echo :', stderr);
 			}
 		}).start();
 		return deferred.promise;
@@ -234,10 +234,10 @@ module.exports = function (app) {
 	app.get('/api/getProjectList', function (req, res) {
 		ProjectList.find({}, function (err, projectList) {
 			if (err) {
-				console.error('error occured while projectlist from the db : ', err);
+				logger.error('error occured while projectlist from the db : ', err);
 			}
 			else {
-				// console.log('projectList retrieved from db ', projectList);
+				// logger.info('projectList retrieved from db ', projectList);
 				res.status(200).json(projectList);
 			}
 		});
@@ -258,18 +258,18 @@ module.exports = function (app) {
 
 		var queryResult = TransData.find({ $or: [{ name: req.body.name, currentStatus: 'Running' }, { name: req.body.name, currentStatus: 'Queued' }] }, function (err, transData) {
 			if (err) {
-				console.error('error occured while fetching running transactions :', err);
+				logger.error('error occured while fetching running transactions :', err);
 			}
 			else if (transData.length > 0) {
-				console.log('Another Request for the Transaction is Already in process :', req.body.name);
+				logger.info('Another Request for the Transaction is Already in process :', req.body.name);
 				res.status(450).send({ error: "Another Request for the Transaction is Already in process , multiple request for the same transaction can not be submitted" });
 			}
 			else if (transData.length === 0) {
 				currentTransactionData.save(function (err) {
 					if (err) {
-						console.error('failed to save transaction data to the database : ', err);
+						logger.error('failed to save transaction data to the database : ', err);
 					} else {
-						console.log('Transaction saved successfully and pre merge will run soon on the transaction: ', req.body.name);
+						logger.info('Transaction saved successfully and pre merge will run soon on the transaction: ', req.body.name);
 					}
 				});
 				req.body.adeServerUsed = getADEServerName();
@@ -281,10 +281,10 @@ module.exports = function (app) {
     app.get('/api/info/dbs', function (req, res) {
 		Databases.find({}, function (err, dbData) {
 			if (err) {
-				console.error('error occured while fetching Currently avaliable Databases : ', err);
+				logger.error('error occured while fetching Currently avaliable Databases : ', err);
 			}
 			else {
-				console.log('Currently avaliable Databases count is ', dbData.length);
+				logger.info('Currently avaliable Databases count is ', dbData.length);
 				res.status(200).json(dbData);
 			}
 		});
@@ -293,7 +293,7 @@ module.exports = function (app) {
     app.post('/api/transactions/list', function (req, res) {
 		TransData.find({ "currentStatus": req.body.transState }, function (err, transData) {
 			if (err) {
-				console.error('error occured while fetching running transactions: ', err);
+				logger.error('error occured while fetching running transactions: ', err);
 				throw err;
 			}
 			else {
@@ -313,14 +313,14 @@ module.exports = function (app) {
 			var readStream = fs.createReadStream(localFilePath);
 			readStream.pipe(res);
 		} catch (error) {
-			console.error("unable to read transaction detail ", error);
+			logger.error("unable to read transaction detail ", error);
 		}
     });
 
     app.post('/api/transactions/describe', function (req, res) {
 		var command = 'ade describetrans ' + req.body.name;
 		getTransactionDetails(command).then(function (newResponse) {
-			console.log('Recived details for the transaction from ADE Server : ', newResponse);
+			logger.info('Recived details for the transaction from ADE Server : ', newResponse);
 			res.status(200).send(newResponse);
 		});
     });
