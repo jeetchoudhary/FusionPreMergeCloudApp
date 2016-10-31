@@ -134,7 +134,7 @@ module.exports = function (app) {
 
 	var getADEServerName = function () {
 		var serverName = '';
-		var count = 1000;
+		var count = 10000;
 		for (var server in adeServerMap) {
 			if (adeServerMap[server] < count) {
 				count = adeServerMap[server];
