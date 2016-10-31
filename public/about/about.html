@@ -2,8 +2,12 @@
   Created by jitender choudhary on 10/28/2016.
  -->
 <div class="container-fluid bg-1 text-center">
-    <h3 class="margin">You need to wait for this information , the development is still in progress</h3>
+    <p style="text-align: justify">
+        Pre-merge is a process which executes several script written specifically to checks our code for common <a href="https://en.wikipedia.org/wiki/Code_smell" target="_blank">Code_smell</a> , which are not desirable application code base. Apart from the basic functinality it also compiles the code and builds the project to ensure that we are not introducing compile time failures along with some other activities which are part of continous integration  e.g Automated Unit Test , ant build etc.
+As of now the pre-merge tool runs on individual developer machines and update the bug with the final results. This will have an overhead on the client machines memory and makes the machine performance slow. This Tool abstract the use of Pre-merge from the developer .This will accept transaction name from the user , then it will perform per-merge scripts on the transaction , update the bug in the bug DB and send mail to the requestor. This whole process will be done on dedicated configured VM's so that there is no overhead on developer machine.<br>
+For more information on this to this tool please refer to the <a href="https://confluence.oraclecorp.com/confluence/display/PRC/Pre-Merge+on+Cloud" target="_blank">documentation</a>.
+    </p>
 </div>
 <footer class="container-fluid bg-4 text-center">
-    <p>For More details on the Release Timelines you can contact me  <a href="mailto:jitender.k.kumar@oracle.com" style="color:red">Jitender Choudhary</a></p>
+    <p>For any queries or problem you can contact me <a href="mailto:jitender.k.kumar@oracle.com" style="color:red">Jitender Choudhary</a></p>
 </footer>

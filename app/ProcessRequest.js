@@ -61,7 +61,7 @@ var checkAnyDBAvaliablityandProcess = function (transaction) {
     var query = { "currentStatus" : "UNUSED"};
     logger.info('checkAnyDBAvaliablityandProcess() request received');
     Databases.find(query, function (err, dbData) {
-       logger.info('call back from db received : ',dbData);
+       logger.info('call back from db received  ');
 		if (err) { logger.error('error occured while fetching Currently avaliable Databases : ', err); }
         else if (dbData.length > 0)
          {
