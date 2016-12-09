@@ -8,7 +8,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         name: '',
         email: '',
         updateBug: 'N',
-        runJunits: 'N',
+        runJunits: 'Y',
         applyFPR: 'N',
         allowDBOverride:'Y',
         errorMsg: {
@@ -31,7 +31,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
             name: '',
             email: '',
             updateBug: 'N',
-            runJunits: 'N',
+            runJunits: 'Y',
             applyFPR: 'N',
             allowDBOverride:'Y',
             errorMsg: {

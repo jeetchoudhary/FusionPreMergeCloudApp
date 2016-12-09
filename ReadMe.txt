@@ -19,21 +19,21 @@
 9. To insert DB SeedData :  
         db.databases.insert({
             "release" : "13",
-            "alias": "REL13_1" ,
+            "alias": "REL13(jjikumar)" ,
             "connectionString":"fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar",
             "currentStatus":"UNUSED"
             });
 
         db.databases.insert({
             "release" : "13",
-            "alias": "REL13_2" ,
+            "alias": "REL13(slc10usm)" ,
             "connectionString":"fusion/fusion@slcak360.us.oracle.com:1543/slc10usm",
             "currentStatus":"UNUSED"
             });
 
         db.databases.insert({
             "release" : "13",
-            "alias": "REL13_3" ,
+            "alias": "REL13(slc09xht)" ,
             "connectionString":"fusion/fusion@slc09xht.us.oracle.com:1563/slc09xht",
             "currentStatus":"UNUSED"
         });
