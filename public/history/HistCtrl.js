@@ -18,11 +18,17 @@ angular.module('HistCtrl', [])
             $http.post('/api/transactions/list', { 'transState': transState }).success(function (response) {
                // console.log('Client : Recieved Data from server', response);
                 if (transState === 'Running'){
+                    
                 	$scope.transactionList.running = response;
+                    $( "#activeTab" ).click();
                 }else if (transState === 'Queued'){
+                     
                 	$scope.transactionList.queued = response;
+                    $( "#queuedTab" ).click();
                 }else{
+                    
                 	$scope.transactionList.archived = response;
+                    $( "#archivedTab" ).click();
                 }
                     
             }).error(function (err) {

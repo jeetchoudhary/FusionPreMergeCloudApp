@@ -3,9 +3,9 @@
  -->
 <div class="row" style="margin-right: -2px;margin-left: -1px; border: solid 1px black;border-radius: 4px;">
     <ul class="nav nav-tabs" style="background-color:#337ab7">
-        <li><a data-toggle="tab" href="#active" ng-click="getTransactionList('Running')" style="color:white">Active Transactions</a></li>
-        <li><a data-toggle="tab" href="#queued" ng-click="getTransactionList('Queued')" style="color:white">Queued</a></li>
-        <li><a data-toggle="tab" href="#archived" ng-click="getTransactionList('Archived')" style="color:white">Archived</a></li>
+        <li><a data-toggle="tab" id="activeTab" href="#active" ng-click="getTransactionList('Running')" style="color:white">Active Transactions</a></li>
+        <li><a data-toggle="tab" id="queuedTab" href="#queued" ng-click="getTransactionList('Queued')" style="color:white">Queued</a></li>
+        <li><a data-toggle="tab" id="archivedTab" href="#archived" ng-click="getTransactionList('Archived')" style="color:white">Archived</a></li>
     </ul>
    <div class="tab-content">
         <div id="active" class="tab-pane fade in active" >
