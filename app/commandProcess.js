@@ -128,7 +128,7 @@ var processTransaction = function (transData) {
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
 	var begintrans = useViewCommand +' \" cd .. && ade begintrans ' + transName + ' && ';
     var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
-    var checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd &&  ade cleanview  && ade expand /ade/'+viewName+'/fusionapps/prc/*.*  && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh '+'-Dfamily=prc -DjunitBuildFile=/ade/'+viewName+'/fusionapps/prc/build-po.xml ';
+    var checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd &&  ade cleanview  && ade expand /ade/'+viewName+'/fusionapps/  && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh '+'-Dfamily=prc -DjunitBuildFile=/ade/'+viewName+'/fusionapps/prc/build-po.xml ';
     var finScriptParams = checkInCommand + ' -d ' + trans.dbString + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) ;
 	if(trans.junitSelectedList){
 		for (var i in trans.junitSelectedList) {

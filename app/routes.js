@@ -50,6 +50,7 @@ module.exports = function (app) {
 			logger.info('Failed to parse projectNames from fileList', ex);
 		}
 
+		// Parsing list for ESS projects
 		listLocationLocal = __dirname + '\\ProjectList\\ProcurementEss.jws';
 		try {
 			var fileData = fs.readFileSync(listLocationLocal).toString();
@@ -78,7 +79,7 @@ module.exports = function (app) {
 			}
 		});
 	};
-	 updateListinDbStandalone();
+	// updateListinDbStandalone();
 
 	var parseProjectListandUpdateDB = function (series, listLocationLocal, viewName) {
 		logger.info('about to parse projectList and update DB with series : ', series);
