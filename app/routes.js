@@ -295,6 +295,7 @@ module.exports = function (app) {
 				});
 				req.body.adeServerUsed = getADEServerName();
 				processSubmitRequest(req.body);
+				res.status(200).send({ response: "Transaction submitted for premerge validation,you will be notified when completed" });
 			}
 		});
 	});
