@@ -1,0 +1,635 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jws:workspace xmlns:jws="http://xmlns.oracle.com/ide/project">
+   <hash n="adrs-workspace-properties">
+      <value n="adrs-instance-binding" v="DefaultServer"/>
+      <value n="adrs-mar-profile" v="ProcurementEss-MAR"/>
+      <value n="deploy-timeout" v="300000"/>
+      <value n="runtime-application-name" v="ProcurementEss"/>
+   </hash>
+   <value n="application-package-prefix" v="oracle.apps.prc.por"/>
+   <url n="application-source-directory" path="src/"/>
+   <hash n="appWebServicePolicy">
+      <value n="location"/>
+      <value n="LOCATION_TYPE" v="policy.config.PolicyOptions.LocationType.FILE_STORE"/>
+      <value n="SERVER_LOCATION" v="IntegratedWebLogicServer"/>
+   </hash>
+   <hash n="component-versions">
+      <value n="oracle.adf.share.dt.migration.jps.JaznCredStoreMigratorHelper" v="11.1.1.0.0;11.1.1.1.0"/>
+      <value n="oracle.adfdt.controller.adfc.source.migration.SavePointDataSourceForWLSMigrator" v="11.1.1.1.0"/>
+      <value n="oracle.adfdtinternal.model.ide.security.wizard.AdfSecurityMigrator" v="11.1.1.0.0.11;11.1.1.1.0.13"/>
+      <value n="oracle.ide.model.Project" v="11.1.1.0.0;11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.deploy.ear.OarMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.deploy.mar.MarMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.runner.oc4j.EmbeddedServerMigratorHelper" v="11.1.1.0.0"/>
+      <value n="oracle.jdevimpl.webservices.WebServicesMigratorHelper" v="11.1.1.0.0"/>
+      <value n="oracle.jdevimpl.xml.oc4j.ds.DataSourcesMigratorHelper" v="11.1.1.0.0"/>
+      <value n="oracle.jdevimpl.xml.oc4j.jps.JpsConfigMigratorHelper" v="11.1.1.0.0;11.1.1.1.0.1"/>
+      <value n="oracle.jdevimpl.xml.wl.WeblogicMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.mds.internal.dt.ide.migrator.MDSConfigMigratorHelper" v="11.1.1.0.0;11.1.1.1.0"/>
+      <value n="oracle.webcenter.internal.dt.migration.WebCenterWorkspaceMigrator" v="11.1.1.0.0.080820.1400;11.1.1.0.0.081216.0654;11.1.1.1.0.090223.1146;11.1.1.1.0.090318.0800;11.1.1.1.0.090402.0800;11.1.1.1.0.090416.1600;11.1.1.1.0.090505.1600;11.1.1.1.0.090618.1120;11.1.1.2.0.100216.2200;11.1.1.4.0.100820.0800;11.1.1.4.0.100903.0800;11.1.1.4.0.101019.0800"/>
+   </hash>
+   <list n="listOfChildren">
+      <hash><url n="URL" path="po/commonPo/ess/PrcPoEss.jpr"/></hash>
+      <hash><url n="URL" path="po/commonPo/essModel/PrcPoEssModel.jpr"/></hash>
+      <hash><url n="URL" path="po/commonPo/essModelTest/PrcPoEssModelTest.jpr"/></hash>
+      <hash><url n="URL" path="po/commonPo/essProtectedModel/PrcPoEssProtectedModel.jpr"/></hash>
+      <hash><url n="URL" path="po/commonPo/essTest/PrcPoEssTest.jpr"/></hash>
+      <hash><url n="URL" path="po/essResource/PrcPoEssPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="por/catalogMgmt/ess/PrcPorEss.jpr"/></hash>
+      <hash><url n="URL" path="por/catalogMgmt/essTest/PrcPorEssTest.jpr"/></hash>
+      <hash><url n="URL" path="por/createReq/ess/PrcPorCreateReqEss.jpr"/></hash>
+      <hash><url n="URL" path="por/createReq/essTest/PrcPorCreateReqEssTest.jpr"/></hash>
+      <hash><url n="URL" path="por/essResource/PrcPorEssPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="poz/essResource/PrcPozCommonPozEssPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="poz/suppliers/ess/PrcPozSupplierEss.jpr"/></hash>
+      <hash><url n="URL" path="poz/suppliers/essTest/PrcPozSupplierEssTest/PrcPozSupplierEssTest.jpr"/></hash>
+      <hash><url n="URL" path="ProcurementEssJobRegistry/ProcurementEssJobRegistry.jpr"/></hash>
+      <hash><url n="URL" path="SuperEss/SuperEss.jpr"/></hash>
+   </list>
+   <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
+      <hash n="profileDefinitions">
+         <hash n="EarProcurementEss">
+            <hash n="archiveOptions">
+               <list n="additionalManifests"/>
+               <value n="hasManifest" v="false"/>
+            </hash>
+            <hash n="dependencies">
+               <list n="dependencyList">
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="por/catalogMgmt/ess/PrcPorEss.jpr"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="PrcPorEss"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="poz/suppliers/ess/PrcPozSupplierEss.jpr"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="ejb-jar-AdfPrcPozSupplierEss"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="SuperEss/SuperEss.jpr"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="SuperEss"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="ProcurementEssJobRegistry/ProcurementEssJobRegistry.jpr"/>
+                     <value n="pathInEar" v="APP-INF/lib"/>
+                     <value n="profileName" v="AdfProcurementEssJobRegistry"/>
+                  </hash>
+               </list>
+            </hash>
+            <url n="earURL" path="../../deploy/EarProcurementEss.ear"/>
+            <value n="enterpriseAppName" v="EarProcurementEss"/>
+            <hash n="fileGroups">
+               <list n="groups">
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <value n="type" v="9"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="Application Descriptors"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="META-INF/jazn-data.xml~"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/temp/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/classes/jsp_servlet/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlLibs/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.svn/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/CVS/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.ade_path"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.data/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.cdi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.contrib"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.keep"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.rvi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".jsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".tags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".dtags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jht"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jjt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jxt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="internalName" v="ear-metainf"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="po/commonPo/ess/essmeta/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                        <hash>
+                           <url n="location" path="por/catalogMgmt/ess/essmeta/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                        <hash>
+                           <url n="location" path="PrcPozSupplierEss/essmeta/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                        <hash>
+                           <url n="location" path="por/createReq/ess/essmeta/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                        <hash>
+                           <url n="location" path="../../tmp/lib/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="APP-INF/lib"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="*.mar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="*Ui.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <value n="type" v="9"/>
+                        </hash>
+                        <hash>
+                           <url n="location" path="jlib/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="MAR Group"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="*_ko.mar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="*.mar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="../../../jlib/crmextnjlib/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="fusionapps/jlib/crmextnjlib"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="AdfExtnCustomSetMigrationPublicUiCmmnObjects.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**Ui.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnOutlookConfiguratorPublicUi.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnMobileConfiguratorPublicUi.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnCustomSetMigrationPublicUiTemplates.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnCustomSetMigrationPublicUiSPE.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnContentPublicUiEventAction.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnContentPublicUiBase.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnConfiguratorPublicUi.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnCommonBusinessProcessHumanWorkflowUi.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/temp/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/classes/jsp_servlet/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlLibs/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.svn/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/CVS/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.ade_path"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.data/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.cdi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.contrib"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.keep"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.rvi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".jsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".tags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".dtags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jht"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jjt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jxt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="../../../jlib/gsicomnextnjlib/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="fusionapps/jlib/gsicomnextnjlib"/>
+                     <hash n="filters">
+                        <list n="rules"/>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+               </list>
+            </hash>
+            <hash n="libraryDependencies">
+               <value n="IncludeLibrariesFromOtherContainers" v="true"/>
+            </hash>
+            <value n="profileClass" v="oracle.jdeveloper.deploy.ear.EarProfile"/>
+            <value n="profileName" v="EarProcurementEss"/>
+         </hash>
+         <hash n="ProcurementEss-MAR">
+            <hash n="archiveOptions">
+               <value n="hasManifest" v="false"/>
+            </hash>
+            <hash n="fileGroups">
+               <list n="groups">
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="por/catalogMgmt/ess/essmeta/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                        <hash>
+                           <url n="location" path="por/createReq/ess/essmeta/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                        <hash>
+                           <url n="location" path="po/commonPo/ess/essmeta/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                        <hash>
+                           <url n="location" path="poz/suppliers/ess/essmeta/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="User Metadata"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="oracle/apps/ess/"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/createReq/reqImport/ess/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/createReq/reqImport/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/createReq/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/catalogMgmt/ess/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/catalogMgmt/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/createReq/reqImport/ess/JobType/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/createReq/reqImport/ess/Jobs/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/createReq/reqImport/ess/"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/createReq/reqImport/ess/Jobs/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/catalogMgmt/ess/Jobs/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/catalogMgmt/ess/JobType/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/catalogMgmt/ess/"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/catalogMgmt/ess/JobType/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/por/catalogMgmt/ess/Jobs/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="src/oracle/apps/prc/po/ess/scheduler/massUpdate/Jobs/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/ess/JobType/.ade_path/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="oracle/apps/prc/po/ess/scheduler/generateOrders/"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/mdssys/cust/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnContentPublicModelBase.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnContentPublicModelCommon.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnFrameworkPublicCore.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnFrameworkPublicGen.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfCrmCommonCorePublicModel.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfCrmCommonCurrenciesPublicModel.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfCrmCommonSearchPublicCore.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicEntity.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicModel.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicService.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlLedgerDefnPublicEntity.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlLedgerDefnPublicView.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlShrdComnLookupPublicEntity.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlShrdComnLookupPublicView.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicView.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompInteractionsPublicModel.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompInteractionsPublicResource.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompActivitiesPublicModel.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompActivitiesPublicResource.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompNotesPublicModel.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompNotesPublicResource.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompObjectsPublicModel.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompRecentItemsPublicModel.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/mdssys/cust/**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="internalName" v="user-metadata"/>
+                     <value n="type" v="1"/>
+                  </hash>
+               </list>
+            </hash>
+            <url n="jarURL" path="../../../../.jdev_user_home/system11.1.1.2.35.54.85/o.j2ee/drs/ProcurementEss/MarProcurementEss.mar"/>
+            <value n="profileClass" v="oracle.jdeveloper.deploy.mar.MetadataProfile"/>
+            <value n="profileName" v="ProcurementEss-MAR"/>
+         </hash>
+      </hash>
+      <list n="profileList">
+         <string v="EarProcurementEss"/>
+         <string v="ProcurementEss-MAR"/>
+      </list>
+      <value n="Security-Deployment-Overwrite-Application-Policies-Key" v="false"/>
+      <value n="Security-Deployment-Overwrite-Credentials-Key" v="false"/>
+      <value n="Weblogic-JDBC-Auto-Sync-Key" v="false"/>
+   </hash>
+   <hash n="oracle.mds.internal.dt.ide.CustOptions">
+      <list n="customizationLibraries">
+         <hash/>
+      </list>
+   </hash>
+</jws:workspace>

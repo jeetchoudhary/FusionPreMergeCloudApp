@@ -49,6 +49,26 @@ module.exports = function (app) {
 		} catch (ex) {
 			logger.info('Failed to parse projectNames from fileList', ex);
 		}
+
+		listLocationLocal = __dirname + '\\ProjectList\\ProcurementEss.jws';
+		try {
+			var fileData = fs.readFileSync(listLocationLocal).toString();
+			var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
+			var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
+			var aFileNameParts = childrenList.split(".jpr");
+			for (var i in aFileNameParts) {
+				if (aFileNameParts[i].lastIndexOf('path=') != -1) {
+					var projectPath = 'fusionapps/prc/components/procurementEss/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
+					if (projectPath.substring(projectPath.length - 4) == 'Test') {
+						projectNames.push(projectPath);
+						logger.info('project updated in the db : ', projectPath);
+					}
+				}
+			}
+		} catch (ex) {
+			logger.info('Failed to parse projectNames from fileList', ex);
+		}
+
 		var query = { "name": "FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64" };
 		ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
 			if (err) {
@@ -58,7 +78,7 @@ module.exports = function (app) {
 			}
 		});
 	};
-	// updateListinDbStandalone();
+	 updateListinDbStandalone();
 
 	var parseProjectListandUpdateDB = function (series, listLocationLocal, viewName) {
 		logger.info('about to parse projectList and update DB with series : ', series);
