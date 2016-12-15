@@ -1,10 +1,11 @@
-#!/usr/bin/env python
 #*********************************************
 # Created by jitender choudhary on 13/12/2016.
 # Version 1.0
 #*********************************************
 
+#!/usr/bin/env python
 
+#import requests
 import optparse
 import subprocess
 import os
@@ -12,25 +13,23 @@ import simplejson as json
 import urllib2
 import sys
 
-#Script Constants
+
+parser = optparse.OptionParser()
 url = 'http://slc04kxc.us.oracle.com/api/submit'
 headers = {"Accept": "application/json"}
 proxies = {
   'http': 'http://www-proxy.us.oracle.com:80',
   'https': 'http://www-proxy.us.oracle.com:80',
 }
-
-#Default values for the variables
 isInsideView = 'N'
 transName = ""
 email = ""
 
-parser = optparse.OptionParser()
-parser.add_option('-d', '--db', action="store", dest="dbString",help="Database String to run Automated Units test format should be like fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar", default="fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar")
+parser.add_option('-d', '--db', action="store", dest="dbString",help="Database String to run Automated Units test", default="fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar")
 parser.add_option('-t', '--trans', action="store", dest="transName",help="Transaction Name on which you want to run script", default="")
 parser.add_option('-e', '--email', action="store", dest="emailID",help="Email ID on which you want to get email", default="")
-parser.add_option('-u', '--updatebug', action="store", dest="updateBug",help="Will update bug with the result if value given is Y , default value is N ", default="N")
-parser.add_option('-j', '--junits', action="store", dest="runJunits",help="Should automated unit tests run on this transaction , default value in N", default="N")
+parser.add_option('-u', '--updatebug', action="store", dest="updateBug",help="will update bug with the output if selected as yes default value is no ", default="N")
+parser.add_option('-j', '--junits', action="store", dest="runJunits",help="should automated unit tests run on this transaction", default="N")
 
 options, args = parser.parse_args()
 
@@ -38,7 +37,6 @@ options, args = parser.parse_args()
 #Getting the transaction name if not provided as the script arguments
 if not options.transName:
     output = subprocess.Popen(["ade", "pwv"], stdout=subprocess.PIPE).communicate()[0]
-    #Below Line shuould be uncommented if the script is running from Windows VM Machines
     #output = subprocess.Popen(['dir'], stdout=subprocess.PIPE,shell=True).communicate()[0]
     list = output.splitlines()
     for x in list:
@@ -59,8 +57,8 @@ if not transName:
 
 if not options.emailID:
     emailFile = os.path.expanduser('~')+'/.Premerge.cfg'
+    f = open(emailFile, 'r')
     try:
-        f = open(emailFile, 'r')
         content = f.read()
         parsedContent = content.split(':')
         email = parsedContent[2].strip()
@@ -93,8 +91,7 @@ print ("***********Saving the transaction***********")
 if isInsideView == 'Y':
     output = subprocess.Popen(["ade", "savetrans"], stdout=subprocess.PIPE).communicate()[0]
     list = output.splitlines()
-    for x in list:
-        print (x)
+    print (list)
     print ("**************transaction Saved************")
 else:
     print ("not saving transaction as not inside view  ")
@@ -112,13 +109,27 @@ data = {
 
 req = urllib2.Request(url)
 req.add_header('Content-Type', 'application/json')
-try:
-  response = urllib2.urlopen(req, json.dumps(data))
-  print ("********************************************")
-  print ("****Transaction Submitted for Validation****")
-  print ("********************************************")
-except: 
-  print ('Another request for the same transaction is already submitted')
+response = urllib2.urlopen(req, json.dumps(data))
+
+
+def makeRestRequestOnFusionPreMergeCloud():
+ params = {
+           "name":transName,
+           "email":email,
+           "updateBug":options.updateBug,
+           "runJunits":options.runJunits,
+           "allowDBOverride":allowDBOverride,
+           "dbString": options.dbString
+}
+
+print ("Going to make rest request")
+response = requests.post(url,headers= headers,data = params,proxies=proxies)
+print ("code:"+ str(response.status_code))
+print ("headers:"+ str(response.headers))
+print ("content:"+ str(response.text))
+
+# call
+#makeRestRequestOnFusionPreMergeCloud()
 
 
 

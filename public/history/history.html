@@ -7,7 +7,7 @@
         <li><a data-toggle="tab" id="queuedTab" href="#queued" ng-click="getTransactionList('Queued')" style="color:white">Queued</a></li>
         <li><a data-toggle="tab" id="archivedTab" href="#archived" ng-click="getTransactionList('Archived')" style="color:white">Archived</a></li>
     </ul>
-   <div class="tab-content">
+   <div class="tab-content" id="tabs">
         <div id="active" class="tab-pane fade in active" >
             <div class="panel-body">
                 <history-list tab="running" data="transactionList.running"></history-list>
