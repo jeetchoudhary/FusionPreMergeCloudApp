@@ -37,6 +37,7 @@
                 <td ng-hide="currentTab=='archived'" style="color:#337ab7">Submitted Time</td>
                 <td ng-hide="currentTab=='queued'" style="color:#337ab7">Start Time</td>
                 <td ng-show="currentTab=='archived'" style="color:#337ab7">Finished Time</td>
+                <td ng-show="currentTab=='archived'" style="color:#337ab7">Total Time</td>
                 <td ng-show="currentTab=='archived'" style="color:#337ab7">Validation Status</td>
                 
             </tr>
@@ -49,6 +50,7 @@
                 <td ng-hide="currentTab=='archived'">{{ transaction.submittedtime | date: 'medium' }}</td>
                 <td ng-hide="currentTab=='queued'">{{ transaction.starttime | date: 'medium' }}</td>
                 <td ng-show="currentTab=='archived'">{{ transaction.endtime | date: 'medium' }}</td>
+                <td ng-show="currentTab=='archived'">{{ transaction.totalTimeSpend }}</td>
                 <td ng-show="currentTab=='archived'">{{ transaction.premergeOutput }}</td>
             </tr>
         </tbody>

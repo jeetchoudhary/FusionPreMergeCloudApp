@@ -9,28 +9,40 @@ angular.module('HistCtrl', [])
             "queued": "",
             "archived": ""
         };
-        $scope.running="running";
-        $scope.queued="queued";
-        $scope.archived="archived";
+        $scope.running = "running";
+        $scope.queued = "queued";
+        $scope.archived = "archived";
         $scope.getTransactionList = function (transState) {
             $scope.tabType = transState;
-           // console.log('getting list for transactions with state :', transState);
             $http.post('/api/transactions/list', { 'transState': transState }).success(function (response) {
-               // console.log('Client : Recieved Data from server', response);
-                if (transState === 'Running'){
-                    
-                	$scope.transactionList.running = response;
-                    $( "#activeTab" ).click();
-                }else if (transState === 'Queued'){
-                     
-                	$scope.transactionList.queued = response;
-                    $( "#queuedTab" ).click();
-                }else{
-                    
-                	$scope.transactionList.archived = response;
-                    $( "#archivedTab" ).click();
+                for (i = 0; i < response.length; i++) {
+                    start = response[i].starttime;
+                    end = response[i].endtime;
+                    if (start != null && end != null) {
+                        timeTaken = new Date(end).getTime() - new Date(start).getTime();
+                        var seconds = Math.floor(timeTaken / 1000);
+                        var h = 3600;
+                        var m = 60;
+                        var hours = Math.floor(seconds / h);
+                        var minutes = Math.floor((seconds % h) / m);
+                        var timeString = '';
+                        if (hours < 10) hours = "0" + hours;
+                        if (minutes < 10) minutes = "0" + minutes;
+                        timeString = hours + " hour " + minutes + " minutes";
+                        temp = response[i];
+                        temp.totalTimeSpend = timeString;
+                        response[i] = temp;
+                    }
+
                 }
-                    
+                if (transState === 'Running') {
+                    $scope.transactionList.running = response;
+                } else if (transState === 'Queued') {
+                    $scope.transactionList.queued = response;
+                } else {
+                    $scope.transactionList.archived = response;
+                }
+
             }).error(function (err) {
                 console.log('Client : Recieved Data from server', err);
                 $scope.transaction.errorMsg.transactionError = err.error;
@@ -44,7 +56,7 @@ angular.module('HistCtrl', [])
     }).controller('HistoryProgress', function ($scope, $rootScope, $http, $sce) {
         $scope.transactionOutput = $rootScope.transactionOutput;
         $scope.displayTransactionProgress = function (histTrans) {
-           // console.log('Client : Going to display the transaction outcome', name);
+            // console.log('Client : Going to display the transaction outcome', name);
             $http.post('/api/transactions/name/output', { histTrans: histTrans }, {
                 responseType: 'arraybuffer'
             })
@@ -71,7 +83,7 @@ angular.module('HistCtrl', [])
             transclude: true,
             scope: {
                 transactionList: '=data',
-                currentTab : '=tab'
+                currentTab: '=tab'
             },
             link: function (scope, element, attrs, controllers) { },
             templateUrl: '../history/historyList.html',
