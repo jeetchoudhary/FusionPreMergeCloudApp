@@ -13,7 +13,7 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <td ng-show="!(currentTab=='queued')" >
+                <td ng-show="!(currentTab=='queued')">
                     <a style="cursor: pointer" ng-click="sortType = 'name'; sortReverse = !sortReverse">
                         Transaction Name
                         <span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
@@ -35,11 +35,17 @@
                     </a>
                 </td>
                 <td ng-hide="currentTab=='archived'" style="color:#337ab7">Submitted Time</td>
-                <td ng-hide="currentTab=='queued'" style="color:#337ab7">Start Time</td>
+                <td ng-hide="currentTab=='queued'">
+                    <a style="cursor: pointer" ng-click="sortType = 'starttime'; sortReverse = !sortReverse">
+                        Start Time
+                        <span ng-show="sortType == 'starttime' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                        <span ng-show="sortType == 'starttime' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+                    </a>
+                </td>
                 <td ng-show="currentTab=='archived'" style="color:#337ab7">Finished Time</td>
                 <td ng-show="currentTab=='archived'" style="color:#337ab7">Total Time</td>
                 <td ng-show="currentTab=='archived'" style="color:#337ab7">Validation Status</td>
-                
+
             </tr>
         </thead>
         <tbody>
