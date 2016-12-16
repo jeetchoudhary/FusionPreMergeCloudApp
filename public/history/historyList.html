@@ -42,7 +42,13 @@
                         <span ng-show="sortType == 'starttime' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
                     </a>
                 </td>
-                <td ng-show="currentTab=='archived'" style="color:#337ab7">Finished Time</td>
+                <td ng-show="currentTab=='archived'">
+                    <a style="cursor: pointer" ng-click="sortType = 'archived'; sortReverse = !sortReverse">
+                        Finish Time
+                        <span ng-show="sortType == 'archived' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                        <span ng-show="sortType == 'archived' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+                    </a>
+                </td>
                 <td ng-show="currentTab=='archived'" style="color:#337ab7">Total Time</td>
                 <td ng-show="currentTab=='archived'" style="color:#337ab7">Validation Status</td>
 
