@@ -89,7 +89,7 @@ angular.module('HistCtrl', [])
             templateUrl: '../history/historyList.html',
             controller: function ($scope, $rootScope, $http, $sce) {
                 $scope.sortType = 'starttime'; // set the default sort type
-                $scope.sortReverse = false;  // set the default sort order
+                $scope.sortReverse = true;  // set the default sort order
                 $scope.search = '';
                 $scope.updateHistTrans = function (histtrans) {
                     $rootScope.histTrans = histtrans;

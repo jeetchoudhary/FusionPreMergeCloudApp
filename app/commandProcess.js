@@ -51,10 +51,11 @@ var updateTransactionStatus = function (transaction, status, logFile) {
 				logger.error('Unable to update the row for the transaction ' + transaction.name, err);
 			}
 			else{
-				logger.info('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
+				logger.info('update row for transaction , completed PreMerge process on the transaction :', transaction.name);
 			}
 			if(transaction.runJunits==='Y'){
 				releaseDBLock(transaction.DBServerUsed);
+				logger.info('Released lock for DB'+ transaction.DBServerUsed);
 			}
 		});
     }
