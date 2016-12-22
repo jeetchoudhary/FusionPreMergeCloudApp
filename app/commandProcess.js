@@ -140,7 +140,17 @@ var processTransaction = function (transData) {
     var endDelimeter = ' \"';
 	var destroyTransCommand = useViewCommand + ' \" ade settransproperty -p BUG_NUM -r && ade destroytrans -force ' + transName + endDelimeter;
     var exeCommand = finScriptParams + endDelimeter;
-	var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
+	//var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
+	var sendmailSuccessJunitCheck = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
+	var sendmailSuccess = "";
+	if(transaction.runJunits==='Y')
+	{
+		sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
+	}
+	else{
+		sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -b '+CC+' '+trans.email ;
+	}
+	
 	var errorMessage = "PreMerge Validation completed on transaction : "+trans.name+" , Please view the logs and validate your result ";
 	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -b '+CC+' '+trans.email;
 	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
