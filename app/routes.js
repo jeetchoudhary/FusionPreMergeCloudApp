@@ -168,6 +168,8 @@ module.exports = function (app) {
 
 	var processSubmitRequest = function (transaction) {
 		child_process.fork(__dirname + "/ProcessRequest.js", [JSON.stringify(transaction)], {});
+		// to debug need to comment aboue line and uncomment line below
+	    // child_process.fork(__dirname+"/ProcessRequest.js", [JSON.stringify(transaction)],{ execArgv: ['--debug=5857'] });
 
 	};
 
