@@ -128,7 +128,8 @@ var processTransaction = function (transData) {
     updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile);
     var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
-	var begintrans = useViewCommand +' \" cd .. && ade begintrans ' + transName + ' && ';
+	//var begintrans = useViewCommand +' \" cd .. && ade begintrans ' + transName + ' && ';
+	var begintrans = useViewCommand +' \" ade begintrans ' + transName + ' && ';
     var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
     var checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd &&  ade expand -recurse  /scratch/'+viewName+'/fusionapps/prc/  && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh'+' -d '+trans.dbString ;
     var finScriptParams = checkInCommand + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) +' -Dfamily=prc -DjunitBuildFile=/ade/'+viewName+'/fusionapps/prc/build-po.xml ';
