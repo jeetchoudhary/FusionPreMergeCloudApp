@@ -120,7 +120,7 @@ var processTransaction = function (transData) {
     var series = trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
 	var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
-	var premergeOutLoc = '/scratch/'+viewName+'/fusionapps/premerge/';
+	var premergeOutLoc = '/scratch/views/'+viewName+'/fusionapps/premerge/';
 	var transactionLogFile = premergeOutLoc+transName+'.txt';
 	var transactionIncrBuildFile = premergeOutLoc+transName+'_incrbld.out';
 	var transactionIncrBuildLog = premergeOutLoc+transName+'_incrbld.log';
@@ -131,7 +131,7 @@ var processTransaction = function (transData) {
 	//var begintrans = useViewCommand +' \" cd .. && ade begintrans ' + transName + ' && ';
 	var begintrans = useViewCommand +' \" ade begintrans ' + transName + ' && ';
     var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
-    var checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd /scratch/'+viewName+'/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh'+' -d '+trans.dbString ;
+    var checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd /scratch/views/'+viewName+'/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh'+' -d '+trans.dbString ;
     var finScriptParams = checkInCommand + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) +' -Dfamily=prc -DjunitBuildFile=/ade/'+viewName+'/fusionapps/prc/build-po.xml ';
 	if(trans.junitSelectedList){
 		for (var i in trans.junitSelectedList) {
