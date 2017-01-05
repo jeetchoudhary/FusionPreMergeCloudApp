@@ -3,7 +3,8 @@
  */
 // modules =================================================
 var express        = require('express');
-var app            = express();
+var fusionAPP      = express();
+var dirListApp     = express();
 var mongoose       = require('mongoose');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
@@ -16,7 +17,8 @@ var fs = require('fs');
 var fuseConfig = require('./config/configuration');
 var logger = require('./app/LoggingConfig');
 var logStream = fs.createWriteStream('log.txt', {'flags': 'a'});
-var port = process.env.PORT || 80;
+var fuseionAppPort = process.env.PORT || 80;
+var dirListAppPort = 81;
 mongoose.Promise = global.Promise;
 mongoose.connect(fuseConfig.dburl);
 var db = mongoose.connection;
@@ -31,16 +33,22 @@ db.once('open', function() {
  logger.info('Server : Application connected to database , server is about to start ');
 });
 
-app.use(bodyParser.json()); 
-app.use(bodyParser.json({ type: 'application/vnd.api+json' })); 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
-app.use(express.static(__dirname + '/public')); 
-app.use(express.static(__dirname + '/History/Archived')); 
-app.use(serveIndex('History/Archived', {'icons': true}))
+fusionAPP.use(bodyParser.json()); 
+fusionAPP.use(bodyParser.json({ type: 'application/vnd.api+json' })); 
+fusionAPP.use(bodyParser.urlencoded({ extended: true }));
+fusionAPP.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
+fusionAPP.use(express.static(__dirname + '/public')); 
+
+dirListApp.use(express.static(__dirname + '/History/Archived')); 
+dirListApp.use(serveIndex('History/Archived', {'icons': true}))
+
+
 
 // routes ==================================================
-require('./app/routes')(app); // pass our application into our routes
-var server = app.listen(port);
-logger.info('Fusion Server Started on port ' + port);
-exports = module.exports = app;
+require('./app/routes')(fusionAPP); // pass our application into our routes
+var fusionAppServer = fusionAPP.listen(fuseionAppPort);
+logger.info('Fusion Server Started on port ' + fuseionAppPort);
+var dirListServer = dirListApp.listen(dirListAppPort);
+logger.info('Directory Server Started on port ' + dirListAppPort);
+
+exports = module.exports = fusionAPP;
