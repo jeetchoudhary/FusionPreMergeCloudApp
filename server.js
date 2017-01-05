@@ -7,6 +7,7 @@ var app            = express();
 var mongoose       = require('mongoose');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
+var serveIndex = require('serve-index');
 var SSH = require('simple-ssh');
 var fs = require('fs');
 
