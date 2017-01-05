@@ -121,14 +121,14 @@ var processTransaction = function (transData) {
 	var bugNo = trans.description.bugNum.value;
 	var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
 	var premergeOutLoc = '/scratch/views/'+viewName+'/fusionapps/premerge/';
-	var transactionLogFile = premergeOutLoc+transName+'.txt';
+	var premergeOutTransName = premergeOutLoc+transName;
+	var transactionLogFile = premergeOutTransName+'.txt';
 	var transactionIncrBuildFile = premergeOutLoc+transName+'_incrbld.out';
 	var transactionIncrBuildLog = premergeOutLoc+transName+'_incrbld.log';
 	var transactionJunitFile = premergeOutLoc+transName+'_junit.out';
     updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile);
     var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
-	//var begintrans = useViewCommand +' \" cd .. && ade begintrans ' + transName + ' && ';
 	var begintrans = useViewCommand +' \" ade begintrans ' + transName + ' && ';
     var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
     var checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd /scratch/views/'+viewName+'/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh'+' -d '+trans.dbString ;
@@ -142,19 +142,11 @@ var processTransaction = function (transData) {
 	var destroyTransCommand = useViewCommand + ' \" ade settransproperty -p BUG_NUM -r && ade destroytrans -force ' + transName + endDelimeter;
     var exeCommand = finScriptParams + endDelimeter;
 	//var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
-	var sendmailSuccessJunitCheck = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
-	var sendmailSuccess = "";
-	if(trans.runJunits==='Y')
-	{
-		sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
-	}
-	else{
-		sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -b '+CC+' '+trans.email ;
-	}
-	
+	var sendmailSuccess = 'cat '+ transactionLogFile+' ' +premergeOutTransName +'_*.out | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
 	var errorMessage = "PreMerge Validation completed on transaction : "+trans.name+" , Please view the logs and validate your result ";
 	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -b '+CC+' '+trans.email;
-	var sendmailCommand = '[ -f '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
+	//var sendmailCommand = '[ -e '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
+	var sendmailCommand = sendmailSuccess;
 	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+trans.adeServerUsed+':'+premergeOutLoc+' '+__dirname+'\\..\\History\\Archived\\'+transName+'_1\\';
 	logger.info('command to copy data : ',preMergeResCopyCommand);
 	logger.info('send mail command',sendmailCommand);
