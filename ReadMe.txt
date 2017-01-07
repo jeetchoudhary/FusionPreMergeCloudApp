@@ -38,9 +38,15 @@
             "currentStatus":"UNUSED"
         });
 
-
+10.db.trans.remove({"name" : "jjikumar_bug-24806188"})
 
 ## To Use Monitor RabbingMQ for the application :
 1. 'rabbitmqctl.bat stop_app' : to stop message queuing service.
 2. 'rabbitmqctl.bat reset' : to reset message queuing service , this will also remove all the messages from the queues.
 3. 'rabbitmqctl.bat start_app' : to start message queuing service.
+
+
+Final Command to be executed :
+1. ade useview -silent jjikumar_REL_13 -exec "ade begintrans jjikumar_bug-24806188_123333333 && ade fetchtrans jjikumar_bug-24806188 &&  ade ci -all && ade savetrans && ade settransproperty -p BUG_NUM -v 24806188 && cd /scratch/views/jjikumar_REL_13/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. && yes n | /scratch/views/jjikumar_REL_13/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh -d fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar -DupdateBug=N -DrunJUnits=1 -Dfamily=prc -DjunitBuildFile=/scratch/views/jjikumar_REL_13/fusionapps/prc/build-po.xml"
+
+2. echo "cd /scratch/views/jjikumar_REL_13/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. && yes n | /scratch/views/jjikumar_REL_13/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh -d fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar -DupdateBug=N -DrunJUnits=1 -Dfamily=prc -DjunitBuildFile=/scratch/views/jjikumar_REL_13/fusionapps/prc/build-po.xml" | ade useview jjikumar_REL_13 
