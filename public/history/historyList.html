@@ -64,9 +64,9 @@
                 <td ng-show="currentTab=='archived'">{{ transaction.endtime | date: 'medium' }}</td>
                 <td ng-show="currentTab=='archived'">{{ transaction.totalTimeSpend }}</td>
                 <td style="vertical-align: middle;" ng-show="currentTab=='archived' && (transaction.premergeOutput=='' || !transaction.premergeOutput)"><span class="label label-default">{{ transaction.premergeOutput }}</span></td>
-                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Successful'"><span class="label label-success">{{ transaction.premergeOutput }}</span></td>
-                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Failed'"><span class="label label-danger">{{ transaction.premergeOutput }}</span></td>
-                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Warning'"><span class="label label-warning">{{ transaction.premergeOutput }}</span></td>
+                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Successful'"><a ng-href="{{transaction.transactionDetailedLocation}}" target="_blank" ><span class="label label-success">{{ transaction.premergeOutput }}</span></a></td>
+                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Failed'"><a ng-href="{{transaction.transactionDetailedLocation}}" target="_blank" ><span class="label label-danger">{{ transaction.premergeOutput }}</span></a></td>
+                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Warning'"><a ng-href="{{transaction.transactionDetailedLocation}}" target="_blank" ><span class="label label-warning">{{ transaction.premergeOutput }}</span></a></td>
                 <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Transaction Does Not exist'"><span class="label label-info">{{ transaction.premergeOutput }}</span></td>
             </tr>
         </tbody>
