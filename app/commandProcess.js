@@ -21,151 +21,169 @@ db.once('open', function () {
 	logger.info('Server : Child process is connected to the database ');
 });
 
-var releaseDBLock = function(dbServer){
+var releaseDBLock = function (dbServer) {
 	logger.info('about to release lock for database  :', dbServer);
-	var query = { "connectionString" : dbServer , "currentStatus" : "USED"};
-    Databases.findOneAndUpdate(query, { "currentStatus": "UNUSED" }, { upsert: false }, function (err, doc) {
-			if (err){
-				logger.error('Unable to release lock on db :' + dbServer , err);
-			}else{
-				logger.info('Released lock on db  :', dbServer);
-			}	
+	var query = { "connectionString": dbServer, "currentStatus": "USED" };
+	Databases.findOneAndUpdate(query, { "currentStatus": "UNUSED" }, { upsert: false }, function (err, doc) {
+		if (err) {
+			logger.error('Unable to release lock on db :' + dbServer, err);
+		} else {
+			logger.info('Released lock on db  :', dbServer);
+		}
 	});
+};
+
+
+var getTransactionOverallStatus = function (transaction) {
+	var transactionStatus = "";
+	var permergeResultMainOutputFile = __dirname + '\\..\\History\\Archived\\' + transaction.name + '_1\\' + transaction.name + '.txt';
+	var premergeOutputArray = fs.readFileSync(permergeResultMainOutputFile).toString().split("\n");
+	for (var i in premergeOutputArray) {
+		if (premergeOutputArray[i].includes("Overall Validation Status")) {
+			var words = premergeOutputArray[i].split(" ");
+			var transactionStatus = words[words.length - 2].trim();
+			console.log('Transactinal final status ' + transactionStatus);
+			break;
+		}
+	}
+	return transactionStatus;
 };
 
 var updateTransactionStatus = function (transaction, status, logFile) {
 	var query = '';
 	if (status === "Running") {
-		query = { "name": transaction.name ,"currentStatus": "Queued" };
-        TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now(), "logFileName": logFile ,"DBServerUsed" : transaction.DBServerUsed ,"adeServerUsed" : transaction.adeServerUsed}, { upsert: false }, function (err, doc) {
-			if (err){
+		query = { "name": transaction.name, "currentStatus": "Queued" };
+		TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now(), "logFileName": logFile, "DBServerUsed": transaction.DBServerUsed, "adeServerUsed": transaction.adeServerUsed }, { upsert: false }, function (err, doc) {
+			if (err) {
 				logger.error('Unable to update the row for the transaction ' + transaction.name, err);
-			}else{
+			} else {
 				logger.info('update row for transaction , will start PreMerge process on the transaction :', transaction.name);
-			}	
+			}
 		});
-    } else if (status === "Archived") {
-		query = { "name": transaction.name,"currentStatus": "Running" };
-		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile }, { upsert: false }, function (err, doc) {
-			if (err){
+	} else if (status === "Archived") {
+		query = { "name": transaction.name, "currentStatus": "Running" };
+		var transStatus = getTransactionOverallStatus(transaction);
+		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile, "premergeOutput": transStatus }, { upsert: false }, function (err, doc) {
+			if (err) {
 				logger.error('Unable to update the row for the transaction ' + transaction.name, err);
 			}
-			else{
+			else {
 				logger.info('update row for transaction , completed PreMerge process on the transaction :', transaction.name);
 			}
-			if(transaction.runJunits==='Y'){
+			if (transaction.runJunits === 'Y') {
 				releaseDBLock(transaction.DBServerUsed);
-				logger.info('Released lock for DB'+ transaction.DBServerUsed);
+				logger.info('Released lock for DB' + transaction.DBServerUsed);
 			}
 		});
-    }
+	}
 };
 
-var updateTransactionErrorStatus = function (transaction,logFile) {
+var updateTransactionErrorStatus = function (transaction, logFile) {
 	logFile = fuseConfig.transactionArchivedLogLocation + logFile;
-	var query = { "name": transaction.name , "currentStatus": "Queued" };
-	TransData.findOneAndUpdate(query, { "currentStatus": "Archived", "starttime": Date.now(), "endtime": Date.now(), "premergeOutput": transaction.description.error , "logFileName": logFile }, { upsert: false }, function (err, doc) {
-		if (err){
+	var query = { "name": transaction.name, "currentStatus": "Queued" };
+	TransData.findOneAndUpdate(query, { "currentStatus": "Archived", "starttime": Date.now(), "endtime": Date.now(), "premergeOutput": transaction.description.error, "logFileName": logFile }, { upsert: false }, function (err, doc) {
+		if (err) {
 			logger.error('Unable to update the row for the transaction ' + transaction.name, err);
-		}else{
+		} else {
 			logger.info('update row for transaction , no more processing required for the transaction :', transaction.name);
 		}
 	});
 };
 
-var updateErroredTransation = function(trans,logStream,logFile){
-			var errorMessage = "Problem Occured while running Validation script on transaction : "+trans.name+" , Error :"+trans.description.error;
-			var errorMailCommand = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' '+trans.email;
-			logStream.write("Problem Occured while running Validation script on transaction : "+trans.name+" Error :"+trans.description.error);
-			logStream.end();
-			var source = fs.createReadStream(fuseConfig.transactionActiveLogLocation + logFile);
-			var dest = fs.createWriteStream(fuseConfig.transactionArchivedLogLocation + logFile);
-			source.pipe(dest);
-			source.on('end', function () {
-				logger.info('transaction logs moved to Archived');
-				fs.unlink(fuseConfig.transactionActiveLogLocation + logFile);
-				dest.end();
-			});
-			source.on('error', function (err) {
-				logger.error('failed to move transaction logs to Archived');
-			});
-			updateTransactionErrorStatus(trans,logFile);
-			new SSH({
-				host: trans.adeServerUsed,
-				user: fuseConfig.adeServerUser,
-				pass: fuseConfig.adeServerPass
-			}).exec(errorMailCommand, {
-				out: function (stdout) {
-					logger.info(stdout);
-					return false;
-			},
-			err: function (stderr) {
-				logger.info(stderr);
-				return false;
-			}
-		}).start();
+var updateErroredTransation = function (trans, logStream, logFile) {
+	var errorMessage = "Problem Occured while running Validation script on transaction : " + trans.name + " , Error :" + trans.description.error;
+	var errorMailCommand = 'echo ' + '\"' + errorMessage + '\"' + ' | mutt -s ' + mailSubject + ' ' + trans.email;
+	logStream.write("Problem Occured while running Validation script on transaction : " + trans.name + " Error :" + trans.description.error);
+	logStream.end();
+	var source = fs.createReadStream(fuseConfig.transactionActiveLogLocation + logFile);
+	var dest = fs.createWriteStream(fuseConfig.transactionArchivedLogLocation + logFile);
+	source.pipe(dest);
+	source.on('end', function () {
+		logger.info('transaction logs moved to Archived');
+		fs.unlink(fuseConfig.transactionActiveLogLocation + logFile);
+		dest.end();
+	});
+	source.on('error', function (err) {
+		logger.error('failed to move transaction logs to Archived');
+	});
+	updateTransactionErrorStatus(trans, logFile);
+	new SSH({
+		host: trans.adeServerUsed,
+		user: fuseConfig.adeServerUser,
+		pass: fuseConfig.adeServerPass
+	}).exec(errorMailCommand, {
+		out: function (stdout) {
+			logger.info(stdout);
+			return false;
+		},
+		err: function (stderr) {
+			logger.info(stderr);
+			return false;
+		}
+	}).start();
 };
 
 var processTransaction = function (transData) {
 	var trans = JSON.parse(transData);
 	var date = new Date();
 	var logFile = trans.name + '_' + date.getTime();
-    var logStream = fs.createWriteStream(fuseConfig.transactionActiveLogLocation + logFile, { 'flags': 'a' });
+	var logStream = fs.createWriteStream(fuseConfig.transactionActiveLogLocation + logFile, { 'flags': 'a' });
 	if (trans.description.error) {
-			updateErroredTransation(trans,logStream,logFile);
-			return;
+		updateErroredTransation(trans, logStream, logFile);
+		return;
 	}
-	var transName = ("jjikumar" + trans.name.substring(trans.name.indexOf('_')))+'_' + date.getTime();
+	var transName = ("jjikumar" + trans.name.substring(trans.name.indexOf('_'))) + '_' + date.getTime();
 	logger.info('transaction data recived in the child process ', trans);
-    var series = trans.description.baseLabel.value;
+	var series = trans.description.baseLabel.value;
 	var bugNo = trans.description.bugNum.value;
 	var viewName = fuseConfig.adeServerUser + '_cloud_' + date.getTime();
-	var premergeOutLoc = '/scratch/views/'+viewName+'/fusionapps/premerge/';
-	var premergeOutTransName = premergeOutLoc+transName;
-	var transactionLogFile = premergeOutTransName+'.txt';
-	var transactionIncrBuildFile = premergeOutLoc+transName+'_incrbld.out';
-	var transactionIncrBuildLog = premergeOutLoc+transName+'_incrbld.log';
-	var transactionJunitFile = premergeOutLoc+transName+'_junit.out';
-    updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile);
-    var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
+	var premergeOutLoc = '/scratch/views/' + viewName + '/fusionapps/premerge/';
+	var premergeOutTransName = premergeOutLoc + transName;
+	var transactionLogFile = premergeOutTransName + '.txt';
+	var transactionIncrBuildFile = premergeOutLoc + transName + '_incrbld.out';
+	var transactionIncrBuildLog = premergeOutLoc + transName + '_incrbld.log';
+	var transactionJunitFile = premergeOutLoc + transName + '_junit.out';
+	updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile);
+	var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
-	var begintrans = useViewCommand +' \" ade begintrans ' + transName + ' && ';
-    var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
-    var checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd /scratch/views/'+viewName+'/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh'+' -d '+trans.dbString ;
-    var finScriptParams = checkInCommand + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) +' -Dfamily=prc -DjunitBuildFile=/ade/'+viewName+'/fusionapps/prc/build-po.xml ';
-	if(trans.junitSelectedList){
+	var begintrans = useViewCommand + ' \" ade begintrans ' + transName + ' && ';
+	var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
+	var checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd /scratch/views/' + viewName + '/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
+	var finScriptParams = checkInCommand + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) + ' -Dfamily=prc -DjunitBuildFile=/ade/' + viewName + '/fusionapps/prc/build-po.xml ';
+	if (trans.junitSelectedList) {
 		for (var i in trans.junitSelectedList) {
-				finScriptParams += ' -j '+ trans.junitSelectedList[i].id+'.jpr';
-			}
+			finScriptParams += ' -j ' + trans.junitSelectedList[i].id + '.jpr';
+		}
 	}
-    var endDelimeter = ' \"';
+	var endDelimeter = ' \"';
 	var destroyTransCommand = useViewCommand + ' \" ade settransproperty -p BUG_NUM -r && ade destroytrans -force ' + transName + endDelimeter;
-    var exeCommand = finScriptParams + endDelimeter;
+	var exeCommand = finScriptParams + endDelimeter;
 	//var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
 	//var sendmailSuccess = 'cat '+ transactionLogFile+' ' +premergeOutTransName +'_*.out | mutt -s ' +mailSubject+' -b '+CC+' '+trans.email ;
-	var emailBody =  'Premerge validation completed for your transaction '+trans.name+'. you can verify the result of the validation at http://slc04kxc.us.oracle.com:81/'+transName+'_1';
-	var sendmailSuccess = 'echo '+ emailBody  +' | mutt -s ' +mailSubject+' -b '+CC+' '+trans.email ;
-	var errorMessage = "PreMerge Validation completed on transaction : "+trans.name+" , Please view the logs and validate your result ";
-	var sendmailFailure = 'echo '+'\"'+errorMessage+'\"'+ ' | mutt -s '+mailSubject+' -b '+CC+' '+trans.email;
+	var emailBody = 'Premerge validation completed for your transaction ' + trans.name + '. you can verify the result of the validation at http://slc04kxc.us.oracle.com:81/' + transName + '_1';
+	var sendmailSuccess = 'echo ' + emailBody + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
+	var errorMessage = "PreMerge Validation completed on transaction : " + trans.name + " , Please view the logs and validate your result ";
+	var sendmailFailure = 'echo ' + '\"' + errorMessage + '\"' + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
 	//var sendmailCommand = '[ -e '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
 	var sendmailCommand = sendmailSuccess;
-	var preMergeResCopyCommand = 'scp -i '+fuseConfig.sshPublicKeyLocation+' -r '+fuseConfig.adeServerUser+'@'+trans.adeServerUsed+':'+premergeOutLoc+' '+__dirname+'\\..\\History\\Archived\\'+transName+'_1\\';
-	logger.info('command to copy data : ',preMergeResCopyCommand);
-	logger.info('send mail command',sendmailCommand);
-    logger.info('command to be executed', exeCommand);
+	var premergeResultLocalLocation = __dirname + '\\..\\History\\Archived\\' + transName + '_1\\';
+	var preMergeResCopyCommand = 'scp -i ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + trans.adeServerUsed + ':' + premergeOutLoc + ' ' + premergeResultLocalLocation;
+	logger.info('command to copy data : ', preMergeResCopyCommand);
+	logger.info('send mail command', sendmailCommand);
+	logger.info('command to be executed', exeCommand);
 	new SSH({
 		host: trans.adeServerUsed,
 		user: fuseConfig.adeServerUser,
 		pass: fuseConfig.adeServerPass
 	}).exec(createViewCommand, {
-        out: function (stdout) {
+		out: function (stdout) {
 			logStream.write(stdout);
-            logger.info(stdout);
-        },
-        err: function (stderr) {
-            logger.info(stderr);
-            return false;
-        }
+			logger.info(stdout);
+		},
+		err: function (stderr) {
+			logger.info(stderr);
+			return false;
+		}
 	}).exec(exeCommand, {
 		out: function (stdout) {
 			logStream.write(stdout);
@@ -177,9 +195,9 @@ var processTransaction = function (transData) {
 		}
 	}).exec('echo', {
 		out: function (stdout) {
-			var copyFiles = exec(preMergeResCopyCommand,function(error, stdout, stderr){
-			if (error) {
-					logger.error('Error occured while coping premerge result files : ',error);
+			var copyFiles = exec(preMergeResCopyCommand, function (error, stdout, stderr) {
+				if (error) {
+					logger.error('Error occured while coping premerge result files : ', error);
 				}
 			});
 			logStream.write('Premerge Process completed');
