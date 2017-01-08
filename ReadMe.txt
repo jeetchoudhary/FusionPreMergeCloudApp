@@ -39,6 +39,8 @@
         });
 
 10.db.trans.remove({"name" : "jjikumar_bug-24806188"})
+11.db.trans.remove({"currentStatus" : "Running"})
+12.db.trans.remove({"premergeOutput" : "Failed"})
 
 ## To Use Monitor RabbingMQ for the application :
 1. 'rabbitmqctl.bat stop_app' : to stop message queuing service.
