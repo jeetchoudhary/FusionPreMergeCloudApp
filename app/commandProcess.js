@@ -34,9 +34,8 @@ var releaseDBLock = function (dbServer) {
 };
 
 
-var getTransactionOverallStatus = function (transaction) {
+var getTransactionOverallStatus = function (permergeResultMainOutputFile) {
 	var transactionStatus = "";
-	var permergeResultMainOutputFile = __dirname + '\\..\\History\\Archived\\' + transaction.name + '_1\\' + transaction.name + '.txt';
 	var premergeOutputArray = fs.readFileSync(permergeResultMainOutputFile).toString().split("\n");
 	for (var i in premergeOutputArray) {
 		if (premergeOutputArray[i].includes("Overall Validation Status")) {
@@ -49,7 +48,7 @@ var getTransactionOverallStatus = function (transaction) {
 	return transactionStatus;
 };
 
-var updateTransactionStatus = function (transaction, status, logFile) {
+var updateTransactionStatus = function (transaction, status, logFile,permergeResultMainOutputFile) {
 	var query = '';
 	if (status === "Running") {
 		query = { "name": transaction.name, "currentStatus": "Queued" };
@@ -62,8 +61,9 @@ var updateTransactionStatus = function (transaction, status, logFile) {
 		});
 	} else if (status === "Archived") {
 		query = { "name": transaction.name, "currentStatus": "Running" };
-		var transStatus = getTransactionOverallStatus(transaction);
-		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile, "premergeOutput": transStatus }, { upsert: false }, function (err, doc) {
+		var detailedLogLocation = trans.transactionDetailedLocation;
+		var transStatus = getTransactionOverallStatus(permergeResultMainOutputFile);
+		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile, "premergeOutput": transStatus ,"transactionDetailedLocation":detailedLogLocation }, { upsert: false }, function (err, doc) {
 			if (err) {
 				logger.error('Unable to update the row for the transaction ' + transaction.name, err);
 			}
@@ -143,7 +143,7 @@ var processTransaction = function (transData) {
 	var transactionIncrBuildFile = premergeOutLoc + transName + '_incrbld.out';
 	var transactionIncrBuildLog = premergeOutLoc + transName + '_incrbld.log';
 	var transactionJunitFile = premergeOutLoc + transName + '_junit.out';
-	updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile);
+	updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile,"");
 	var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
 	var begintrans = useViewCommand + ' \" ade begintrans ' + transName + ' && ';
@@ -160,7 +160,9 @@ var processTransaction = function (transData) {
 	var exeCommand = finScriptParams + endDelimeter;
 	//var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
 	//var sendmailSuccess = 'cat '+ transactionLogFile+' ' +premergeOutTransName +'_*.out | mutt -s ' +mailSubject+' -b '+CC+' '+trans.email ;
-	var emailBody = 'Premerge validation completed for your transaction ' + trans.name + '. you can verify the result of the validation at http://slc04kxc.us.oracle.com:81/' + transName + '_1';
+	var detailedTransactionOutputLocation = 'http://slc04kxc.us.oracle.com:81/' + transName + '_1'
+	var emailBody = 'Premerge validation completed for your transaction ' + trans.name + '. you can verify the result of the validation at '+detailedTransactionOutputLocation;
+	trans.transactionDetailedLocation = detailedTransactionOutputLocation;
 	var sendmailSuccess = 'echo ' + emailBody + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
 	var errorMessage = "PreMerge Validation completed on transaction : " + trans.name + " , Please view the logs and validate your result ";
 	var sendmailFailure = 'echo ' + '\"' + errorMessage + '\"' + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
@@ -168,6 +170,7 @@ var processTransaction = function (transData) {
 	var sendmailCommand = sendmailSuccess;
 	var premergeResultLocalLocation = __dirname + '\\..\\History\\Archived\\' + transName + '_1\\';
 	var preMergeResCopyCommand = 'scp -i ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + trans.adeServerUsed + ':' + premergeOutLoc + ' ' + premergeResultLocalLocation;
+	var permergeResultMainOutputFile = premergeResultLocalLocation + transName + '.txt';
 	logger.info('command to copy data : ', preMergeResCopyCommand);
 	logger.info('send mail command', sendmailCommand);
 	logger.info('command to be executed', exeCommand);
@@ -214,7 +217,7 @@ var processTransaction = function (transData) {
 			source.on('error', function (err) {
 				logger.error('failed to move transaction logs to Archived');
 			});
-			updateTransactionStatus(trans, 'Archived', fuseConfig.transactionArchivedLogLocation + logFile);
+			updateTransactionStatus(trans, 'Archived', fuseConfig.transactionArchivedLogLocation + logFile,permergeResultMainOutputFile);
 		},
 		err: function (stderr) {
 			logger.info(stderr);

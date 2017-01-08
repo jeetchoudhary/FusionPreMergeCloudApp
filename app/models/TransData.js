@@ -17,7 +17,8 @@ var TransDataSchema = mongoose.Schema({
 	adeServerUsed : String,
 	DBServerUsed : String,
 	allowDBOverride : String,
-	remark : String
+	remark : String,
+	transactionDetailedLocation : String
 });
 
 var Trans = mongoose.model('Trans', TransDataSchema);
