@@ -35,16 +35,20 @@ var releaseDBLock = function (dbServer) {
 
 
 var getTransactionOverallStatus = function (permergeResultMainOutputFile) {
-	logger.info('Premerge final output file location  :', permergeResultMainOutputFile);
 	var transactionStatus = "";
-	var premergeOutputArray = fs.readFileSync(permergeResultMainOutputFile).toString().split("\n");
-	for (var i in premergeOutputArray) {
-		if (premergeOutputArray[i].includes("Overall Validation Status")) {
-			var words = premergeOutputArray[i].split(" ");
-			var transactionStatus = words[words.length - 2].trim();
-			console.log('Transactinal final status ' + transactionStatus);
-			break;
+	if (fs.existsSync(permergeResultMainOutputFile)) {
+		logger.info('Premerge final output file exist at location  :', permergeResultMainOutputFile);
+		var premergeOutputArray = fs.readFileSync(permergeResultMainOutputFile).toString().split("\n");
+		for (var i in premergeOutputArray) {
+			if (premergeOutputArray[i].includes("Overall Validation Status")) {
+				var words = premergeOutputArray[i].split(" ");
+				var transactionStatus = words[words.length - 2].trim();
+				console.log('Transactinal final status ' + transactionStatus);
+				break;
+			}
 		}
+	}else{
+		logger.info('Premerge final output file does not exist at location  :', permergeResultMainOutputFile);
 	}
 	return transactionStatus;
 };
