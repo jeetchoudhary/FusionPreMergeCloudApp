@@ -47,13 +47,13 @@ var getTransactionOverallStatus = function (permergeResultMainOutputFile) {
 				break;
 			}
 		}
-	}else{
+	} else {
 		logger.info('Premerge final output file does not exist at location  :', permergeResultMainOutputFile);
 	}
 	return transactionStatus;
 };
 
-var updateTransactionStatus = function (transaction, status, logFile,permergeResultMainOutputFile) {
+var updateTransactionStatus = function (transaction, status, logFile, permergeResultMainOutputFile) {
 	var query = '';
 	if (status === "Running") {
 		query = { "name": transaction.name, "currentStatus": "Queued" };
@@ -67,9 +67,9 @@ var updateTransactionStatus = function (transaction, status, logFile,permergeRes
 	} else if (status === "Archived") {
 		query = { "name": transaction.name, "currentStatus": "Running" };
 		var detailedLogLocation = transaction.transactionDetailedLocation;
-		logger.info('Premerge detailedLogLocation for the transaction '+ transaction.name+' : ', detailedLogLocation);
+		logger.info('Premerge detailedLogLocation for the transaction ' + transaction.name + ' : ', detailedLogLocation);
 		var transStatus = getTransactionOverallStatus(permergeResultMainOutputFile);
-		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile, "premergeOutput": transStatus ,"transactionDetailedLocation":detailedLogLocation }, { upsert: false }, function (err, doc) {
+		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile, "premergeOutput": transStatus, "transactionDetailedLocation": detailedLogLocation }, { upsert: false }, function (err, doc) {
 			if (err) {
 				logger.error('Unable to update the row for the transaction ' + transaction.name, err);
 			}
@@ -149,7 +149,7 @@ var processTransaction = function (transData) {
 	var transactionIncrBuildFile = premergeOutLoc + transName + '_incrbld.out';
 	var transactionIncrBuildLog = premergeOutLoc + transName + '_incrbld.log';
 	var transactionJunitFile = premergeOutLoc + transName + '_junit.out';
-	updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile,"");
+	updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile, "");
 	var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
 	var begintrans = useViewCommand + ' \" ade begintrans ' + transName + ' && ';
@@ -167,7 +167,7 @@ var processTransaction = function (transData) {
 	//var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
 	//var sendmailSuccess = 'cat '+ transactionLogFile+' ' +premergeOutTransName +'_*.out | mutt -s ' +mailSubject+' -b '+CC+' '+trans.email ;
 	var detailedTransactionOutputLocation = 'http://slc04kxc.us.oracle.com:81/' + transName + '_1'
-	var emailBody = 'Premerge validation completed for your transaction ' + trans.name + '. you can verify the result of the validation at '+detailedTransactionOutputLocation;
+	var emailBody = 'Premerge validation completed for your transaction ' + trans.name + '. you can verify the result of the validation at ' + detailedTransactionOutputLocation;
 	trans.transactionDetailedLocation = detailedTransactionOutputLocation;
 	var sendmailSuccess = 'echo ' + emailBody + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
 	var errorMessage = "PreMerge Validation completed on transaction : " + trans.name + " , Please view the logs and validate your result ";
@@ -228,10 +228,12 @@ var processTransaction = function (transData) {
 			logger.info(stderr);
 			return false;
 		}
-	}).exec("sleep 5", {
+	}).exec("echo", {
 		out: function (stdout) {
 			logger.info("permergeResultMainOutputFile : " + permergeResultMainOutputFile);
-			updateTransactionStatus(trans, 'Archived', fuseConfig.transactionArchivedLogLocation + logFile,permergeResultMainOutputFile);
+			setTimeout(function () {
+				updateTransactionStatus(trans, 'Archived', fuseConfig.transactionArchivedLogLocation + logFile, permergeResultMainOutputFile);
+			}, 5000);
 		},
 		err: function (stderr) {
 			logger.info(stderr);
