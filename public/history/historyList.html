@@ -63,7 +63,11 @@
                 <td ng-hide="currentTab=='queued'">{{ transaction.starttime | date: 'medium' }}</td>
                 <td ng-show="currentTab=='archived'">{{ transaction.endtime | date: 'medium' }}</td>
                 <td ng-show="currentTab=='archived'">{{ transaction.totalTimeSpend }}</td>
-                <td ng-show="currentTab=='archived'">{{ transaction.premergeOutput }}</td>
+                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && (transaction.premergeOutput=='' || !transaction.premergeOutput)"><span class="label label-default">{{ transaction.premergeOutput }}</span></td>
+                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Successful'"><span class="label label-success">{{ transaction.premergeOutput }}</span></td>
+                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Failed'"><span class="label label-danger">{{ transaction.premergeOutput }}</span></td>
+                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Warning'"><span class="label label-warning">{{ transaction.premergeOutput }}</span></td>
+                <td style="vertical-align: middle;" ng-show="currentTab=='archived' && transaction.premergeOutput=='Transaction Does Not exist'"><span class="label label-info">{{ transaction.premergeOutput }}</span></td>
             </tr>
         </tbody>
     </table>
