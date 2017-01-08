@@ -61,7 +61,7 @@ var updateTransactionStatus = function (transaction, status, logFile,permergeRes
 		});
 	} else if (status === "Archived") {
 		query = { "name": transaction.name, "currentStatus": "Running" };
-		var detailedLogLocation = trans.transactionDetailedLocation;
+		var detailedLogLocation = transaction.transactionDetailedLocation;
 		var transStatus = getTransactionOverallStatus(permergeResultMainOutputFile);
 		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile, "premergeOutput": transStatus ,"transactionDetailedLocation":detailedLogLocation }, { upsert: false }, function (err, doc) {
 			if (err) {
