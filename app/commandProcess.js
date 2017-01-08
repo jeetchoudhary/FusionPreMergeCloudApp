@@ -35,6 +35,7 @@ var releaseDBLock = function (dbServer) {
 
 
 var getTransactionOverallStatus = function (permergeResultMainOutputFile) {
+	logger.info('Premerge final output file location  :', permergeResultMainOutputFile);
 	var transactionStatus = "";
 	var premergeOutputArray = fs.readFileSync(permergeResultMainOutputFile).toString().split("\n");
 	for (var i in premergeOutputArray) {
@@ -62,6 +63,7 @@ var updateTransactionStatus = function (transaction, status, logFile,permergeRes
 	} else if (status === "Archived") {
 		query = { "name": transaction.name, "currentStatus": "Running" };
 		var detailedLogLocation = transaction.transactionDetailedLocation;
+		logger.info('Premerge detailedLogLocation for the transaction '+ transaction.name+' : ', detailedLogLocation);
 		var transStatus = getTransactionOverallStatus(permergeResultMainOutputFile);
 		TransData.findOneAndUpdate(query, { "currentStatus": status, "endtime": Date.now(), "logFileName": logFile, "premergeOutput": transStatus ,"transactionDetailedLocation":detailedLogLocation }, { upsert: false }, function (err, doc) {
 			if (err) {
@@ -217,6 +219,14 @@ var processTransaction = function (transData) {
 			source.on('error', function (err) {
 				logger.error('failed to move transaction logs to Archived');
 			});
+		},
+		err: function (stderr) {
+			logger.info(stderr);
+			return false;
+		}
+	}).exec("sleep 5", {
+		out: function (stdout) {
+			logger.info("permergeResultMainOutputFile : " + permergeResultMainOutputFile);
 			updateTransactionStatus(trans, 'Archived', fuseConfig.transactionArchivedLogLocation + logFile,permergeResultMainOutputFile);
 		},
 		err: function (stderr) {
