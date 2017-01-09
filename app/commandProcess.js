@@ -150,11 +150,19 @@ var processTransaction = function (transData) {
 	var transactionIncrBuildLog = premergeOutLoc + transName + '_incrbld.log';
 	var transactionJunitFile = premergeOutLoc + transName + '_junit.out';
 	updateTransactionStatus(trans, 'Running', fuseConfig.transactionActiveLogLocation + logFile, "");
+	var mkprivatePrcJaznCommand = 'ade mkprivate /scratch/views/' + viewName + '/fusionapps/prc/components/procurement/src/META-INF/* ';
+	var mkprivatePrcEssJaznCommand = 'ade mkprivate /scratch/views/' + viewName + '/fusionapps/prc/components/procurementEss/src/META-INF/* ';
 	var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
 	var begintrans = useViewCommand + ' \" ade begintrans ' + transName + ' && ';
 	var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
-	var checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd /scratch/views/' + viewName + '/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
+	var checkInCommand = "";
+	if(trans.runJunits === 'Y'){
+		 checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd /scratch/views/' + viewName + 
+						'/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. '+mkprivatePrcJaznCommand + ' && '+mkprivatePrcEssJaznCommand +'&& yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
+	}else{
+		checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
+	}
 	var finScriptParams = checkInCommand + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) + ' -Dfamily=prc -DjunitBuildFile=/ade/' + viewName + '/fusionapps/prc/build-po.xml ';
 	if (trans.junitSelectedList) {
 		for (var i in trans.junitSelectedList) {
@@ -164,15 +172,12 @@ var processTransaction = function (transData) {
 	var endDelimeter = ' \"';
 	var destroyTransCommand = useViewCommand + ' \" ade settransproperty -p BUG_NUM -r && ade destroytrans -force ' + transName + endDelimeter;
 	var exeCommand = finScriptParams + endDelimeter;
-	//var sendmailSuccess = 'cat '+ transactionLogFile+ ' | mutt -s ' +mailSubject+' -a '+transactionIncrBuildFile+' -a '+transactionIncrBuildLog+' -a '+transactionJunitFile+' -b '+CC+' '+trans.email ;
-	//var sendmailSuccess = 'cat '+ transactionLogFile+' ' +premergeOutTransName +'_*.out | mutt -s ' +mailSubject+' -b '+CC+' '+trans.email ;
 	var detailedTransactionOutputLocation = 'http://slc04kxc.us.oracle.com:81/' + transName + '_1'
 	var emailBody = 'Premerge validation completed for your transaction ' + trans.name + '. you can verify the result of the validation at ' + detailedTransactionOutputLocation;
 	trans.transactionDetailedLocation = detailedTransactionOutputLocation;
 	var sendmailSuccess = 'echo ' + emailBody + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
 	var errorMessage = "PreMerge Validation completed on transaction : " + trans.name + " , Please view the logs and validate your result ";
 	var sendmailFailure = 'echo ' + '\"' + errorMessage + '\"' + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
-	//var sendmailCommand = '[ -e '+ transactionLogFile+ ' ]  && ' + sendmailSuccess +' || ' + sendmailFailure ;
 	var sendmailCommand = sendmailSuccess;
 	var premergeResultLocalLocation = __dirname + '\\..\\History\\Archived\\' + transName + '_1\\';
 	var preMergeResCopyCommand = 'scp -i ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + trans.adeServerUsed + ':' + premergeOutLoc + ' ' + premergeResultLocalLocation;
