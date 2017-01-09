@@ -158,8 +158,11 @@ var processTransaction = function (transData) {
 	var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
 	var checkInCommand = "";
 	if(trans.runJunits === 'Y'){
-		 checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd /scratch/views/' + viewName + 
-						'/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. '+mkprivatePrcJaznCommand + ' && '+mkprivatePrcEssJaznCommand +'&& yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
+		var dummyLRGCommand =  ' ant -f build-po.xml -Dtest.lrg=true test test-report -Dlrg=prc_po_lrg -Dtest.project=\'PrcPoPublicViewEcsfTest\' -Ddb.host=slc09xht.us.oracle.com -Ddb.port=1595 -Ddb.sid=jjikumar -Ddb.user=fusion -Ddb.pass=fusion ';
+		 //checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd /scratch/views/' + viewName + 
+			//			'/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. '+mkprivatePrcJaznCommand + ' && '+mkprivatePrcEssJaznCommand +'&& yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
+			 checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo +' && cd prc && '+dummyLRGCommand +' && cd /scratch/views/' + viewName + 
+						'/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/*  && echo preMergeValidationStarted && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
 	}else{
 		checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
 	}
@@ -170,7 +173,7 @@ var processTransaction = function (transData) {
 		}
 	}
 	var endDelimeter = ' \"';
-	var destroyTransCommand = useViewCommand + ' \" ade settransproperty -p BUG_NUM -r && ade destroytrans -force ' + transName + endDelimeter;
+	var destroyTransCommand = useViewCommand + ' \"  ade settransproperty -p BUG_NUM -r && ade destroytrans -force ' + transName + endDelimeter;
 	var exeCommand = finScriptParams + endDelimeter;
 	var detailedTransactionOutputLocation = 'http://slc04kxc.us.oracle.com:81/' + transName + '_1'
 	var emailBody = 'Premerge validation completed for your transaction ' + trans.name + '. you can verify the result of the validation at ' + detailedTransactionOutputLocation;
@@ -185,6 +188,7 @@ var processTransaction = function (transData) {
 	logger.info('command to copy data : ', preMergeResCopyCommand);
 	logger.info('send mail command', sendmailCommand);
 	logger.info('command to be executed', exeCommand);
+	var startLogging = 'N';
 	new SSH({
 		host: trans.adeServerUsed,
 		user: fuseConfig.adeServerUser,
@@ -200,7 +204,11 @@ var processTransaction = function (transData) {
 		}
 	}).exec(exeCommand, {
 		out: function (stdout) {
-			logStream.write(stdout);
+			if(startLogging==='Y' || trans.runJunits === 'N'){
+				logStream.write(stdout);
+			}else if(startLogging==='N' && trans.runJunits === 'Y' && stdout.includes("preMergeValidationStarted")){
+					startLogging = 'Y';
+			}
 			logger.info(stdout);
 		},
 		err: function (stderr) {
