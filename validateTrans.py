@@ -29,8 +29,8 @@ parser = optparse.OptionParser()
 parser.add_option('-d', '--db', action="store", dest="dbString",help="Database String to run Automated Units test format should be like fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar", default="fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar")
 parser.add_option('-t', '--trans', action="store", dest="transName",help="Transaction Name on which you want to run script", default="")
 parser.add_option('-e', '--email', action="store", dest="emailID",help="Email ID on which you want to get email", default="")
-parser.add_option('-u', '--updatebug', action="store", dest="updateBug",help="Will update bug with the result if value given is Y , default value is N ", default="N")
-parser.add_option('-j', '--junits', action="store", dest="runJunits",help="Should automated unit tests run on this transaction , default value in N", default="N")
+parser.add_option('-u', '--updatebug', action="store", dest="updateBug",help="Will update bug with the result if value given is Y , default value is N ", default="Y")
+parser.add_option('-j', '--junits', action="store", dest="runJunits",help="Should automated unit tests run on this transaction , default value in N", default="Y")
 
 options, args = parser.parse_args()
 
@@ -38,7 +38,7 @@ options, args = parser.parse_args()
 #Getting the transaction name if not provided as the script arguments
 if not options.transName:
     output = subprocess.Popen(["ade", "pwv"], stdout=subprocess.PIPE).communicate()[0]
-    #Below Line shuould be uncommented if the script is running from Windows VM Machines
+    #Below Line should be uncommented if the script is running from Windows VM Machines
     #output = subprocess.Popen(['dir'], stdout=subprocess.PIPE,shell=True).communicate()[0]
     list = output.splitlines()
     for x in list:
