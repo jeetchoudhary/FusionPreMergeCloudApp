@@ -38,9 +38,12 @@
             "currentStatus":"UNUSED"
         });
 
-10.db.trans.remove({"name" : "jjikumar_bug-24806188"})
-11.db.trans.remove({"currentStatus" : "Running"})
-12.db.trans.remove({"premergeOutput" : "Failed"})
+10. db.trans.remove({"name" : "jjikumar_bug-24806188"})
+11. db.trans.remove({"currentStatus" : "Running"})
+12. db.trans.remove({"premergeOutput" : "Failed"})
+13. db.trans.find({ "premergeOutput" : { "$exists" : false } })
+14. db.trans.remove({"_id" : ObjectId("587933d5f03c237ae0c547fe")})
+15. UT03 DB : fusion/fusion@slcao718.us.oracle.com:1620/sp5yd57
 
 ## To Use Monitor RabbingMQ for the application :
 1. 'rabbitmqctl.bat stop_app' : to stop message queuing service.
