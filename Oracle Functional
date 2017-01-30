@@ -1,0 +1,32 @@
+1## Enable Finest Leve Logging for user :
+	1. Set up and Main > 'Manage Administrator Profile Values'
+	2. Enter “AFLOG%” in ‘Profile Option Code’ .
+	3. Enter a new record for AFLOG_ENABLED  
+              Profile Level= “User” 
+              User Name= The name of the user that will reproduce the issue
+              Profile Value=  “YES”
+    4. In “Manage Administrator Profile Values” page, enter a new record for AFLOG_LEVEL
+              Profile Level= “User” 
+              User Name= The name of the user that will reproduce the issue
+              Profile Value=  “Finest”
+
+
+2## Communicate Purchasing Documents Changes
+    1, Profile Options :
+        1. Set up and Main > 'Manage Administrator Profile Values'
+        2. Search for 'Profile Display Name' as 'Control Supplier Communication'
+        3. Search for 'Profile Display Name' as 'Override E-mail Address'
+
+    2. To get Ess Request Log file : 
+        Purchasing > Communicate Purchasing Documents
+
+
+    3. User of different Profile Options : 
+        1. Control Supplier Communication	Disable: Disable Supplier email communication disabled
+                                            Enable: Enable Supplier email communication disabled (this is the Default profile value)
+        2. Override E-mail Recipient: Specify the email address to which all purchasing documents need to be communicated
+        3. Override E-mail Address	<freeform text/email addresss> : Purchasing documents will be sent to this email address, if "Control Supplier Communication" profile value is "Override E-mail Recipient" and supplier communication method is set to Email.
+
+    4. Query to check value for the db for the above values : 
+        1. SELECT * FROM FND_PROFILE_OPTION_VALUES WHERE PROFILE_OPTION_ID IN (SELECT profile_option_id FROM fnd_profile_options WHERE PROFILE_OPTION_NAME='PO_CONTROL_SUPPLIER_COMMUNICATION');
+        2. SELECT PROFILE_OPTION_VALUE FROM FND_PROFILE_OPTION_VALUES WHERE PROFILE_OPTION_ID IN (SELECT profile_option_id FROM fnd_profile_options WHERE PROFILE_OPTION_NAME='PO_NOTIFICATION_OVERRIDE_E-MAIL');

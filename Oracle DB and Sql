@@ -1,0 +1,20 @@
+##1 To set environment Variables :
+    cd /scratch/oradba/db/tech_st/12.1.0/bin;
+    export ORACLE_HOME=/scratch/oradba/db/tech_st/12.1.0;
+    export ORACLE_SID=in76040;
+    ./sqlplus "sys as sysdba"
+    ./sqlplus ./ as sysdba
+
+##2 SMC WorkList Application table Modifications
+    GRANT ALL PRIVILEGES ON PRC_FUSION_SOAINFRA.WFTASKMETADATA  TO fusion;
+    ALTER TABLE PRC_FUSION_SOAINFRA.WFTASKMETADATA ADD ( PACKAGENAME   VARCHAR2(200 BYTE));
+
+##3 Data to be Visible in Seed Data Extraction 
+    select * from fnd_appl_taxonomy where module_key in ('PO','PRC','POR','PON','POZ','POS','POQ');
+    update fnd_appl_taxonomy set usage_type = 'INSTALLED' where module_key in ('PO','PRC','POR','PON','POZ','POS','POQ');
+    commit;
+
+##4 for po charge account not getting defaulted : open /ade/jjikumar_intprc/fusionapps/prc/po/db/sql/po_tab_sddyn.sql  copy the content and execute on db
+
+
+##5 

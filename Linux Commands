@@ -1,0 +1,12 @@
+##1 Command to take JFR
+./jrcmd  24819  start_flightrecording duration=300s filename=/scratch/PurchasingWorkArea_28_12_REL11_INDL76105_with_JDBC_profile.jfr 
+./jrcmd  24819  start_flightrecording settings=/scratch/jdbc_profile.jfs duration=300s filename=/scratch/PurchasingWorkArea_28_12_REL11_INDL76105_with_JDBC_profile.jfr 
+./jrcmd 24819  stop_flightrecording recording=3
+
+##2 Schedule Cron Jobs
+crontab -e
+MAILTO=jitender.k.kumar@orale.com
+30 01 * * 0-6 /scratch/jjikumar/cronscript.sh
+
+##3 Command to track time taken in every line 
+ant build | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; fflush(); }' > ~/Desktop/antBuildRun1.log

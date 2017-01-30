@@ -43,7 +43,7 @@
 12. db.trans.remove({"premergeOutput" : "Failed"})
 13. db.trans.find({ "premergeOutput" : { "$exists" : false } })
 14. db.trans.remove({"_id" : ObjectId("587933d5f03c237ae0c547fe")})
-15. UT03 DB : fusion/fusion@slcao718.us.oracle.com:1620/sp5yd57
+15. db.databases.updateOne({"alias" : "REL13_1"},{ $set:{"currentStatus" : "UNUSED"}})
 
 ## To Use Monitor RabbingMQ for the application :
 1. 'rabbitmqctl.bat stop_app' : to stop message queuing service.
