@@ -1,12 +1,13 @@
-2## Deploy approval Composites
+1## Deploy approval Composites
     ant deploySOAComposite -Ddeploy.appinfo=AppInfo.xml -Ddeploy.configplan=deployPlan.xml -Ddeploy.composite=./deploy/sca_PrcPoApprovalComposite.jar
     ant deploySOAComposite -Ddeploy.appinfo=AppInfo.xml -Ddeploy.configplan=deployPlan.xml -Ddeploy.composite=$ADE_VIEW_ROOT/fusionapps/prc/deploy/jar_PrcPoApprovalSoaResource.jar
     ant deploySOAComposite -Ddeploy.appinfo=AppInfo.xml -Ddeploy.configplan=deployPlan.xml -Ddeploy.composite=$ADE_VIEW_ROOT/fusionapps/prc/deploy/jar_PrcPoSendFYINotificationSoaResource.jar
     cp po/noship/approvalRules/PoApproval_Rules_Metadata.jar ~/Desktop/
     connect('weblogic','weblogic1','t3://indl76040.in.oracle.com:7111')
-    sca_importUpdates ('http://indl76040.in.oracle.com:7111','/home/jjikumar/Desktop/PoApproval_Rules_Metadata.jar', 'PrcPoApprovalComposite','11.13.0.0.0' )
+    sca_importUpdates('http://indl76040.in.oracle.com:7111','/scratch/jjikumar/view_storage/jjikumar_REL_13_Server/fusionapps/prc/po/noship/approvalRules/PoApproval_Rules_Metadata.jar','PrcPoApprovalComposite','11.13.0.0.0')
+    sca_importUpdates('http://indl76040.in.oracle.com:7111','/scratch/jjikumar/view_storage/jjikumar_REL_13_Server/fusionapps/prc/por/noship/approvalRules/ReqApproval_Rules_Metadata.jar','PrcPorManageReqApprovalComposite','11.13.0.0.0')
 
-3## Entries for flex enabling in adf-config.xml
+2## Entries for flex enabling in adf-config.xml
     <mds:namespace path="/oracle/apps/prc/po/editDocument/flex/draftPurchaseOrderDistribution" metadata-store-usage="globalStore-by-adfconfigfilter"/>
     <mds:namespace path="/oracle/apps/prc/po/editDocument/flex/draftPurchasingDocumentHeader" metadata-store-usage="globalStore-by-adfconfigfilter"/>
     <mds:namespace path="/oracle/apps/prc/po/editDocument/flex/draftPurchasingDocumentLine" metadata-store-usage="globalStore-by-adfconfigfilter"/>
@@ -22,7 +23,7 @@
     <mds:namespace path="/oracle/apps/prc/po/viewDocument/publicFlex/purchasingDocumentSchedule" metadata-store-usage="globalStore-by-adfconfigfilter"/>
     <mds:namespace path="/oracle/apps/prc/po/viewDocument/publicFlex/agreementNotificationControl" metadata-store-usage="globalStore-by-adfconfigfilter"/>
 
-4## DB FPR Commands
+3## DB FPR Commands
     fpr -e jjikumar -s FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64_LATEST -r jarupdate
     fpr -e jjikumar -s FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64_LATEST -f F_JITU_PO_ONLY
     fpr -e slc10usm -s FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64_LATEST -r jarupdate
@@ -35,8 +36,7 @@
     fpr -e sp5yd57 -s FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64_LATEST -f F_JITU_PO_ONLY
 
 
-5## Enable DB Logging 
-
+4## Enable DB Logging 
 	a.  set lines 150
         set pages 10000
         DECLARE
@@ -71,7 +71,7 @@
         fnd_log_repository.init;
         END;
 
-6## Take AWR Report
+5## Take AWR Report
     a. ssh oradba@UT03DB
     b. sqlplus ./ as sysdba
     c. Configure Tables (Add other tables for which we want to take AWR Report) e.g
@@ -87,6 +87,163 @@
         #run the flows that use fusion schema
         exec SQLREP.Stop_Capture('JAN20NEW');
         @sqlreprpt.sql JAN20NEW    CAPTURE_NAME -> THIS WILL GENERATE html awr report
+
+
+6## Start DTE In Debug Mode
+    a. Add below params in  "Server Start" > "Arguments" 
+       -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8453,server=y,suspend=n -DJDBCProgramName=DS/ProcurementDomain/ProcurementServer_1 -Djava.compiler=NONE -Dserver.group=ProcurementCluster
+    b. restart
+
+7## Change DB for standalone environment
+    a. cd mw_home_standalone/
+    b. find ./ -iname '*DB*.xml'
+    c. cd ./config/jdbc/
+    d. sed -i 's/jdbc:oracle:thin:@indl76048.in.oracle.com:1522:in76048/jdbc:oracle:thin:@indl76090.in.oracle.com:1522:in76090/g' *
+    e. gedit ./config/jdbc/ApplicationDB-8936-jdbc.xml
+
+8## Using Intergrated Standalone Environment
+    a. To Run Application :
+        1. Manage Working Set > SuperWeb > SaveAs > #Give any Name# >OK
+        2.  SuperWeb > Web Content > WEB-INF > web.xml
+            * Servlets > Remove "IntegrateTaskFlowWithTask"  (this will remove both name and mapping from the source code).
+            * References > Remove both ejb references (MetadataServiceLocal and RuntimeServiceLocal )
+            * oracle.applcore.setupui
+        3. Application Resources > Descriptors > META-INF > weblogic-application.xml
+        4. Remove "oracle.edq.fusion.connector" and "oracle.apps.common.resource".
+        5. Run > Use current working set
+        6. Superweb > web content >index.jspx>right click > run(working set)
+    b. To set up DB connection
+        1. Open WebLogicServer consol URL : http://slc09obh.us.oracle.com:7101/console
+        2. Home >Summary of Security Realms >myrealm >Providers >DefaultAuthenticator>migration>import file on server  : /scratch/jjikumar/WLS_Users_and_Groups.ldift
+        3. Change DB Connection : Home >Summary of JDBC Data Sources >ApplicationDB> server class name
+
+9## Use Database on Linux Machine:
+    a.Start :
+        * su oradba (enter password)
+        * cd ~/scripts/
+        * commands for starting the DB:a../lcmdlnctl.sh start <SID>
+        * ./lcmdbctl.sh start
+    b.Stop :
+        * ../lcmdlnctl.sh stop <SID>
+        * ../lcmdbctl.sh stop
+        * to stop forcefully use following command ../lcmdbctl.sh stop  immediate
+
+10# To redeploy Procurement App :
+	a. Build Ear's:
+		* ant build
+		* ade mkprivate deploy/*.*
+		* ant -f build-prc.xml ear
+		* ant -f build-prcEss.xml ear
+	b. Deploy:
+		* Remove the procurement app from the weblogic server from console>deployments>select "procurementApp" and delete it.
+		* cd /scratch/jjikumar/view_storage/jjikumar_r13_view/fusionapps/prc
+		* ant -f build-prc.xml j2eeDeploy -Denvid=INDL76040 
+		* ant -f build-prc.xml j2eeDeploy -Denvfile=/scratch/jjikumar/Desktop/ENVID_STANDALONE.xml  //for xml file in case we do not have envid
+
+11# Important File locations :
+       1.root_menu.xml location
+             /scratch/dedelgad/view_storage/dedelgad_new_interpprc_view/.jdev_user_home/system11.1.1.7.40.67.54/o.mds.dt/adrs/ProcurementApp/Procurement-MAR/mds_adrs_writedir/oracle/apps/menu/root_menu.xml
+     3.Soa Location
+          "/scratch/software/mw_local/FMWTOOLS_11.1.1.7.3_GENERIC_140403.1140_PATCHES4FA_11.1.11.0.0_PLATFORMS_JDK64/jjikumar/mw_home_standalone/user_projects/domains/jjikumar/bin"
+          "./startManagedWebLogic.sh soa_server1 http://indl76040.in.oracle.com:7011"
+     4.Upload location
+             "/scratch/software/mw_local/FMWTOOLS_11.1.1.7.3_GENERIC_140403.1140_PATCHES4FA_11.1.11.0.0_PLATFORMS_JDK64/jjikumar/mw_home_standalone/user_projects/domains/jjikumar/servers/AdminServer/upload"
+             "find -iname  name.jar"
+     5.Admin Console location
+             /scratch/software/mw_local/FMWTOOLS_11.1.1.7.3_GENERIC_140403.1140_PATCHES4FA_11.1.11.0.0_PLATFORMS_JDK64/jjikumar/mw_home_standalone/user_projects/domains/jjikumar/bin
+            "./startWebLogic.sh"
+      6. Keystory ane cwallet location for the BIP server
+            /net/slc08twf.us.oracle.com/scratch/software/biDomain/bi_domain/config/fmwconfig/
+      7.OHS Logs Location : 
+            /scratch/aime/work/APPTOP/instance/CommonDomain_webtier/diagnostics/logs/OHS/ohs1
+
+12# Pidgin Settings
+        user-name : jitender.k.kumar
+        domain  : oracle.com
+        resource :  jjikumar-lap(beehive)
+        password:
+        connection security : use old-style ssl
+        connect port 5223
+        connect server : stbeehive.oracle.com
+        fr proxied  : stbeehive.oracle.com
+
+13# In case of any problem with jdeveloper follow below command in order       
+        ade cleanview
+        jdev repatchBuildHome -force
+        ade expand -recurse $ADE_VIEW_ROOT/fusionapps/prc/pwv
+        ade expand -recurse $ADE_VIEW_ROOT/fusionapps/prc/deploy
+        rm -rf .jdev_user_home/system11.1.1.***/DefaultDomain 
+
+14# Rest Request from em console in fusion applicatoins :
+        Policy Url: oracle/wss11_username_token_with_message_protection_client_policy
+        ONDIT : oracle/wss11_saml_token_with_message_protection_client_policy
+        UserName: FUSION_APPS_PRC_SOA_APPID
+        Password: Welcome1
+
+15# Docusing Rest Request Data
+        1.Headers : 
+            X-DocuSign-Authentication :
+                <DocuSignCredentials>
+                    <SendOnBehalfOf>ravi.y.shankar@oracle.com</SendOnBehalfOf>
+                    <Username>cntr.mgr@gmail.com</Username>
+                    <Password>Welcome1234</Password>
+                    <IntegratorKey>ORAC-12a29f73-7254-4974-8195-b9f1b8a9add1</IntegratorKey>
+                 </DocuSignCredentials>
+            Accept : application/xml
+            Content-Type : application/xml
+        2. https://demo.docusign.net/restapi/v2/accounts/202357/users
+        3. URL : https://demo.docusign.net/restapi/v2/accounts/78315a95-d69e-456a-ba8e-49d85cb29573/envelopes/6acfddc4-9337-4d3a-a74b-24c6383d5e47
+
+16# To start JRockit with proxy in windows
+        cd C:\JRockit\jrockit-jdk1.6.0_45-R28.2.7-4.1.0\bin>
+        java -Dhttp.proxyPort=80 -Dhttp.proxyHost=www-proxy.us.oracle.com -jar ../missioncontrol/mc.jar
+
+17# Yum Settings :
+        proxy=http://www-proxy.us.oracle.com:80
+        baseurl=http://public-yum.oracle.com/repo/OracleLinux/OL5/6/base/x86_64/
+        baseurl=http://pd-yum-slc-01.us.oracle.com/yum/OracleLinux/EL5/GA/x86_64/base/Server
+        baseurl=http://pd-yum-slc-01.us.oracle.com/yum/OracleLinux/OL7/GA/x86_64/updates
+        cd /etc/yum.repos.d
+        wget  http://public-yum.oracle.com/public-yum-ol7.repo
+
+18# Out of Memory and proxy settings:
+	    1.  if we get pergen space error the go to project properties > run/debug/profile > edit default and add below java options
+            "-XX:CompileThreshold=8000 -XX:PermSize=512m -XX:MaxPermSize=1024m -Xms1024m -Xmx2048m"
+	    2. Proxy Settings :
+            -Dhttps.proxyHost=www-proxy.us.oracle.com -Dhttps.proxyPort=80 -Dhttps.proxySet=true -Dhttps.nonProxyHosts=*.oracle.com|*.oraclecorp.com
+	    3. Docusign proxy parameters :
+		     PROXY_SETTINGS="${PROXY_SETTINGS} -Dhttps.proxySet=true -Dhttps.proxyHost=www-proxy.us.oracle.com -Dhttps.proxyPort=80"
+             export PROXY_SETTINGS
+	    4. Custom memory parameters:
+		     MEM_ARGS="-Xms2048m -Xmx2048m -Xns:256m -XXlazyUnlocking -XXtlaSize:min=1k,preferred=512k"
+             export MEM_ARGS
+
+
+19# Importing rootmenu.xml
+        $MW_HOME/oracle_common/common/bin/wlst.sh
+        connect('weblogic', 'weblogic1', 't3://indl76040.in.oracle.com:7011')
+        exportMetadata(application='ProcurementApp', server='AdminServer', toLocation='/scratch/jjikumar/Desktop/rootmenu_backup',docs="/oracle/apps/menu/**")
+        importMetadata(application='ProcurementApp', server='AdminServer',fromLocation='/scratch/jjikumar/Desktop/rootmenu_backup',docs="/**")
+
+20# Importing Metadata when getting compilation error while deploying SOA composite for Requisitions
+        a. $MW_HOME/oracle_common/common/bin/wlst.sh
+        b. connect('weblogic','weblogic1','indl76040.in.oracle.com:7011')
+        c. importMetadata(application='ProcurementApp', server='AdminServer',fromLocation='/scratch/jjikumar/view_storage/rshshank_intprc/fusionapps/soa_shared/soa-infra/apps/',docs='/oracle/apps/**')
+        d. Then Deploy Soa Composite for Requisitions
+                 ##in the steps before deploying soaComposite follow below steps
+                    cd to $ADE_VIEW_ROOT/fusionapps/prc
+                    ade mkprivate ../../fabuildtools/lib/abstract_build.xml
+                    delete below line from ../../fabuildtools/lib/abstract_build.xml  and save
+                        <property name="deploy.skipmar" value="true" />
+        e. ant -f build.xml deploySOASharedRepository -Ddeploy.appinfo=AppInfo.xml 
+
+
+21# for approval cluster exception find file "wf_client_config.xml" and change  cluster to "cluster:t3://FS_SOACluster" 
+22# for supplierApp  not being deployed find file "application.xml" and remove  last module 
+23# for Approvals To work in standalone server , open ManageApprovalRuleAMImpl.java in PrcPorManageApprovalRulesUiModel project and comment out all code which have Testing 
+
+
+
 
 
 

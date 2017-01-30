@@ -10,16 +10,14 @@
               User Name= The name of the user that will reproduce the issue
               Profile Value=  “Finest”
 
-
 2## Communicate Purchasing Documents Changes
-    1, Profile Options :
+    1. Profile Options :
         1. Set up and Main > 'Manage Administrator Profile Values'
         2. Search for 'Profile Display Name' as 'Control Supplier Communication'
         3. Search for 'Profile Display Name' as 'Override E-mail Address'
 
     2. To get Ess Request Log file : 
         Purchasing > Communicate Purchasing Documents
-
 
     3. User of different Profile Options : 
         1. Control Supplier Communication	Disable: Disable Supplier email communication disabled
@@ -30,3 +28,17 @@
     4. Query to check value for the db for the above values : 
         1. SELECT * FROM FND_PROFILE_OPTION_VALUES WHERE PROFILE_OPTION_ID IN (SELECT profile_option_id FROM fnd_profile_options WHERE PROFILE_OPTION_NAME='PO_CONTROL_SUPPLIER_COMMUNICATION');
         2. SELECT PROFILE_OPTION_VALUE FROM FND_PROFILE_OPTION_VALUES WHERE PROFILE_OPTION_ID IN (SELECT profile_option_id FROM fnd_profile_options WHERE PROFILE_OPTION_NAME='PO_NOTIFICATION_OVERRIDE_E-MAIL');
+
+3## Credentials
+    1. Application 
+        cvrqst01/Welcome1
+        weblogic/weblogic1
+        faadmin/fusionfa1
+        podevqa/devqapo
+    2. Docusign
+        cntr.mgr@gmail.com/Welcome1234
+        podocusignsender@gmail.com/Sender123
+        jitender.k.kumar@oracle.com/welcome1
+        jeet.choudhary7@gmail.com/welcome1
+        ravi.y.shankar@oracle.com/Welcome1
+

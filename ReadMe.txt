@@ -7,6 +7,11 @@
 2. "cat ~/.ssh/id_rsa.pub | ssh jjikumar@slc05gsa.us.oracle.com "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys"" 
 
 
+##Configure proxy setting for npm 
+    npm config set proxy http://www-proxy.us.oracle.com:80
+    npm config set https-proxy http://www-proxy.us.oracle.com:80
+    npm config set strict_ssl false
+
 ##Steps to use MongoDb for the application :
 1. Start DB using 'mongod'.
 2. Use another shell and give command 'mongo'.

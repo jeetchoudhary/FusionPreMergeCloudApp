@@ -1,0 +1,75 @@
+##1 Command to run Premerge script 
+    $ADE_VIEW_ROOT/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh -d fusion/fusion@indl76040.in.oracle.com:1522/in76040   -DrunJUnits=1 -DjunitBuildFile=$ADE_VIEW_ROOT/fusionapps/prc/build-po.xml fusion/fusion@indl76040.in.oracle.com:1522/in76040
+
+##2 Command to run junits on particular project
+    ant -f build-po.xml -Dtest.lrg=true test test-report -Dlrg=prc_po_lrg -Dtest.project='PrcPoCommonPoProtectedModelTest'  -Ddb.host=indl76040.in.oracle.com -Ddb.port=1522 -Ddb.sid=in76040 -Ddb.user=fusion -Ddb.pass=fusion | & tee test.out
+
+##3 Command For Incremental Build 
+    ant -f $ADE_VIEW_ROOT/fusionapps/prc/build.xml incrementalBuild -Dtransactions=jjikumar_bug-24806188 -Dpatchcore.excludedListeners=oracle.apps.ateam.patch.service.OHSDiffListener
+
+##4 Command for Premerge validation scripts
+    $ADE_VIEW_ROOT/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh -d fusion/fusion@indl76040.in.oracle.com:1522/in76040 -DBreakOnError=0 -DrunJUnitsAfterBuild=1 -DrunJUnits=1 -DjunitBuildFile=$ADE_VIEW_ROOT/fusionapps/prc/build-po.xml -j $ADE_VIEW_ROOT/fusionapps/prc/components/procurement/po/editDocument/protectedModelTest/PrcPoEditDocumentProtectedModelTest.jpr
+
+##5 ADE Commands
+	1. ade showseries | grep "INTERPPRC" 
+	2. ade createview <view_name> -series <series-name> -latest
+	3. ade lsviews  :: to list all the avaliable views
+	4. ade useview <view_name>
+	5. ade begintrans -bug <bug-number>
+	6. jdev
+	7. To Checkout file  :
+		1. right click on the file  -> versioning ->checkout or 
+		2. ade co <file-path>
+	8. ade lsco   ::list of checkout files
+	9. ade diff -label -gui <file-path>
+	10. ade ci <file-path>
+	11. ade savetrans
+	12. finchecker
+	13. ade settransproperty -prop README_BUGFIX_FUNCT_DESC -cfile ~/Desktop/functional_readme.txt -txn jjikumar_rfi_backport_25039169_11.1.11.1.0
+	14. orareview -u -r ymahajan,shagarla,smathrus,rshshankd,pswargam,uramidi
+	15. /usr/local/packages/mergereq/mergereq -y -m venkat.sanjay@oracle.com
+	16. ade refreshview -latest
+	17. Merge
+		* ade beginmerge
+		* ade mergetrans
+		* cd fusionapps/prc
+		* ant build | -tee ~/Desktop/Build.log  :: search for "0 of" in build.log or build.txt file if it is there than no failure. otherwise there is a fuilure
+		* ade endmerge
+	18. ade unco -all   :   remove any changes, make read-only, and remove an element from the transaction
+	19. ade endtrans   :  closes a transaction without merging
+	20. ade destroytrans :  ends transaction and destroys all associated data
+    21. vnccongif & :give this command in other terminal to copy from 1 VM to actual machine.
+		1. ade tkreview -view -tkdiff   :  tool to view all changes pending in transaction
+	22. sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"   : if the system goes slow
+	23. ade renametrans -bug <bug-number>
+	24. ade grabtrans <from_txn_name>
+	25. ade begintrans -xbranchmerge -fromtrans <transaction_name> : dont create a transaction before this to merge the transaction from different release
+	26. setenv USER_MEM_ARGS "-Xms1024m -Xmx1024m -XX:CompileThreshold=8000 -XX:PermSize=256m -XX:MaxPermSize=1024m"  : before jdev to free memory
+	27. ade settransproperty -p BUG_NUM -v 21945233
+	28. ade tkvtree filepath   : to see history of any file merges
+	29. $ADE_VIEW_ROOT/fusionapps/prc/po/noship/internalScripts/prcPremergeSubmit.py  
+
+
+##6 JDeveloper Shrotcuts
+	1.  Ctrl + g  : Go To line number
+	2.  Ctrl + -  : Search java type
+	3.  Ctrl + = : Quick Files
+
+## Patch The Database 
+	1. Use Command Line :
+		a. fpr -e in76040 -s FUSIONAPPS_PT.DEVINT_LINUX.X64_151223.2100.S  -p V_CONT_EQUIV=NO   : command to apply changes to DB
+		b. fpr -e in76040 -s FUSIONAPPS_11.1.8PRC_LINUX.X64_LATEST -r jarupdate
+		c. fpr -e in76040 -s currenttransaction
+	2. Use FRE 
+		a. Open http://fre.us.oracle.com:7777/cgi-bin/fprScheduler?scope=env&req=home&sid=in76040
+		b. Login with bugDB credentials Click on Requests>jars
+		c. Select the family INTERP and Label and submit request OR
+		d. To auto schedule open http://fre.us.oracle.com:7777/cgi-bin/fprScheduler?scope=auto&req=show&id=in76040
+		e. User below setting to submit request
+			* DEPLOYMENT_JARS :  FUSIONAPPS_PT.INTERPPRC_LINUX.X64
+			* LABEL_PATCHING :     FUSIONAPPS_PT.INTERPPRC_LINUX.X64
+			* FILTER_PROFILE :      F_DEFAULT_113
+			* PATCHING_PROFILE : DEFAULTZIPDB
+
+
+

@@ -1,12 +1,55 @@
 ##1 Command to take JFR
-./jrcmd  24819  start_flightrecording duration=300s filename=/scratch/PurchasingWorkArea_28_12_REL11_INDL76105_with_JDBC_profile.jfr 
-./jrcmd  24819  start_flightrecording settings=/scratch/jdbc_profile.jfs duration=300s filename=/scratch/PurchasingWorkArea_28_12_REL11_INDL76105_with_JDBC_profile.jfr 
-./jrcmd 24819  stop_flightrecording recording=3
+    ./jrcmd  24819  start_flightrecording duration=300s filename=/scratch/PurchasingWorkArea_28_12_REL11_INDL76105_with_JDBC_profile.jfr 
+    ./jrcmd  24819  start_flightrecording settings=/scratch/jdbc_profile.jfs duration=300s filename=/scratch/PurchasingWorkArea_28_12_REL11_INDL76105_with_JDBC_profile.jfr 
+    ./jrcmd 24819  stop_flightrecording recording=3
 
 ##2 Schedule Cron Jobs
-crontab -e
-MAILTO=jitender.k.kumar@orale.com
-30 01 * * 0-6 /scratch/jjikumar/cronscript.sh
+    crontab -e
+    MAILTO=jitender.k.kumar@orale.com
+    30 01 * * 0-6 /scratch/jjikumar/cronscript.sh
 
 ##3 Command to track time taken in every line 
-ant build | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; fflush(); }' > ~/Desktop/antBuildRun1.log
+    ant build | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; fflush(); }' > ~/Desktop/antBuildRun1.log
+
+##4 Command to copy using scp from remote machine
+    a. add ssh keys 
+        1. from the host : "ssh-keygen -t rsa" and accept all default values
+        2. "cat ~/.ssh/id_rsa.pub | ssh jjikumar@slc05gsa.us.oracle.com "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys"" 
+    b. scp -i C:\Users\jjikumar\.ssh\id_rsa -r jjikumar@slc05gsa.us.oracle.com:/ade/ C:\Users\jjikumar\Downloads\FusionPreMergeCloudApp-master\app\History\Archived\jjikumar_bug-24806188\
+
+##5 Random Commands
+	1. find . -type f -name "*.txt"   :: wil list all text files in current directory
+	2. find / -type d -name myDirectory  :: find all directories whose name is myDirectory in / directory 
+	3. find /home -iname jitu.txt  :: find case insensitive 
+	4. printenv : to list all environment variables
+	5. vncserver -alwaysshared -geometry 1920x1080
+	6. vncpasswd
+	7. vncserver -kill :1
+	8. vnccongif & :give this command in other terminal to copy from 1 VM to actual machine.
+	9. free -m
+	10. sudo reboot
+	11. /etc/init.d/sshd restart
+	12. /sbin/service vncserver start
+    13. du -m --max-depth 1 | sort -rn  : list size of all directories
+    14. grep -Hrn 'search term' path/to/files : to recursively search 
+    15. find -iname "*.lck" -exec rm {} \;     : find files and delete them
+    16. Top 5 Lines of file : Head -n 5 a.txt
+    17. Last 5 Lines of file : tail -n 5 a.txt
+    18. find . -name "*.jar" -exec cp -t ~/Desktop/temp/ {} +
+
+##6 Shell Command Shortcuts
+	1. Ctrl + R    : use to reverse lookup in the history of commands
+	2. Ctrl + W   : deletes the word immediate before the cursor in the command line
+	3. Ctrl + K    : deletes the word immediately after the cursor in the command line
+	4. nohup xterm & : to start new terminal or any other program in detached mode    
+	5. Ctrl + A : Go to start of command
+	6. Ctrl + E  : Go to end of command
+	7. Ctrl  + left Arrow :  Go one word left 
+	8. Ctrl  + right Arrow :  Go one word right
+	9. Ctrl + Shift + C : Copy
+	10.Ctrl + Shift + P : Paste
+    11.Ctrl + G : Display Line Numbers in Vi Editor
+
+
+
+

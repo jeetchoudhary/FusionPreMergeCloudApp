@@ -17,4 +17,6 @@
 ##4 for po charge account not getting defaulted : open /ade/jjikumar_intprc/fusionapps/prc/po/db/sql/po_tab_sddyn.sql  copy the content and execute on db
 
 
-##5 
+##5 Table for online report in DCM Submittion : PO_ONLINE_REPORT_TEXT
+
+##6 Query for tab combination of user : select DEFAULT_CODE_COMB_ID from per_all_assignments_m where PERSON_ID='24';
