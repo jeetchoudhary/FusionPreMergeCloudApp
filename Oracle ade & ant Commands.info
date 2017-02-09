@@ -48,6 +48,7 @@
 	27. ade settransproperty -p BUG_NUM -v 21945233
 	28. ade tkvtree filepath   : to see history of any file merges
 	29. $ADE_VIEW_ROOT/fusionapps/prc/po/noship/internalScripts/prcPremergeSubmit.py  
+	30. /usr/sbin/userdel -r oradba
 
 
 ##6 JDeveloper Shrotcuts

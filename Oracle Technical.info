@@ -242,11 +242,14 @@
 22# for supplierApp  not being deployed find file "application.xml" and remove  last module 
 23# for Approvals To work in standalone server , open ManageApprovalRuleAMImpl.java in PrcPorManageApprovalRulesUiModel project and comment out all code which have Testing 
 
+24# Command to change apache httpd server config 
+	sudo perl -pi -e 's#/var/www/html#'/scratch/jjikumar/view_storage/jjikumar_REL_13_Test/fusionapps/'#g' /etc/httpd/conf/httpd.conf
 
+25# Command to restart apache httpd server
+	/sbin/service  httpd start
+	/sbin/service httpd restart
 
-
-
-
-
+26# Disable Connection pooling of am set below property in setDomainEnv.sh
+	-Dorg.apache.myfaces.trinidad.CHECK_STATE_SERIALIZATION=session,tree,beans -Djbo.ampool.doampooling=false
 
 
