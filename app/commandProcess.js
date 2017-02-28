@@ -157,6 +157,9 @@ var processTransaction = function (transData) {
 	var begintrans = useViewCommand + ' \" ade begintrans ' + transName + ' && ';
 	var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
 	var checkInCommand = "";
+	if(!bugNo){
+		bugNo=24806188 ;
+	}
 	if(trans.runJunits === 'Y'){
 		var dummyLRGCommand =  ' ant -f build-po.xml -Dtest.lrg=true test test-report -Dlrg=prc_po_lrg -Dtest.project=\'PrcPoPublicViewEcsfTest\' -Ddb.host=slc09xht.us.oracle.com -Ddb.port=1595 -Ddb.sid=jjikumar -Ddb.user=fusion -Ddb.pass=fusion ';
 		 //checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd /scratch/views/' + viewName + 

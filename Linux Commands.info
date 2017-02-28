@@ -36,6 +36,7 @@
     16. Top 5 Lines of file : Head -n 5 a.txt
     17. Last 5 Lines of file : tail -n 5 a.txt
     18. find . -name "*.jar" -exec cp -t ~/Desktop/temp/ {} +
+	19. Replace all occurance of prc with fa in all files : sed -i 's/prc/fa/' *
 
 ##6 Shell Command Shortcuts
 	1. Ctrl + R    : use to reverse lookup in the history of commands
