@@ -10,15 +10,41 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         updateBug: 'N',
         runJunits: 'Y',
         applyFPR: 'N',
-        allowDBOverride:'Y',
-        errorMsg: {
+        allowDBOverride: 'Y',
+        errorMsg:
+        {
             transactionError: '',
             DBError: ''
         },
-        description: {
+        description:
+        {
             "baseLabel": '{"name":"","value":""}',
             "bugNum": { "name": "", "value": "" },
             "transDesc": { "name": "", "value": "" }
+        },
+        family:
+        {
+            availableOptions: [
+                { id: '1', name: 'Select Family', productList: [] },
+                {
+                    id: '2', name: 'Procurement', productList: [
+                        { id: '1', name: 'PO' },
+                        { id: '2', name: 'PON' },
+                        { id: '3', name: 'POQ' },
+                        { id: '4', name: 'POR' },
+                        { id: '5', name: 'POS' },
+                    ], product: { id: '1', name: 'PO' }
+                },
+                {
+                    id: '3', name: 'Logistics', productList: [
+                        { id: '1', name: 'INV' },
+                        { id: '2', name: 'RCV' },
+                        { id: '3', name: 'WSH' },
+
+                    ], product: { id: '1', name: 'INV' }
+                }
+            ],
+            selectedOption: { id: '1', name: 'Select Family', product: 'Select Product' }
         }
     };
     $scope.errorMsg = "";
@@ -33,7 +59,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
             updateBug: 'N',
             runJunits: 'Y',
             applyFPR: 'N',
-            allowDBOverride:'Y',
+            allowDBOverride: 'Y',
             errorMsg: {
                 transactionError: '',
                 DBError: ''
@@ -42,22 +68,47 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                 "baseLabel": '{"name":"","value":""}',
                 "bugNum": { "name": "", "value": "" },
                 "transDesc": { "name": "", "value": "" }
+            },
+            family:
+            {
+                availableOptions: [
+                    { id: '1', name: 'Select Family', productList: [] },
+                    {
+                        id: '2', name: 'Procurement', productList: [
+                            { id: '1', name: 'PO' },
+                            { id: '2', name: 'PON' },
+                            { id: '3', name: 'POQ' },
+                            { id: '4', name: 'POR' },
+                            { id: '5', name: 'POS' },
+                        ], product: { id: '1', name: 'PO' }
+                    },
+                    {
+                        id: '3', name: 'Logistics', productList: [
+                            { id: '1', name: 'INV' },
+                            { id: '2', name: 'RCV' },
+                            { id: '3', name: 'WSH' },
+
+                        ], product: { id: '1', name: 'INV' }
+                    }
+                ],
+                selectedOption: { id: '1', name: 'Select Family', product: 'Select Product' }
             }
+
         };
         $scope.errorMsg = "";
-         if($scope.junitSelectedList.length!==0){
+        if ($scope.junitSelectedList.length !== 0) {
             trans.junitSelectedList = $scope.junitSelectedList;
             $scope.junitSelectedList = [];
         }
-       
+
         $http.post('/api/submit', trans).success(function (response) {
             console.log('Client : Recieved Data from server', response);
         }).error(function (err) {
             console.log('Client : Recieved Data from server', err);
-            if (variable !== null){
+            if (variable !== null) {
                 $scope.errorMsg = err.error;
             }
-            
+
         });
     };
 
@@ -73,22 +124,22 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
 
     $scope.changeDB = function (val) {
         $scope.transaction.dbString = val.connectionString;
-         $scope.transactionSubmitform.dbstring.$setDirty();
+        $scope.transactionSubmitform.dbstring.$setDirty();
     };
     $scope.getDBInformation();
 
     $('#transactionname').click(function () {
-        var value=$('#transactionname').val();
-        if(value){
+        var value = $('#transactionname').val();
+        if (value) {
             $scope.transactionSubmitform.transaction.$setDirty();
-        }else{
+        } else {
             $scope.transactionSubmitform.$setPristine();
         }
     });
 
-      $scope.updateProjectList = function () {
-        var series = {val : 'FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64'}; 
-        console.log('updating list of procects for series :',series);
+    $scope.updateProjectList = function () {
+        var series = { val: 'FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64' };
+        console.log('updating list of procects for series :', series);
         $http.post('/api/updateProjectList', series).success(function (response) {
             console.log('Client : ProjectList Updated Successfully', response);
         }).error(function (err) {
@@ -96,24 +147,24 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         });
     };
 
-    $scope.getProjectList = function(){
-          $http.get('/api/getProjectList', $scope.transaction).success(function (response) {
-              for (var i in  response[0].list) {
-				$scope.projectList.push({id: response[0].list[i],"label" : response[0].list[i].substring(response[0].list[i].lastIndexOf('/')+1)});
-			}
-           // console.log('Client : ProjectList Received from server', $scope.projectList);
+    $scope.getProjectList = function () {
+        $http.get('/api/getProjectList', $scope.transaction).success(function (response) {
+            for (var i in response[0].list) {
+                $scope.projectList.push({ id: response[0].list[i], "label": response[0].list[i].substring(response[0].list[i].lastIndexOf('/') + 1) });
+            }
+            // console.log('Client : ProjectList Received from server', $scope.projectList);
         }).error(function (err) {
             console.log('Client : failed to get projectList from the server', err);
         });
     };
     $scope.getProjectList();
 
-     $scope.projectListConfigParams = {
-                        enableSearch: true,
-                        scrollableHeight: '500px',
-                        scrollable: true,
-                        smartButtonMaxItems: 3,
-                        smartButtonTextConverter: function(itemText, originalItem) {return itemText;}
-                        };
-     $scope.projectListDisplayText = {buttonDefaultText: 'Select Project to run Junits'}
+    $scope.projectListConfigParams = {
+        enableSearch: true,
+        scrollableHeight: '500px',
+        scrollable: true,
+        smartButtonMaxItems: 3,
+        smartButtonTextConverter: function (itemText, originalItem) { return itemText; }
+    };
+    $scope.projectListDisplayText = { buttonDefaultText: 'Select Project to run Junits' }
 });
