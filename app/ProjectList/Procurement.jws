@@ -111,6 +111,7 @@
       <hash><url n="URL" path="po/publicViewEcsfTest/PrcPoPublicViewEcsfTest.jpr"/></hash>
       <hash><url n="URL" path="po/publicViewTest/PrcPoPublicViewTest.jpr"/></hash>
       <hash><url n="URL" path="po/reqToPoAutomation/reqToPoAutomationService/PrcPoReqToPoAutomationService.jpr"/></hash>
+      <hash><url n="URL" path="po/reqToPoAutomation/reqToPoAutomationServiceTest/PrcPoReqToPoAutomationServiceTest.jpr"/></hash>
       <hash><url n="URL" path="po/setup/migratorService/PrcPoSetupServiceMigrator.jpr"/></hash>
       <hash><url n="URL" path="po/setup/migratorServiceTest/PrcPoSetupServiceMigratorTest.jpr"/></hash>
       <hash><url n="URL" path="po/setup/protectedModel/PrcPoSetupProtectedModel.jpr"/></hash>

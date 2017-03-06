@@ -49,6 +49,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
     };
     $scope.errorMsg = "";
     $scope.projectList = [];
+    $scope.allProjectList = [];
     $scope.junitSelectedList = [];
 
     $scope.submitTransaction = function () {
@@ -138,7 +139,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
     });
 
     $scope.updateProjectList = function () {
-        var series = { val: 'FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64' };
+        var series = { val: 'Procurement' };
         console.log('updating list of procects for series :', series);
         $http.post('/api/updateProjectList', series).success(function (response) {
             console.log('Client : ProjectList Updated Successfully', response);
@@ -147,17 +148,45 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         });
     };
 
-    $scope.getProjectList = function () {
+    // $scope.getProjectList = function () {
+    //     $http.get('/api/getProjectList', $scope.transaction).success(function (response) {
+    //         for (var i in response[0].list) {
+    //             $scope.projectList.push({ id: response[0].list[i], "label": response[0].list[i].substring(response[0].list[i].lastIndexOf('/') + 1) });
+    //         }
+    //         // console.log('Client : ProjectList Received from server', $scope.projectList);
+    //     }).error(function (err) {
+    //         console.log('Client : failed to get projectList from the server', err);
+    //     });
+    // };
+    // $scope.getProjectList();
+
+    $scope.getAllProjectList = function () {
         $http.get('/api/getProjectList', $scope.transaction).success(function (response) {
-            for (var i in response[0].list) {
-                $scope.projectList.push({ id: response[0].list[i], "label": response[0].list[i].substring(response[0].list[i].lastIndexOf('/') + 1) });
+            var arrayLength = response.length;
+            for (var k = 0; k < arrayLength; k++) {
+                for (var i in response[k].list) {
+                    if (response[k].list[i])
+                        $scope.allProjectList.push({ "familyName": response[k].name, id: response[k].list[i], "label": response[k].list[i].substring(response[k].list[i].lastIndexOf('/') + 1) });
+                }
             }
-            // console.log('Client : ProjectList Received from server', $scope.projectList);
         }).error(function (err) {
             console.log('Client : failed to get projectList from the server', err);
         });
     };
-    $scope.getProjectList();
+
+    $scope.getAllProjectList();
+
+    $scope.$watch('transaction.family.selectedOption', function updateProjectList() {
+        var arrayLength = $scope.allProjectList.length;
+        $scope.projectList = [];
+        for (var i = 0; i < arrayLength; i++) {
+            if ($scope.allProjectList[i].familyName == $scope.transaction.family.selectedOption.name) {
+                $scope.projectList.push({ id: $scope.allProjectList[i].id, "label": $scope.allProjectList[i].label });
+            }
+        }
+        console.log("Updated ProjectList for the product Family ", $scope.transaction.family.selectedOption.name);
+    }
+    );
 
     $scope.projectListConfigParams = {
         enableSearch: true,

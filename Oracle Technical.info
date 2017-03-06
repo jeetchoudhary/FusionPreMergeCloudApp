@@ -251,5 +251,8 @@
 
 26# Disable Connection pooling of am set below property in setDomainEnv.sh
 	-Dorg.apache.myfaces.trinidad.CHECK_STATE_SERIALIZATION=session,tree,beans -Djbo.ampool.doampooling=false
+	
+27# wget proxy command :
+	wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz"  -e use_proxy=yes -e http_proxy=http://www-proxy.us.oracle.com:80  -e https_proxy=https://www-proxy.us.oracle.com:80
 
 

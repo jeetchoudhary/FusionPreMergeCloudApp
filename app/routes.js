@@ -9,6 +9,7 @@ module.exports = function (app) {
 	var TransData = require('../app/models/TransData');
 	var Databases = require('../app/models/DBData');
 	var ProjectList = require('../app/models/ProjectListData');
+//	var dumpProjectFamilyData = require('./DumpProjectData');
 	var fs = require('fs');
 	var q = require('q');
 	var transactionLogLocation = ".\\History\\Current\\";
@@ -29,7 +30,7 @@ module.exports = function (app) {
 
 
 	/**This Method is just to dump project list data in to the database , for the production sys need to comment this method and use only method written below it to update project list */
-	var updateListinDbStandalone = function () {
+	var updateTestProjectListProcurement = function () {
 		var projectNames = [];
 		var listLocationLocal = __dirname + '\\ProjectList\\Procurement.jws';
 		try {
@@ -42,7 +43,7 @@ module.exports = function (app) {
 					var projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
 					if (projectPath.substring(projectPath.length - 4) == 'Test') {
 						projectNames.push(projectPath);
-						logger.info('project updated in the db : ', projectPath);
+						logger.info('project updated in the db , Family : Procurement , Path : ', projectPath);
 					}
 				}
 			}
@@ -62,7 +63,7 @@ module.exports = function (app) {
 					var projectPath = 'fusionapps/prc/components/procurementEss/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
 					if (projectPath.substring(projectPath.length - 4) == 'Test') {
 						projectNames.push(projectPath);
-						logger.info('project updated in the db : ', projectPath);
+						logger.info('project updated in the db , Family : ProcurementEss , Path : ', projectPath);
 					}
 				}
 			}
@@ -70,7 +71,7 @@ module.exports = function (app) {
 			logger.info('Failed to parse projectNames from fileList', ex);
 		}
 
-		var query = { "name": "FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64" };
+		var query = { "name": "Procurement" };
 		ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
 			if (err) {
 				logger.error('failed to save list in db :', err);
@@ -79,28 +80,28 @@ module.exports = function (app) {
 			}
 		});
 	};
-	// updateListinDbStandalone();
 
-	var parseProjectListandUpdateDB = function (series, listLocationLocal, viewName) {
-		logger.info('about to parse projectList and update DB with series : ', series);
+	 var updateTestProjectListLogistics = function () {
 		var projectNames = [];
+		var listLocationLocal = __dirname + '\\ProjectList\\Logistics.jws';
 		try {
-			var fileData = fs.readFileSync(listLocationLocal + 'Procurement.jws').toString();
+			var fileData = fs.readFileSync(listLocationLocal).toString();
 			var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
 			var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
 			var aFileNameParts = childrenList.split(".jpr");
 			for (var i in aFileNameParts) {
 				if (aFileNameParts[i].lastIndexOf('path=') != -1) {
-					var projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
+					var projectPath = 'fusionapps/scm/components/logistics/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
 					if (projectPath.substring(projectPath.length - 4) == 'Test') {
 						projectNames.push(projectPath);
-						logger.info('project updated in the db : ', projectPath);
+						logger.info('project updated in the db , Family : Logistics , Path : ', projectPath);
 					}
 				}
 			}
-		} catch (ex) { logger.info('Failed to parse projectNames from fileList', ex) }
-
-		var query = { "name": "FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64" };
+		} catch (ex) {
+			logger.info('Failed to parse projectNames from fileList', ex);
+		}
+		var query = { "name": "Logistics" };
 		ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
 			if (err) {
 				logger.error('failed to save list in db :', err);
@@ -108,42 +109,80 @@ module.exports = function (app) {
 				logger.info('saved list in db  :');
 			}
 		});
-	};
-	var updateProjectNameList = function (series) {
-		var viewName = 'cloudupdateProjects';
-		var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
-		var listLocationOnServer = '/scratch/' + fuseConfig.adeServerUser + '_' + viewName + '/fusionapps/prc/components/procurement/Procurement.jws';
-		var listLocationLocal = __dirname + '\\ProjectList\\';
-		var projectListCopyCommand = 'scp ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + fuseConfig.historyServerUrl + ':' + listLocationOnServer + ' ' + listLocationLocal;
-		logger.info('command to copy file : ', projectListCopyCommand);
-		ssh.exec(createViewCommand, {
-			out: function (stdout) {
-				logger.info(stdout);
-			},
-			err: function (stderr) {
-				logger.error('failed to execute command desc :', stderr);
-				return;
-			}
-		}).exec('echo', {
-			out: function (stdout) {
-				var copyFiles = exec(projectListCopyCommand, function (error, stdout, stderr) {
-					if (error) {
-						logger.error('Failed to copy projectList file from server : ', error);
-					}
-				});
-			},
-			err: function (stderr) {
-				logger.error('failed to execute command echo :', stderr);
-			}
-		}).exec('echo', {
-			out: function (stdout) {
-				setTimeout(function () { parseProjectListandUpdateDB(series, listLocationLocal, viewName); }, 5000);
-			},
-			err: function (stderr) {
-				logger.error('failed to execute command echo :', stderr);
-			}
-		}).start();
-	};
+	 }
+
+
+	 var updateTestProjectLists = function(){
+			updateTestProjectListProcurement();
+			updateTestProjectListLogistics();
+	 }
+
+	// updateTestProjectLists();
+
+
+	// var parseProjectListandUpdateDB = function (series, listLocationLocal, viewName) {
+	// 	logger.info('about to parse projectList and update DB with series : ', series);
+	// 	var projectNames = [];
+	// 	try {
+	// 		var fileData = fs.readFileSync(listLocationLocal + 'Procurement.jws').toString();
+	// 		var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
+	// 		var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
+	// 		var aFileNameParts = childrenList.split(".jpr");
+	// 		for (var i in aFileNameParts) {
+	// 			if (aFileNameParts[i].lastIndexOf('path=') != -1) {
+	// 				var projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
+	// 				if (projectPath.substring(projectPath.length - 4) == 'Test') {
+	// 					projectNames.push(projectPath);
+	// 					logger.info('project updated in the db : ', projectPath);
+	// 				}
+	// 			}
+	// 		}
+	// 	} catch (ex) { logger.info('Failed to parse projectNames from fileList', ex) }
+
+	// 	var query = { "name": "Procurement" };
+	// 	ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
+	// 		if (err) {
+	// 			logger.error('failed to save list in db :', err);
+	// 		} else {
+	// 			logger.info('saved list in db  :');
+	// 		}
+	// 	});
+	// };
+	// var updateProjectNameList = function (series) {
+	// 	var viewName = 'cloudupdateProjects';
+	// 	var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
+	// 	var listLocationOnServer = '/scratch/' + fuseConfig.adeServerUser + '_' + viewName + '/fusionapps/prc/components/procurement/Procurement.jws';
+	// 	var listLocationLocal = __dirname + '\\ProjectList\\';
+	// 	var projectListCopyCommand = 'scp ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + fuseConfig.historyServerUrl + ':' + listLocationOnServer + ' ' + listLocationLocal;
+	// 	logger.info('command to copy file : ', projectListCopyCommand);
+	// 	ssh.exec(createViewCommand, {
+	// 		out: function (stdout) {
+	// 			logger.info(stdout);
+	// 		},
+	// 		err: function (stderr) {
+	// 			logger.error('failed to execute command desc :', stderr);
+	// 			return;
+	// 		}
+	// 	}).exec('echo', {
+	// 		out: function (stdout) {
+	// 			var copyFiles = exec(projectListCopyCommand, function (error, stdout, stderr) {
+	// 				if (error) {
+	// 					logger.error('Failed to copy projectList file from server : ', error);
+	// 				}
+	// 			});
+	// 		},
+	// 		err: function (stderr) {
+	// 			logger.error('failed to execute command echo :', stderr);
+	// 		}
+	// 	}).exec('echo', {
+	// 		out: function (stdout) {
+	// 			setTimeout(function () { parseProjectListandUpdateDB(series, listLocationLocal, viewName); }, 5000);
+	// 		},
+	// 		err: function (stderr) {
+	// 			logger.error('failed to execute command echo :', stderr);
+	// 		}
+	// 	}).start();
+	// };
 
 	var initilizeADEServerMap = function () {
 		var adeServerList = fuseConfig.adeServerUrl.split(';');
