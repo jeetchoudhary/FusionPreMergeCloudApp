@@ -61,21 +61,6 @@ var saveProcurementFamilyData = function () {
 
     data.save(function (err) {
         if (err) {
-            logger.error('failed to savePORPOQ Family data to the database : ', err);
-        } else {
-            logger.info('POR Family data saved successfully : ');
-        }
-    });
-
-    data = new ProjectBuildData({
-        productName: "Procurement",
-        familyName: "POR",
-        buildFile: "fusionapps/prc/build-por.xml",
-        workspaceFile: "fusionapps/prc/components/procurement/Procurement.jws"
-    });
-
-    data.save(function (err) {
-        if (err) {
             logger.error('failed to save POR Family data to the database : ', err);
         } else {
             logger.info('POR Family data saved successfully : ');
