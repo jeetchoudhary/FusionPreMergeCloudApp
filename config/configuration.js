@@ -14,13 +14,5 @@ module.exports = {
 	describeTrans : 'ade describetrans',
 	transactionActiveLogLocation:'.\\History\\Current\\',
 	transactionArchivedLogLocation:'.\\History\\Archived\\',
-	sshPublicKeyLocation : 'C:\\Users\\jjikumar\\.ssh\\id_rsa',
-	po: 'fusionapps/prc/build-po.xml',
-	pon: 'fusionapps/prc/build-pon.xml',
-	poq: 'fusionapps/prc/build-poq.xml',
-	por: 'fusionapps/prc/build-por.xml',
-	poz: 'fusionapps/prc/build-poz.xml',
-	inv: 'fusionapps/scm/build-log.xml',
-	rcv: 'fusionapps/scm/build-log.xml',
-	wsh: 'fusionapps/scm/build-log.xml'
+	sshPublicKeyLocation : 'C:\\Users\\jjikumar\\.ssh\\id_rsa'
 };

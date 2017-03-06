@@ -96,6 +96,37 @@ var updateTransactionErrorStatus = function (transaction, logFile) {
 	});
 };
 
+var getProductFamilyBuildFile = function(familyName){
+	switch (familyName) {
+		case 'po':
+			return 'fusionapps/prc/build-po.xml';
+			break;
+		case 'pon':
+			return 'fusionapps/prc/build-pon.xml';
+			break;
+		case 'poq':
+			return 'fusionapps/prc/build-poq.xml';
+			break;
+		case 'por':
+			return 'fusionapps/prc/build-por.xml';
+			break;
+		case 'poz':
+			return 'fusionapps/prc/build-poz.xml';
+			break;
+		case 'inv':
+			return 'fusionapps/scm/build-log.xml';
+			break;
+		case 'rcv':
+			return 'fusionapps/scm/build-log.xml';
+			break;
+		case 'wsh':
+			return 'fusionapps/scm/build-log.xml';
+			break;
+		default:
+			logger.log('Did not find any build file for  ' + familyName + '.');
+	}
+}
+
 var updateErroredTransation = function (trans, logStream, logFile) {
 	var errorMessage = "Problem Occured while running Validation script on transaction : " + trans.name + " , Error :" + trans.description.error;
 	var errorMailCommand = 'echo ' + '\"' + errorMessage + '\"' + ' | mutt -s ' + mailSubject + ' ' + trans.email;
@@ -154,8 +185,7 @@ var processTransaction = function (transData) {
 		bugNo = 24806188;
 	}
 	var familyName = trans.family.selectedOption.product.name.toLowerCase();
-	var familyBuildFileLocation = fuseConfig+'.'+familyName;
-	var familyBuildFile = familyBuildFileLocation;
+	var familyBuildFile = getProductFamilyBuildFile(familyName);
 	logger.info('familyBuildFile got resolved to  : ', familyBuildFile);
 	var finScriptParams = '';
 	if (familyName == 'PO') {
