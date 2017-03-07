@@ -1,4 +1,4 @@
-1## Enable Finest Leve Logging for user :
+1## Enable Finest Level Logging for user :
 	1. Set up and Main > 'Manage Administrator Profile Values'
 	2. Enter “AFLOG%” in ‘Profile Option Code’ .
 	3. Enter a new record for AFLOG_ENABLED  

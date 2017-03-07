@@ -63,3 +63,21 @@ Final Command to be executed :
 
 3.ade useview -silent jjikumar_REL_13 -exec "cd prc && ant -f build-po.xml -Dtest.lrg=true test test-report -Dlrg=prc_po_lrg -Dtest.project='PrcPoEsignatureProtectedModelTest'  -Ddb.host=slc09xht.us.oracle.com -Ddb.port=1595 -Ddb.sid=jjikumar -Ddb.user=fusion -Ddb.pass=fusion && exit " 
 4.ade useview -silent jjikumar_REL_13 -exec "cd /scratch/views/jjikumar_REL_13/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/* && cd .. && yes n | /scratch/views/jjikumar_REL_13/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh -d fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar -DupdateBug=N -DrunJUnits=1 -Dfamily=prc -DjunitBuildFile=/scratch/views/jjikumar_REL_13/fusionapps/prc/build-po.xml"
+
+
+
+
+####################################################################################################################################################################################################################################
+Sonar setup
+####################################################################################################################################################################################################################################
+1. yum update *mysql* 
+2. /etc/init.d/mysqld start
+3. Change max_allowed_packet for DB 
+	SHOW VARIABLES LIKE 'max_allowed_packet';
+	SELECT @@global.max_allowed_packet;
+	SET @@global.max_allowed_packet =  500 * 1024 * 1024;
+	commit;
+3. edit sonar.preperties file
+   sonar.web.javaAdditionalOpts=-Dhttps.proxyHost=www-proxy.us.oracle.com -Dhttps.proxyPort=80 -Dhttps.proxySet=true -Dhttps.nonProxyHosts=*.oracle.com|*.oraclecorp.com
+4. /scratch/shared/sonar/sonarqube-6.2/bin/linux-x86-64/startsonar.sh
+5. sonar-scanner
