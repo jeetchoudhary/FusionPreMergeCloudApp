@@ -28,13 +28,13 @@
                         <label for="transaction-family" class="col-sm-2 col-md-2 control-label">Family</label>
                         <div id="productFamilyDetails">
                             <div class="btn-group" style="float: left;margin-left: 15px;">
-                                <select style="width: 180px" class="btn btn-default dropdown-toggle" name="familySelect" id="familySelectID" ng-options="option.name for option in transaction.family.availableOptions track by option.id" ng-model="transaction.family.selectedOption"></select>
+                                <select class="btn btn-default dropdown-toggle" name="familySelect" id="familySelectID" ng-options="option.name for option in transaction.family.availableOptions track by option.id" ng-model="transaction.family.selectedOption"></select>
                             </div>
                             <div class="btn-group" style="float: left;margin-left: 15px;" ng-hide="transaction.family.selectedOption.id == 1">
-                                <select style="width: 180px" class="btn btn-default dropdown-toggle" name="productSelect" id="productSelectID" ng-options="option.name for option in transaction.family.selectedOption.productList track by option.id" ng-model="transaction.family.selectedOption.product"></select>
+                                <select class="btn btn-default dropdown-toggle" name="productSelect" id="productSelectID" ng-options="option.name for option in transaction.family.selectedOption.productList track by option.id" ng-model="transaction.family.selectedOption.product"></select>
                             </div>
 
-                            <div class="col-lg-6" style="float: right" ng-show="transaction.family.selectedOption.id == 2 && transaction.runJunits=='Y'">
+                            <div class="col-lg-6" style="float: right" ng-show="transaction.family.selectedOption.id == 2 ">
                                 <label for="dbstring1" class="col-sm-2 col-md-2 control-label">DB</label>
                                 <div class="input-group" id="dbstring1">
                                     <input type="text" class="form-control" id="dbstring" name="dbstring" ng-model="transaction.dbString" required placeholder="Something like.. username/password@slc09lwn.us.oracle.com:1522/jjikumar">
@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6" style="float: right" ng-show="transaction.family.selectedOption.id != 2 && transaction.family.selectedOption.id !=1 && transaction.runJunits=='Y'">
+                            <div class="col-lg-6" style="float: right" ng-show="transaction.family.selectedOption.id != 2 && transaction.family.selectedOption.id !=1 ">
                                 <label for="dbstring1" class="col-sm-2 col-md-2 control-label">DB</label>
                                 <div class="input-group" id="dbstring1" style="width: 80%;float: right;">
                                     <input type="text" style="border-radius: 4px" class="form-control" id="dbstring" name="dbstring" ng-model="transaction.dbString"
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-show="transaction.family.selectedOption.id == 2 ">
                         <label for="allowDBOverride" class="col-sm-2 col-md-2 control-label">Allow DB Override
                             <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Always Select yes if you don't want Junits to run on specific DB"></span>
                         </label>

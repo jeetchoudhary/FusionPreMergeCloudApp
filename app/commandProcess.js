@@ -245,7 +245,7 @@ var processTransaction = function (transData) {
 		}
 	}).exec(exeCommand, {
 		out: function (stdout) {
-			if (startLogging === 'Y' || trans.runJunits === 'N') {
+			if (startLogging === 'Y' || trans.runJunits === 'N' || familyName !== 'po') {
 				logStream.write(stdout);
 			} else if (startLogging === 'N' && trans.runJunits === 'Y' && stdout.includes("preMergeValidationStarted")) {
 				startLogging = 'Y';
