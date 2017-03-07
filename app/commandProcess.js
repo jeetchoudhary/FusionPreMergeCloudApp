@@ -184,7 +184,13 @@ var processTransaction = function (transData) {
 	if (!bugNo) {
 		bugNo = 24806188;
 	}
-	var familyName = trans.family.selectedOption.product.name.toLowerCase();
+	var familyName = '';
+	if(trans.family){
+		familyName = trans.family.selectedOption.product.name.toLowerCase();
+	}else{
+		familyName = 'po';
+	}
+	 
 	var familyBuildFile = getProductFamilyBuildFile(familyName);
 	logger.info('familyBuildFile got resolved to  : ', familyBuildFile);
 	var finScriptParams = '';

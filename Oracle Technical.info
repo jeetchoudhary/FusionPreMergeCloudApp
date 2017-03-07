@@ -255,4 +255,14 @@
 27# wget proxy command :
 	wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz"  -e use_proxy=yes -e http_proxy=http://www-proxy.us.oracle.com:80  -e https_proxy=https://www-proxy.us.oracle.com:80
 
+27# Change weblogic console password
+	setenv MW_HOME /scratch/software/mw_local/FMWTOOLS_11.1.1.9.1_GENERIC_160712.1219_PATCHES4FA_11.1.13.0.0_PLATFORMS_JDK64/ropal/mw_home_standalone;
+	setenv DOMAIN_HOME $MW_HOME/user_projects/domains/fusion_domain;
+	mv $DOMAIN_HOME/servers/AdminServer/data/ $DOMAIN_HOME/servers/AdminServer/data-old
+	$DOMAIN_HOME/bin/setDomainEnv.sh
+	cd $DOMAIN_HOME/security
+	java weblogic.security.utils.AdminAccount jitu passwd
+		or
+	setenv CLASSPATH /usr/bin (if required) 
+	java -cp /scratch/software/mw_local/FMWTOOLS_11.1.1.9.1_GENERIC_160712.1219_PATCHES4FA_11.1.13.0.0_PLATFORMS_JDK64/ropal/mw_home_standalone/wlserver_10.3/server/lib/weblogic.jar:$CLASSPATH weblogic.security.utils.AdminAccount jitu passwd .
 

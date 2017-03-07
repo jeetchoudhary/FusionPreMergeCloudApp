@@ -32,7 +32,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                         { id: '2', name: 'PON' },
                         { id: '3', name: 'POQ' },
                         { id: '4', name: 'POR' },
-                        { id: '5', name: 'POS' },
+                        { id: '5', name: 'POZ' },
                     ], product: { id: '1', name: 'PO' }
                 },
                 {
@@ -80,7 +80,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                             { id: '2', name: 'PON' },
                             { id: '3', name: 'POQ' },
                             { id: '4', name: 'POR' },
-                            { id: '5', name: 'POS' },
+                            { id: '5', name: 'POZ' },
                         ], product: { id: '1', name: 'PO' }
                     },
                     {
