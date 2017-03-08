@@ -102,6 +102,16 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
             $scope.junitSelectedList = [];
         }
 
+
+        try {
+            if (trans.family.selectedOption.name != 'Procurement') {
+                trans.allowDBOverride = 'N';
+            }
+        }
+        catch (err) {
+            console.log('Error while getting family name from transaction');
+        }
+
         $http.post('/api/submit', trans).success(function (response) {
             console.log('Client : Recieved Data from server', response);
         }).error(function (err) {
