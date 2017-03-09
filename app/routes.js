@@ -4,9 +4,9 @@
 "use strict";
 module.exports = function (app) {
 	
-	var messageServer = require('./MessageProcessor');
-	var messageClient = require('./MessageBroker');
-	var amqp = require('amqplib/callback_api');
+	require('./MessageProcessor');
+	require('./MessageBroker');
+	require('amqplib/callback_api');
 	var exec = require('child_process').exec;
 	var fuseConfig = require('../config/configuration');
 	var TransData = require('../app/models/TransData');
@@ -39,12 +39,13 @@ module.exports = function (app) {
 		var childrenList ;
 		var aFileNameParts;
 		var projectPath;
+		var fileName;
 		try {
 			fileData = fs.readFileSync(listLocationLocal).toString();
 			childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
 			childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
 			aFileNameParts = childrenList.split(".jpr");
-			for (var i in aFileNameParts) {
+			for (fileName in aFileNameParts) {
 				if (aFileNameParts[i].lastIndexOf('path=') != -1) {
 					projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
 					if (projectPath.substring(projectPath.length - 4) == 'Test') {
@@ -64,7 +65,7 @@ module.exports = function (app) {
 			childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
 			childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
 			aFileNameParts = childrenList.split(".jpr");
-			for (var i in aFileNameParts) {
+			for (fileName in aFileNameParts) {
 				if (aFileNameParts[i].lastIndexOf('path=') != -1) {
 					projectPath = 'fusionapps/prc/components/procurementEss/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
 					if (projectPath.substring(projectPath.length - 4) == 'Test') {
