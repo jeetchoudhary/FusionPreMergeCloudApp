@@ -54,8 +54,9 @@ var getTransactionOverallStatus = function (permergeResultMainOutputFile) {
 };
 
 var updateTransactionStatus = function (transaction, status, logFile, permergeResultMainOutputFile) {
+	var query;
 	if (status === "Running") {
-		var query = { "name": transaction.name, "currentStatus": "Queued" };
+		query = { "name": transaction.name, "currentStatus": "Queued" };
 		TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now(), "logFileName": logFile, "DBServerUsed": transaction.DBServerUsed, "adeServerUsed": transaction.adeServerUsed }, { upsert: false }, function (err, doc) {
 			if (err) {
 				logger.error('Unable to update the row for the transaction ' + transaction.name, err);
@@ -64,7 +65,7 @@ var updateTransactionStatus = function (transaction, status, logFile, permergeRe
 			}
 		});
 	} else if (status === "Archived") {
-		var query = { "name": transaction.name, "currentStatus": "Running" };
+		query = { "name": transaction.name, "currentStatus": "Running" };
 		var detailedLogLocation = transaction.transactionDetailedLocation;
 		logger.info('Premerge detailedLogLocation for the transaction ' + transaction.name + ' : ', detailedLogLocation);
 		var transStatus = getTransactionOverallStatus(permergeResultMainOutputFile);
@@ -108,9 +109,7 @@ var getProductFamilyBuildFile = function(familyName){
 		case 'poz':
 			return 'fusionapps/prc/build-poz.xml';
 		case 'inv':
-			return 'fusionapps/scm/build-log.xml';
 		case 'rcv':
-			return 'fusionapps/scm/build-log.xml';
 		case 'wsh':
 			return 'fusionapps/scm/build-log.xml';
 		default:
@@ -212,15 +211,17 @@ var processTransaction = function (transData) {
 	var detailedTransactionOutputLocation = 'http://slc04kxc.us.oracle.com:81/' + transName + '_1'
 	var emailBody = 'Premerge validation completed for your transaction ' + trans.name + '. you can verify the result of the validation at ' + detailedTransactionOutputLocation;
 	trans.transactionDetailedLocation = detailedTransactionOutputLocation;
-	var sendmailSuccess = 'echo ' + emailBody + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
-	var errorMessage = "PreMerge Validation completed on transaction : " + trans.name + " , Please view the logs and validate your result ";
-	var sendmailCommand = sendmailSuccess;
+	var sendmailCommand = 'echo ' + emailBody + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
 	var premergeResultLocalLocation = __dirname + '\\..\\History\\Archived\\' + transName + '_1\\';
 	var preMergeResCopyCommand = 'scp -i ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + trans.adeServerUsed + ':' + premergeOutLoc + ' ' + premergeResultLocalLocation;
 	var permergeResultMainOutputFile = premergeResultLocalLocation + transName + '.txt';
+	logger.info('******************************************************************************************************************************************************');
 	logger.info('command to copy data : ', preMergeResCopyCommand);
+	logger.info('******************************************************************************************************************************************************');
 	logger.info('send mail command', sendmailCommand);
+	logger.info('******************************************************************************************************************************************************');
 	logger.info('command to be executed', exeCommand);
+	logger.info('******************************************************************************************************************************************************');
 	var startLogging = 'N';
 	new SSH({
 		host: trans.adeServerUsed,

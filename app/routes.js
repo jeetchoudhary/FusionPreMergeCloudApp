@@ -14,7 +14,6 @@ module.exports = function (app) {
 	var ProjectList = require('../app/models/ProjectListData');
 	var fs = require('fs');
 	var q = require('q');
-	var transactionLogLocation = ".\\History\\Current\\";
 	
 	var SSH = require('simple-ssh');
 	var adeServerMap = new Object();
