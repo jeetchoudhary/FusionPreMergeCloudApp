@@ -3,21 +3,23 @@
  */
 "use strict";
 module.exports = function (app) {
-	var fuseConfig = require('../config/configuration');
+	
 	var messageServer = require('./MessageProcessor');
 	var messageClient = require('./MessageBroker');
+	var amqp = require('amqplib/callback_api');
+	var exec = require('child_process').exec;
+	var fuseConfig = require('../config/configuration');
 	var TransData = require('../app/models/TransData');
 	var Databases = require('../app/models/DBData');
 	var ProjectList = require('../app/models/ProjectListData');
-//	var dumpProjectFamilyData = require('./DumpProjectData');
 	var fs = require('fs');
 	var q = require('q');
 	var transactionLogLocation = ".\\History\\Current\\";
-	var amqp = require('amqplib/callback_api');
+	
 	var SSH = require('simple-ssh');
 	var adeServerMap = new Object();
 	var child_process = require('child_process');
-	var exec = require('child_process').exec;
+	
 	var logger = require('./LoggingConfig');
 	
 	var ssh = new SSH({
@@ -33,14 +35,19 @@ module.exports = function (app) {
 	var updateTestProjectListProcurement = function () {
 		var projectNames = [];
 		var listLocationLocal = __dirname + '\\ProjectList\\Procurement.jws';
+		var fileData ;
+		var childrenStartData;
+		var childrenList ;
+		var aFileNameParts;
+		var projectPath;
 		try {
-			var fileData = fs.readFileSync(listLocationLocal).toString();
-			var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
-			var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
-			var aFileNameParts = childrenList.split(".jpr");
+			fileData = fs.readFileSync(listLocationLocal).toString();
+			childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
+			childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
+			aFileNameParts = childrenList.split(".jpr");
 			for (var i in aFileNameParts) {
 				if (aFileNameParts[i].lastIndexOf('path=') != -1) {
-					var projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
+					projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
 					if (projectPath.substring(projectPath.length - 4) == 'Test') {
 						projectNames.push(projectPath);
 						logger.info('project updated in the db , Family : Procurement , Path : ', projectPath);
@@ -54,13 +61,13 @@ module.exports = function (app) {
 		// Parsing list for ESS projects
 		listLocationLocal = __dirname + '\\ProjectList\\ProcurementEss.jws';
 		try {
-			var fileData = fs.readFileSync(listLocationLocal).toString();
-			var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
-			var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
-			var aFileNameParts = childrenList.split(".jpr");
+			fileData = fs.readFileSync(listLocationLocal).toString();
+			childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
+			childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
+			aFileNameParts = childrenList.split(".jpr");
 			for (var i in aFileNameParts) {
 				if (aFileNameParts[i].lastIndexOf('path=') != -1) {
-					var projectPath = 'fusionapps/prc/components/procurementEss/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
+					projectPath = 'fusionapps/prc/components/procurementEss/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
 					if (projectPath.substring(projectPath.length - 4) == 'Test') {
 						projectNames.push(projectPath);
 						logger.info('project updated in the db , Family : ProcurementEss , Path : ', projectPath);
@@ -118,71 +125,6 @@ module.exports = function (app) {
 	 }
 
 	// updateTestProjectLists();
-
-
-	// var parseProjectListandUpdateDB = function (series, listLocationLocal, viewName) {
-	// 	logger.info('about to parse projectList and update DB with series : ', series);
-	// 	var projectNames = [];
-	// 	try {
-	// 		var fileData = fs.readFileSync(listLocationLocal + 'Procurement.jws').toString();
-	// 		var childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
-	// 		var childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
-	// 		var aFileNameParts = childrenList.split(".jpr");
-	// 		for (var i in aFileNameParts) {
-	// 			if (aFileNameParts[i].lastIndexOf('path=') != -1) {
-	// 				var projectPath = 'fusionapps/prc/components/procurement/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
-	// 				if (projectPath.substring(projectPath.length - 4) == 'Test') {
-	// 					projectNames.push(projectPath);
-	// 					logger.info('project updated in the db : ', projectPath);
-	// 				}
-	// 			}
-	// 		}
-	// 	} catch (ex) { logger.info('Failed to parse projectNames from fileList', ex) }
-
-	// 	var query = { "name": "Procurement" };
-	// 	ProjectList.findOneAndUpdate(query, { "list": projectNames }, { upsert: true }, function (err, doc) {
-	// 		if (err) {
-	// 			logger.error('failed to save list in db :', err);
-	// 		} else {
-	// 			logger.info('saved list in db  :');
-	// 		}
-	// 	});
-	// };
-	// var updateProjectNameList = function (series) {
-	// 	var viewName = 'cloudupdateProjects';
-	// 	var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
-	// 	var listLocationOnServer = '/scratch/' + fuseConfig.adeServerUser + '_' + viewName + '/fusionapps/prc/components/procurement/Procurement.jws';
-	// 	var listLocationLocal = __dirname + '\\ProjectList\\';
-	// 	var projectListCopyCommand = 'scp ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + fuseConfig.historyServerUrl + ':' + listLocationOnServer + ' ' + listLocationLocal;
-	// 	logger.info('command to copy file : ', projectListCopyCommand);
-	// 	ssh.exec(createViewCommand, {
-	// 		out: function (stdout) {
-	// 			logger.info(stdout);
-	// 		},
-	// 		err: function (stderr) {
-	// 			logger.error('failed to execute command desc :', stderr);
-	// 			return;
-	// 		}
-	// 	}).exec('echo', {
-	// 		out: function (stdout) {
-	// 			var copyFiles = exec(projectListCopyCommand, function (error, stdout, stderr) {
-	// 				if (error) {
-	// 					logger.error('Failed to copy projectList file from server : ', error);
-	// 				}
-	// 			});
-	// 		},
-	// 		err: function (stderr) {
-	// 			logger.error('failed to execute command echo :', stderr);
-	// 		}
-	// 	}).exec('echo', {
-	// 		out: function (stdout) {
-	// 			setTimeout(function () { parseProjectListandUpdateDB(series, listLocationLocal, viewName); }, 5000);
-	// 		},
-	// 		err: function (stderr) {
-	// 			logger.error('failed to execute command echo :', stderr);
-	// 		}
-	// 	}).start();
-	// };
 
 	var initilizeADEServerMap = function () {
 		var adeServerList = fuseConfig.adeServerUrl.split(';');
@@ -276,14 +218,6 @@ module.exports = function (app) {
 			}
 		}).start();
 		return deferred.promise;
-	};
-
-	var getTransactionLogFileName = function (transactionName) {
-		var newPath = transactionLogLocation + transactionName + '_1';
-		var path = newPath.replace(/\\/g, "/");
-		fs.open(newPath, 'r', function (error, fd) {
-			if (error) { throw new Error("ERROR - failed to open file : " + newPath); }
-		});
 	};
 
 // server routes ================================================================================================================================================================================================

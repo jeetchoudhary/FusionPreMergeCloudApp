@@ -35,15 +35,15 @@ var releaseDBLock = function (dbServer) {
 
 
 var getTransactionOverallStatus = function (permergeResultMainOutputFile) {
-	var transactionStatus = "";
+	var transactionStatus = '';
 	if (fs.existsSync(permergeResultMainOutputFile)) {
 		logger.info('Premerge final output file exist at location  :', permergeResultMainOutputFile);
 		var premergeOutputArray = fs.readFileSync(permergeResultMainOutputFile).toString().split("\n");
 		for (var i in premergeOutputArray) {
 			if (premergeOutputArray[i].includes("Overall Validation Status")) {
 				var words = premergeOutputArray[i].split(" ");
-				var transactionStatus = words[words.length - 2].trim();
-				console.log('Transactinal final status ' + transactionStatus);
+				transactionStatus = words[words.length - 2].trim();
+				logger.info('Transactinal final status ' + transactionStatus);
 				break;
 			}
 		}
@@ -54,9 +54,8 @@ var getTransactionOverallStatus = function (permergeResultMainOutputFile) {
 };
 
 var updateTransactionStatus = function (transaction, status, logFile, permergeResultMainOutputFile) {
-	var query = '';
 	if (status === "Running") {
-		query = { "name": transaction.name, "currentStatus": "Queued" };
+		var query = { "name": transaction.name, "currentStatus": "Queued" };
 		TransData.findOneAndUpdate(query, { "currentStatus": status, "starttime": Date.now(), "logFileName": logFile, "DBServerUsed": transaction.DBServerUsed, "adeServerUsed": transaction.adeServerUsed }, { upsert: false }, function (err, doc) {
 			if (err) {
 				logger.error('Unable to update the row for the transaction ' + transaction.name, err);
@@ -65,7 +64,7 @@ var updateTransactionStatus = function (transaction, status, logFile, permergeRe
 			}
 		});
 	} else if (status === "Archived") {
-		query = { "name": transaction.name, "currentStatus": "Running" };
+		var query = { "name": transaction.name, "currentStatus": "Running" };
 		var detailedLogLocation = transaction.transactionDetailedLocation;
 		logger.info('Premerge detailedLogLocation for the transaction ' + transaction.name + ' : ', detailedLogLocation);
 		var transStatus = getTransactionOverallStatus(permergeResultMainOutputFile);
@@ -100,30 +99,23 @@ var getProductFamilyBuildFile = function(familyName){
 	switch (familyName) {
 		case 'po':
 			return 'fusionapps/prc/build-po.xml';
-			break;
 		case 'pon':
 			return 'fusionapps/prc/build-pon.xml';
-			break;
 		case 'poq':
 			return 'fusionapps/prc/build-poq.xml';
-			break;
 		case 'por':
 			return 'fusionapps/prc/build-por.xml';
-			break;
 		case 'poz':
 			return 'fusionapps/prc/build-poz.xml';
-			break;
 		case 'inv':
 			return 'fusionapps/scm/build-log.xml';
-			break;
 		case 'rcv':
 			return 'fusionapps/scm/build-log.xml';
-			break;
 		case 'wsh':
 			return 'fusionapps/scm/build-log.xml';
-			break;
 		default:
-			logger.log('Did not find any build file for  ' + familyName + '.');
+			logger.log('Did not find any build file for  ' + familyName + ' so using default famile po.');
+			return 'fusionapps/prc/build-po.xml';
 	}
 }
 
@@ -141,7 +133,7 @@ var updateErroredTransation = function (trans, logStream, logFile) {
 		dest.end();
 	});
 	source.on('error', function (err) {
-		logger.error('failed to move transaction logs to Archived');
+		logger.error('failed to move transaction logs to Archived',err);
 	});
 	updateTransactionErrorStatus(trans, logFile);
 	new SSH({
@@ -180,7 +172,8 @@ var processTransaction = function (transData) {
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
 	var begintrans = useViewCommand + ' \" ade begintrans ' + transName + ' && ';
 	var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
-	var checkInCommand = "";
+	var checkInCommand;
+	var finScriptParams;
 	if (!bugNo) {
 		bugNo = 24806188;
 	}
@@ -193,7 +186,7 @@ var processTransaction = function (transData) {
 	 
 	var familyBuildFile = getProductFamilyBuildFile(familyName);
 	logger.info('familyBuildFile got resolved to  : ', familyBuildFile);
-	var finScriptParams = '';
+	
 	if (familyName == 'po') {
 		if (trans.runJunits === 'Y') {
 			var dummyLRGCommand = ' ant -f build-po.xml -Dtest.lrg=true test test-report -Dlrg=prc_po_lrg -Dtest.project=\'PrcPoPublicViewEcsfTest\' -Ddb.host=slc09xht.us.oracle.com -Ddb.port=1595 -Ddb.sid=jjikumar -Ddb.user=fusion -Ddb.pass=fusion ';
@@ -221,7 +214,6 @@ var processTransaction = function (transData) {
 	trans.transactionDetailedLocation = detailedTransactionOutputLocation;
 	var sendmailSuccess = 'echo ' + emailBody + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
 	var errorMessage = "PreMerge Validation completed on transaction : " + trans.name + " , Please view the logs and validate your result ";
-	var sendmailFailure = 'echo ' + '\"' + errorMessage + '\"' + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
 	var sendmailCommand = sendmailSuccess;
 	var premergeResultLocalLocation = __dirname + '\\..\\History\\Archived\\' + transName + '_1\\';
 	var preMergeResCopyCommand = 'scp -i ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + trans.adeServerUsed + ':' + premergeOutLoc + ' ' + premergeResultLocalLocation;
@@ -275,7 +267,7 @@ var processTransaction = function (transData) {
 				dest.end();
 			});
 			source.on('error', function (err) {
-				logger.error('failed to move transaction logs to Archived');
+				logger.error('failed to move transaction logs to Archived',err);
 			});
 		},
 		err: function (stderr) {

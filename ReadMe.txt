@@ -80,4 +80,5 @@ Sonar setup
 3. edit sonar.preperties file
    sonar.web.javaAdditionalOpts=-Dhttps.proxyHost=www-proxy.us.oracle.com -Dhttps.proxyPort=80 -Dhttps.proxySet=true -Dhttps.nonProxyHosts=*.oracle.com|*.oraclecorp.com
 4. /scratch/shared/sonar/sonarqube-6.2/bin/linux-x86-64/startsonar.sh
-5. sonar-scanner
+5. setenv _JAVA_OPTIONS "-Xmx3g"
+6. sonar-scanner

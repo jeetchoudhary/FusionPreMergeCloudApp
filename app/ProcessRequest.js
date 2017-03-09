@@ -13,7 +13,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(fuseConfig.dburl);
 var db = mongoose.connection;
 db.once('open', function () {
-	logger.info('Server : Process Request is connected to the database ');
+    logger.info('Server : Process Request is connected to the database ');
 });
 
 var serveRequest = function (transaction) {
@@ -58,15 +58,14 @@ var checkParticularDBAvaliablityandProcess = function (transaction) {
 };
 
 var checkAnyDBAvaliablityandProcess = function (transaction) {
-    var query = { "currentStatus" : "UNUSED"};
+    var query = { "currentStatus": "UNUSED" };
     logger.info('checkAnyDBAvaliablityandProcess() request received');
     Databases.find(query, function (err, dbData) {
-       logger.info('call back from db received  ');
-		if (err) { logger.error('error occured while fetching Currently avaliable Databases : ', err); }
-        else if (dbData.length > 0)
-         {
+        logger.info('call back from db received  ');
+        if (err) { logger.error('error occured while fetching Currently avaliable Databases : ', err); }
+        else if (dbData.length > 0) {
             var db = dbData[0];
-            logger.info('updating status for the database : ',db.connectionString);
+            logger.info('updating status for the database : ', db.connectionString);
             Databases.findOneAndUpdate({ 'alias': db.alias }, { "currentStatus": 'USED' }, { upsert: false }, function (err, doc) {
                 if (err) {
                     logger.error('Unable to update the row for the DB String  ' + transaction.dbString, err);
@@ -78,30 +77,30 @@ var checkAnyDBAvaliablityandProcess = function (transaction) {
                 }
             });
         }
-		});
+    });
 };
 
-var processSubmitRequest = function (transaction) {
-    var transaction = JSON.parse(transaction);
+var processSubmitRequest = function (transactionString) {
+    var transaction = JSON.parse(transactionString);
     var dbSplitIndex = transaction.dbString.indexOf('@') + 1;
     var dbDomain = transaction.dbString.substring(dbSplitIndex, dbSplitIndex + 3);
     var adeDomain = transaction.adeServerUsed.substring(0, 3);
     if (dbDomain !== adeDomain) {
         transaction.remark = 'DB and ADE Server are in Different Zone';
     }
-    logger.info('transaction.runJunits : ',transaction.runJunits );
-    logger.info('transaction.allowDBOverride : ',transaction.allowDBOverride );
+    logger.info('transaction.runJunits : ', transaction.runJunits);
+    logger.info('transaction.allowDBOverride : ', transaction.allowDBOverride);
     if (transaction.runJunits === 'Y') {
-        if (transaction.allowDBOverride === 'N'){
-        	processTimeout = setInterval(checkParticularDBAvaliablityandProcess, 1000*30 , transaction);
-        }         
-        else{
-        	processTimeout = setInterval(checkAnyDBAvaliablityandProcess, 1000*30 , transaction);
-        }     
+        if (transaction.allowDBOverride === 'N') {
+            processTimeout = setInterval(checkParticularDBAvaliablityandProcess, 1000 * 30, transaction);
+        }
+        else {
+            processTimeout = setInterval(checkAnyDBAvaliablityandProcess, 1000 * 30, transaction);
+        }
     }
     else {
-         transaction.DBServerUsed = transaction.dbString;
-         serveRequest(transaction);
+        transaction.DBServerUsed = transaction.dbString;
+        serveRequest(transaction);
     }
 };
 

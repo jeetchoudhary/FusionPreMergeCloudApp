@@ -15,21 +15,24 @@ angular.module('HistCtrl', [])
         $scope.getTransactionList = function (transState) {
             $scope.tabType = transState;
             $http.post('/api/transactions/list', { 'transState': transState }).success(function (response) {
-                for (i = 0; i < response.length; i++) {
-                    start = response[i].starttime;
-                    end = response[i].endtime;
+                for (var i = 0; i < response.length; i++) {
+                    var start = response[i].starttime;
+                    var end = response[i].endtime;
                     if (start != null && end != null) {
-                        timeTaken = new Date(end).getTime() - new Date(start).getTime();
+                        var timeTaken = new Date(end).getTime() - new Date(start).getTime();
                         var seconds = Math.floor(timeTaken / 1000);
                         var h = 3600;
                         var m = 60;
                         var hours = Math.floor(seconds / h);
                         var minutes = Math.floor((seconds % h) / m);
-                        var timeString = '';
-                        if (hours < 10) hours = "0" + hours;
-                        if (minutes < 10) minutes = "0" + minutes;
-                        timeString = hours + " hour " + minutes + " minutes";
-                        temp = response[i];
+                        if (hours < 10) {
+                            hours = "0" + hours;
+                        }
+                        if (minutes < 10){
+                            minutes = "0" + minutes;
+                        } 
+                        var timeString = hours + " hour " + minutes + " minutes";
+                        var temp = response[i];
                         temp.totalTimeSpend = timeString;
                         response[i] = temp;
                     }
@@ -56,7 +59,6 @@ angular.module('HistCtrl', [])
     }).controller('HistoryProgress', function ($scope, $rootScope, $http, $sce) {
         $scope.transactionOutput = $rootScope.transactionOutput;
         $scope.displayTransactionProgress = function (histTrans) {
-            // console.log('Client : Going to display the transaction outcome', name);
             $http.post('/api/transactions/name/output', { histTrans: histTrans }, {
                 responseType: 'arraybuffer'
             })
