@@ -1,0 +1,353 @@
+1. DB String : slcao718.us.oracle.com:1528:sc0yd57
+
+2. Create Security Keystory
+	mkdir -p $AVR/rtf && cd $AVR/rtf && cp -R /ade_autofs/ud62_fa/FSM_MAIN_GENERIC.rdd/LATEST/fsm/asm/noship/scripts/rtf .
+	cd rtf/
+	sh setupConsumerKSS.sh $MW_HOME/oracle_common/common/bin . slc10gby.us.oracle.com 7011 weblogic weblogic1 /scratch/software/mw_local/FMWTOOLS_11.1.1.9.1_GENERIC_160712.1219_PATCHES4FA_11.1.13.0.0_PLATFORMS_JDK64/ropal/mw_home_standalone/user_projects/domains/fusion_domain
+	sh setupProducerKSS.sh $MW_HOME/oracle_common/common/bin AdminServerclient.cer slc10gby.us.oracle.com 7011 weblogic weblogic1 /scratch/software/mw_local/FMWTOOLS_11.1.1.9.1_GENERIC_160712.1219_PATCHES4FA_11.1.13.0.0_PLATFORMS_JDK64/ropal/mw_home_standalone/user_projects/domains/fusion_domain
+
+3. Deployment 
+	cd $AVR/fusionapps;
+	ade expand $AVR/fusionapps/ -recurse;
+	ant uploadDomainConfig -Denvid=POSMC;
+	cd prc;
+	ant -f build-prc.xml sharedlib ;
+	ant -f build-sp.xml sharedlib ;
+	ant -f build-prcEss.xml sharedlib ;
+	ant -Denvid=POSMC -DearsToDeploy=EarProcurement,EarSupplierPortal,EarProcurementEss -DmergeJazn=true -DuploadConfig=true j2eeConsolidatedDeploy | tee /scratch/ropal/smc/j2eeConsolidatedDeploy.log;
+	ant -Denvid=POSMC -DskipGenerateApps=true -DskipMergeJars=true -DearsToDeploy=EarProcurement,EarSupplierPortal,EarProcurementEss j2eeConsolidatedDeploy
+
+4. Location of Apps
+	/scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/consolidatedApps
+	/scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/sharedLibs/deploy
+	/scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/com/config/
+	
+	/scratch/ropal/view_storage/ropal_REL_13_SMC_Deploy/fusionapps/consolidatedApps
+	/scratch/ropal/view_storage/ropal_REL_13_SMC_Deploy/fusionapps/sharedLibs/deploy
+	/scratch/ropal/view_storage/ropal_REL_13_SMC_Deploy/fusionapps/com/config/
+
+
+5. Importing rootmenu.xml
+	$MW_HOME/oracle_common/common/bin/wlst.sh 
+	connect("weblogic","weblogic1","t3://slc10gby.us.oracle.com:7011")
+	importMetadata(application='EarFscmUIApp',server='AdminServer',fromLocation='/scratch/ropal/smc/rootmenu',docs='/**')
+
+6. copy required jars while deployment 
+	cp   /scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/jlib/faglobal/AdfAtkDevPortalRESTWebService.jar /scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/sharedLibs/deploy/oracle.apps.fa.model.ear/APP-INF/lib
+	cp   /scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/jlib/AdfAtkHomePageFuseProtectedModel.jar 		/scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/sharedLibs/deploy/oracle.apps.fa.model.ear/APP-INF/lib
+		or
+	cp  $AVR/fusionapps/jlib/AdfAtkHomePageFuseProtectedModel.jar $AVR/fusionapps/sharedLibs/deploy/oracle.apps.fa.model.ear/APP-INF/lib/
+
+7. Add below entry in the manifist files
+<jar name="AdfAtkDevPortalRESTWebService.jar" sharedLibName="oracle.apps.fa.model.ear" location="fusionapps/jlib/faglobal/AdfAtkDevPortalRESTWebService.jar" />
+<jar name="AdfAtkHomePageFuseProtectedModel.jar" sharedLibName="oracle.apps.fa.model.ear" location="fusionapps/jlib/AdfAtkHomePageFuseProtectedModel.jar" />
+
+8. For the flex Feild issue 
+	rm  /scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/consolidatedApps/EarFscmUIApp.ear/adf/META-INF/adf-config.xml
+	cp 	/net/indl76040.in.oracle.com/scratch/shared/adf-config.xml	/scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/consolidatedApps/EarFscmUIApp.ear/adf/META-INF/adf-config.xml
+
+9. Deploy SOA Composites
+	a) If got Error PDocument not found in MetadataStore
+		mkdir -p $MW_HOME_STANDALONE/applications/prc/deploy/soa_shared
+		pushd $MW_HOME_STANDALONE/applications/prc/deploy/soa_shared
+		jar xvf $ADE_VIEW_ROOT/fusionapps/prc/deploy/soa_shared.mar
+		popd
+		bounce the servers
+	b)cd $ADE_VIEW_ROOT/fusionapps/prc
+	c)ant prepare_soa_shared_repository
+	d)Create AppInfo.xml: ant -f build.xml generateSOAEnvironment
+	e)Update AppInfo.xml
+	f)Create deployPlan.xml file: ant -f build.xml generateSOADeployPlan -Ddeploy.appinfo=AppInfo.xml
+	g)ant -f build.xml deploySOASharedRepository -Ddeploy.appinfo=AppInfo.xml
+	h)ant -f $JDEV_HOME/bin/ant-sca-deploy.xml -DserverURL=http://slc10gby.us.oracle.com:7111 -DsarLocation=$ADE_VIEW_ROOT/fusionapps/jlib/common_soa_shared/soa_shared.zip -Duser=weblogic -Dpassword=weblogic1
+	i) Deploy Composites , cd prc
+		cd $ADE_VIEW_ROOT/fusionapps/prc
+        ant -f build.xml family_publish
+		cd $ADE_VIEW_ROOT/fusionapps
+        ade mkprivate */deploy/soa_shared_deleted.mar
+        ant regenerateSoaSharedDeletedMar
+		bounce soa server
+		ant -f build.xml deploySOAComposite -Ddeploy.appinfo=AppInfo.xml -Ddeploy.configplan=deployPlan.xml -Ddeploy.composite=./deploy/sca_PrcPoApprovalComposite.jar -Ddeploy.skipmar=true
+		ant -f build.xml deploySOAComposite -Ddeploy.appinfo=AppInfo.xml -Ddeploy.configplan=deployPlan.xml -Ddeploy.composite=./deploy/sca_PrcPorManageReqApprovalComposite.jar -Ddeploy.skipmar=true
+	j) $MW_HOME_STANDALONE/soa/common/bin/wlst.sh
+		connect('weblogic','weblogic1','t3://slc10gby.us.oracle.com:7111')
+		sca_importUpdates('http://slc10gby.us.oracle.com:7111','/scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/prc/po/noship/approvalRules/PoApproval_Rules_Metadata.jar','PrcPoApprovalComposite','1.0')
+		sca_importUpdates('http://slc10gby.us.oracle.com:7111','/scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/prc/por/noship/approvalRules/ReqApproval_Rules_Metadata.jar','PrcPorManageReqApprovalComposite','1.0')
+
+##Application URLS
+	http://slc10gby.us.oracle.com:7011/console
+	http://slc10gby.us.oracle.com:7011/fscmUI/faces/FuseWelcome
+	http://slc10gby.us.oracle.com:7011/fscmUI/faces/SetupDemo_UIShellPage
+	http://slc10gby.us.oracle.com:7011/fscmUI/faces/EssUIShell
+	http://slc10gby.us.oracle.com:7011/fscmUI/faces/FuseTaskListManagerTop
+	http://slc10gby.us.oracle.com:7011/fscmUI/faces/PrcPosRegisterSupplier?prcBuId=204
+	http://slc10gby.us.oracle.com:7011/wsm-pm/validator
+
+
+
+## Logs Location 
+	/scratch/software/mw_local/FMWTOOLS_11.1.1.9.1_GENERIC_160712.1219_PATCHES4FA_11.1.13.0.0_PLATFORMS_JDK64/ropal/mw_home_standalone/user_projects/domains/fusion_domain/servers/ESS_SOAServer_1/logs/
+
+
+## DataSource to be changed :
+	EDNLocalTxSource-jdbc.xml
+	EDNDataSource-jdbc.xml
+	EDNSource-jdbc.xml
+	EDNLocalTxDataSource-jdbc.xml
+	mds-soa-jdbc.xml
+	SOALocalTxDataSource-jdbc.xml
+	SOADataSource-jdbc.xml
+
+
+## Set up UPatch DB :
+	 1. cd /net/slcai797/scratch/upatch/LATEST/bin
+	 2../uPatchManager BUILD_EMS_CONFIG -EMS_ENV_NAME=JJIKUMARSMC  -UPATCH_CONFIG=/slot/ems11899/oracle/env_configuration_file.xml
+	 3../uPatchManager VALIDATE -UPATCH_CONFIG=/slot/ems11899/oracle/env_configuration_file.xml 
+	 4../uPatchManager -UPATCH_CONFIG=/slot/ems11899/oracle/env_configuration_file.xml 
+	 5.BOOTSTRAP -ADMIN_EMAIL_ADDR="jitender.k.kumar@oracle.com" 
+	 6../uPatch -INSTANCE=//slcak360.us.oracle.com:1620/jitusmc -ROLE=admin -ROLE_PASSWORD=admin INSTALL_ALL -COMPONENT_SOURCE=FAINTEG_PT.SMC_PLATFORMS_170207.0835
+	 7../uPatch -INSTANCE=//slcak360.us.oracle.com:1620/jitusmc -ROLE=admin -ROLE_PASSWORD=admin 
+	 8.uPatch[ADMIN]> APPLY_FA_LABEL -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170209.0930.S 
+					APPLY_FA_JARS -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170209.0930.S
+
+	## standalone machine
+		BUILD_SIMPLE_CONFIG -DB_HOST=indl76041.in.oracle.com -DB_SID=in76041 -DB_PORT=1522 -DB_USER=fusion -DB_PASS=fusion -DB_ORACLEHOME=/scratch/oradba/db/tech_st/12.1.0
+		BUILD_SIMPLE_CONFIG -DB_HOST=indl76041.in.oracle.com -DB_SID=in76041 -DB_PORT=1522 -DB_USER=oradba -DB_PASS=oradba123 -APPLTOP_USER_PWD=oradba123 -DB_ORACLEHOME=/scratch/oradba/db/tech_st/12.1.0
+		BUILD_SIMPLE_CONFIG -DB_HOST=slc03fnj.us.oracle.com -DB_SID=upatchdb -DB_PORT=5599 -DB_USER=upatch -DB_PASS=upatch -APPLTOP_USER_PWD=oradba123 -DB_ORACLEHOME=/scratch/upatch/upatchdb/oracle/db/tech_st/12.1.0
+		BOOTSTRAP -ADMIN_EMAIL_ADDR="jitender.k.kumar@oracle.com" -APPLTOP_INSTALL_SOURCE="FAINTEG_MAIN_PLATFORMS_170204.0058" 
+		cd /net/slcai797/scratch/upatch/LATEST/bin;
+		./uPatchManager -UPATCH_CONFIG=/scratch/oradba/upatchconfig.xml
+
+Please find the steps from OWSM side :
+A. Steps to be performed Pre-P2T:
+==============================
+Keep backup of Token Issuer Trust doc by exporting from Test using the below
+steps :
+1. Connect to WLST online from oracle_common/common/bin/wlst.sh
+2. Execute the below commands :
+a) beginRepositorySession()
+b) selectWSMTokenIssuerTrustDocument('tokenissuertrustGLOBAL')
+c) exportWSMTokenIssuerTrustMetadata(trustFile='/tmp/trustData.xml')
+(Preserve the file /tmp/trustData.xml as this would be used post P2T. You may
+mention any path here.)
+d) commitRepositorySession()
+3. Exit WLST
+
+
+B. Steps to be performed Post P2T:
+===============================
+Import the Token Issuer Trust doc from the backup (taken pre-P2T as per the
+above steps) using the below steps:
+1. Connect to WLST online from oracle_common/common/bin/wlst.sh
+2. Execute the below commands :
+a) beginRepositorySession()
+b) selectWSMTokenIssuerTrustDocument('tokenissuertrustGLOBAL')
+c)
+exportWSMTokenIssuerTrustMetadata(trustFile='/tmp/tokenissuertrustGLOBAL-backup.xml')
+(Taking backup before importing. Preserve
+/tmp/tokenissuertrustGLOBAL-backup.xml as backup file.)
+d) revokeWSMTokenIssuerTrust()
+e) importWSMTokenIssuerTrustMetadata(trustFile='/tmp/trustData.xml')
+(The path should be same as A.2.c step as mentioned in the pre-P2T steps)
+f) commitRepositorySession()
+3. Exit WLST
+
+
+connect('weblogic','weblogic1','t3://slc10gby.us.oracle.com:7011')
+
+beginRepositorySession()
+createPolicySet('ws-service','ws-service','Domain("*")')
+attachPolicySetPolicy('oracle/wss_saml_bearer_or_username_token_service_policy')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+createPolicySet('ws-callback','ws-callback','Domain("*")')
+attachPolicySetPolicy('oracle/wss_saml_token_bearer_client_policy')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+createPolicySet('ws-client','ws-client','Domain("*")')
+attachPolicySetPolicy('oracle/wss_saml_token_bearer_client_policy')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+createPolicySet('ws-connection','ws-connection','Domain("*")')
+attachPolicySetPolicy('oracle/wss_saml_token_bearer_client_policy')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+createPolicySet('sca-service','sca-service','Domain("*")')
+attachPolicySetPolicy('oracle/wss_saml_bearer_or_username_token_service_policy')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+createPolicySet('sca-reference','sca-reference','Domain("*")')
+attachPolicySetPolicy('oracle/wss_saml_token_bearer_client_policy')
+validatePolicySet()
+commitRepositorySession()
+
+
+
+SELECT * FROM ask_enterprise_applications ;
+select * from ask_deployed_applications ;
+SELECT * FROM ask_modules;
+SELECT * FROM ask_deployed_modules;
+SELECT * FROM ASK_DEPLOYED_DOMAINS;
+select * from FA_FUSION_SOAINFRA.WFTASKDISPLAY;
+select * from PRC_FUSION_SOAINFRA.WFTASKDISPLAY;
+
+
+
+
+
+
+
+
+
+
+beginRepositorySession()
+deletePolicySet('ws-service')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('ws-client')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('ws-callback')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('sca-reference')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('sca-service')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('ws-connection')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+deletePolicySet('default-domain-ws-connection-DefaultDomain')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('rest-connection')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('soa-domain-sca-service-DefaultDomain')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('default-domain-ws-DefaultDomain')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('rest-resource')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('external-rest-resource')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('default-domain-ws-callback-DefaultDomain')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('internal-rest-resource')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('default-domain-ws-client-DefaultDomain')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('soa-domain-sca-reference-DefaultDomain')
+validatePolicySet()
+commitRepositorySession()
+beginRepositorySession()
+deletePolicySet('rest-client')
+validatePolicySet()
+commitRepositorySession()
+
+
+
+
+
+
+
+
+----------create policy----------------
+beginRepositorySession()  
+createPolicySet('default-domain-ws-ALL_DOMAINS','ws-service','Domain("*")')
+attachPolicySetPolicy('oracle/wss_saml_or_username_token_service_policy')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+createPolicySet('default-domain-ws-client-ALL_DOMAINS','ws-client','Domain("*")')
+attachPolicySetPolicy('oracle/wss10_saml_token_client_policy')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+createPolicySet('default-domain-ws-connection-ALL_DOMAINS','ws-connection','Domain("*")')
+attachPolicySetPolicy('oracle/wss10_saml_token_client_policy')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+createPolicySet('default-domain-ws-callback-ALL_DOMAINS','ws-callback','Domain("*")')
+attachPolicySetPolicy('oracle/wss10_saml_token_client_policy')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+createPolicySet('soa-domain-sca-reference-ALL_DOMAINS','sca-reference','Domain("*")')
+attachPolicySetPolicy('oracle/wss10_saml_token_client_policy')
+validatePolicySet()
+commitRepositorySession()
+
+beginRepositorySession()
+createPolicySet('soa-domain-sca-service-ALL_DOMAINS','sca-service','Domain("*")')
+attachPolicySetPolicy('oracle/wss_saml_or_username_token_service_policy')
+validatePolicySet()
+commitRepositorySession()
+
+
+
+listPolicySets()
+
+
+
+
+
+
+default-domain-ws-connection-DefaultDomain 
+ws-service 
+rest-connection 
+soa-domain-sca-service-DefaultDomain 
+ws-connection 
+default-domain-ws-DefaultDomain 
+rest-resource 
+external-rest-resource 
+ws-client 
+default-domain-ws-callback-DefaultDomain 
+internal-rest-resource 
+sca-reference 
+default-domain-ws-client-DefaultDomain 
+soa-domain-sca-reference-DefaultDomain 
+ws-callback 
+rest-client 
+sca-service 
+

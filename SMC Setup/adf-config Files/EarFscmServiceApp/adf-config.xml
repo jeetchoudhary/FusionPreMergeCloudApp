@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adf-config xmlns="http://xmlns.oracle.com/adf/config" xmlns:adf="http://xmlns.oracle.com/adf/config/properties" xmlns:adfc="http://xmlns.oracle.com/adf/controller/config" xmlns:collabC="http://xmlns.oracle.com/webcenter/collab/config" xmlns:config="http://xmlns.oracle.com/bc4j/configuration" xmlns:cust="http://xmlns.oracle.com/adf/faces/customizable/config" xmlns:doclibC="http://xmlns.oracle.com/webcenter/doclib/config" xmlns:jndiC="http://xmlns.oracle.com/adf/jndi/config" xmlns:mds="http://xmlns.oracle.com/mds/config" xmlns:mdsC="http://xmlns.oracle.com/adf/mds/config" xmlns:pe="http://xmlns.oracle.com/adf/pageeditor/config" xmlns:portlet="http://xmlns.oracle.com/adf/portlet/config" xmlns:rcv="http://xmlns.oracle.com/adf/rcs/viewer/adf-config" xmlns:relC="http://xmlns.oracle.com/webcenter/relationship/config" xmlns:searchC="http://xmlns.oracle.com/webcenter/search/config" xmlns:sec="http://xmlns.oracle.com/adf/security/config" xmlns:tagC="http://xmlns.oracle.com/webcenter/tagging/config" xmlns:worklistC="http://xmlns.oracle.com/webcenter/worklist/config" xmlns:wpsC="http://xmlns.oracle.com/webcenter/framework/service">
+   <adf:adf-properties-child xmlns="http://xmlns.oracle.com/adf/config/properties">
+      <adf-property name="adfAppUID" value="FscmService.oracle.apps.fscm" />
+      <adf-property name="partition_customizations_by_application_id" value="true" />
+      <adf-property name="federatedApplicationIdentifier" value="ORA_FSCM_SERVICESAPP" />
+   </adf:adf-properties-child>
+   <sec:adf-security-child xmlns="http://xmlns.oracle.com/adf/security/config">
+      <CredentialStoreContext credentialStoreLocation="../../src/META-INF/jps-config.xml" credentialStoreClass="oracle.adf.share.security.providers.jps.CSFCredentialStore" />
+      <sec:JaasSecurityContext initialContextFactoryClass="oracle.adf.share.security.JAASInitialContextFactory" authorizationEnforce="true" dataSecurityProviderClass="oracle.apps.scm.productCatalogManagement.itemSecurity.protectedModel.common.util.ItemDataSecurityProvider" jaasProviderClass="oracle.adf.share.security.providers.jps.JpsSecurityContext" authenticationRequire="true" />
+   </sec:adf-security-child>
+   <rcv-config xmlns="http://xmlns.oracle.com/adf/rcs/viewer/adf-config">
+      <catalog-selector class-name="oracle.apps.atk.homePage.fuse.publicUi.resourcecatalog.AtkCommonResourceCatalogSelector" />
+      <default-catalog catalog-name="common/common-catalog" />
+   </rcv-config>
+   <adf-rcs-config xmlns="http://xmlns.oracle.com/adf/rcs/adf-config">
+      <rcs-config mds-package-prefix="/oracle/apps/meta/rc" />
+   </adf-rcs-config>
+   <adf-search-config xmlns="http://xmlns.oracle.com/webcenter/search/config">
+      <display-properties>
+         <common numSavedSearches="5" />
+         <region-specific>
+            <usage id="simpleSearchResultUIMetadata" numServiceRows="5" />
+            <usage id="searchResultUIMetadata" numServiceRows="5" />
+            <usage id="localToolbarRegion" numServiceRows="5" />
+         </region-specific>
+      </display-properties>
+      <execution-properties prepareTimeoutMs="1000" timeoutMs="3000" />
+      <crawl-properties enableWcServicesCrawl="true" fullCrawlInterval="P5D" enableWcDiscussionsCrawl="true" enableWcUcmCrawl="true" />
+      <ses-properties />
+   </adf-search-config>
+   <wpsC:adf-service-config xmlns:adfm="http://xmlns.oracle.com/adfm/config">
+      <wpsC:resource-handler class="oracle.apps.atk.helpPortal.ui.AtkhelpPortalCustomTagHandler" />
+      <wpsC:resource-handler class="oracle.apps.fnd.applcore.tags.handler.FndResourceActionViewHandler" />
+      <wpsC:data-source jndi-name="java:/comp/env/jdbc/ApplicationDBDS" />
+   </wpsC:adf-service-config>
+   <adf-controller-config xmlns="http://xmlns.oracle.com/adf/controller/config">
+      <adf-scope-ha-support>true</adf-scope-ha-support>
+      <root-view-port-request-lock-timeout>300</root-view-port-request-lock-timeout>
+      <savepoint-datasource>java:comp/env/jdbc/ApplicationDBDS</savepoint-datasource>
+   </adf-controller-config>
+   <adf-adfm-config xmlns="http://xmlns.oracle.com/adfm/config" xmlns:adfm="http://xmlns.oracle.com/adfm/config">
+      <defaults useBindVarsForViewCriteriaLiterals="true" rowLimit="500">
+         <amconfig-defaults>
+            <config:AM-Pooling jbo.dofailover="true" />
+         </amconfig-defaults>
+      </defaults>
+      <startup>
+         <amconfig-overrides>
+            <config:Database jbo.locking.mode="optimistic" />
+         </amconfig-overrides>
+      </startup>
+      <versions>
+         <version name="r13" displayName="11.13.0.0" />
+         <version name="r12d1" displayName="11.12.1.0" />
+         <version name="r12" displayName="11.12.0.0" />
+         <version name="r11" displayName="11.1.11" />
+         <version name="r10" displayName="11.1.10" />
+         <version name="r9" displayName="11.1.9" />
+      </versions>
+   </adf-adfm-config>
+   <page-editor-config xmlns="http://xmlns.oracle.com/adf/pageeditor/config">
+      <!-- CRM only: enable-design-views -->
+      <!--enable-design-views>#{PageComposerConfigBean.designViewMode}</enable-design-views-->
+      <security-config>
+         <task-flow-security check-permission="true" />
+      </security-config>
+      <session-options-factory>oracle.apps.fnd.applcore.customization.uiPublic.ApplCoreSessionOptionsFactoryImpl</session-options-factory>
+      <resource-string-editor>
+         <enabled>#{GlobalAreaBackingBean.tipLayerNonUser}</enabled>
+      </resource-string-editor>
+      <!-- non CRM -->
+      <enable-source-view>#{GlobalAreaBackingBean.tipLayerNonUser}</enable-source-view>
+      <allow-el>#{securityContext.authenticated and securityContext.userGrantedResource['resourceName=FND_Administration_Menu;resourceType=FNDResourceType;action=launch']}</allow-el>
+      <!-- CRM only
+      <enable-source-view>#{PageComposerConfigBean.sourceViewEnabled}</enable-source-view>
+      <allow-el>#{(securityContext.authenticated and securityContext.userGrantedResource['resourceName=FND_Administration_Menu;resourceType=FNDResourceType;action=launch']) ? (pageEditorPanelBean.layoutView ? PageComposerConfigBean.allowEL : true) : false}</allow-el>
+      -->
+      <addon-panels>
+         <!-- OPEN: confirming with webcenter if this is the right name to disable page reset -->
+         <addon-panel name="oracle.adf.pageeditor.addonpanels.page-settings" rendered="false" />
+         <!-- CRM only: taskslist -->
+         <!--addon-panel name="oracle.apps.fnd.applcore.menu.taskslist" rendered="true"/-->
+      </addon-panels>
+      <!-- CRM only: protect-el -->
+      <!--protect-el>#{pageEditorPanelBean.layoutView ? PageComposerConfigBean.protectEL : false}</protect-el-->
+   </page-editor-config>
+   <adf-resourcebundle-config xmlns="http://xmlns.oracle.com/adf/resourcebundle/config">
+      <load-xliff-at-startup-behavior note="false" />
+      <applicationBundleName>oracle/apps/resourcebundles/xliffBundle/FusionAppsOverrideBundle</applicationBundleName>
+      <bundleList>
+         <bundleId override="true">oracle.adf.view.page.editor.resource.ComposerOverrideBundle</bundleId>
+         <bundleId override="true">oracle.adf.businesseditor.model.util.BaseRuntimeResourceBundle</bundleId>
+      </bundleList>
+   </adf-resourcebundle-config>
+   <adf-faces-config xmlns="http://xmlns.oracle.com/adf/faces/config">
+      <persistent-change-manager>
+         <persistent-change-manager-class>oracle.adf.view.rich.change.MDSDocumentChangeManager</persistent-change-manager-class>
+      </persistent-change-manager>
+      <taglib-config>
+         <taglib uri="http://xmlns.oracle.com/adf/faces/customizable">
+            <tag name="showDetailFrame">
+               <attribute name="expansionMode">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+               <attribute name="contentStyle">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+            </tag>
+            <tag name="panelCustomizable">
+               <persist-operations>all</persist-operations>
+            </tag>
+         </taglib>
+         <taglib uri="http://xmlns.oracle.com/adf/pageeditor">
+            <tag name="layoutCustomizable">
+               <persist-operations>all</persist-operations>
+               <attribute name="type">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+            </tag>
+         </taglib>
+         <taglib uri="http://xmlns.oracle.com/adf/faces/rich">
+            <tag name="richTextEditor">
+               <attribute name="editMode">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+            </tag>
+            <tag name="column">
+               <attribute name="displayIndex">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+               <attribute name="frozen">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+               <attribute name="noWrap">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+               <attribute name="visible">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+               <attribute name="width">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+            </tag>
+            <tag name="table">
+               <attribute name="filterVisible">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+            </tag>
+            <tag name="calendar">
+               <attribute name="view">
+                  <persist-changes>true</persist-changes>
+               </attribute>
+            </tag>
+         </taglib>
+      </taglib-config>
+   </adf-faces-config>
+   <adf-relationship-config xmlns="http://xmlns.oracle.com/webcenter/relationship/config" />
+   <collabC:adf-collaboration-config>
+      <service-config xmlns="http://xmlns.oracle.com/webcenter/collab/config" serviceId="oracle.webcenter.collab.forum">
+         <property name="auto.login" value="false" />
+         <property name="selected.connection" value="ATKHelpPortalDiscussionForumConn" />
+      </service-config>
+      <service-config xmlns="http://xmlns.oracle.com/webcenter/collab/config" serviceId="oracle.webcenter.collab.announcement">
+         <property name="auto.login" value="false" />
+         <property name="selected.connection" value="ATKHelpPortalDiscussionForumConn" />
+      </service-config>
+   </collabC:adf-collaboration-config>
+   <adf-tagging-config xmlns="http://xmlns.oracle.com/webcenter/tagging/config" />
+   <adf-dtrt-configuration xmlns="http://xmlns.oracle.com/adf/view/rich/dt/config">
+      <skin-repository>
+         <type>mds</type>
+         <mds>
+            <namespace>/oracle/apps/meta</namespace>
+            <location>/oracle/apps/meta/skins</location>
+         </mds>
+      </skin-repository>
+   </adf-dtrt-configuration>
+   <adf-webcenter-generalsettings-config xmlns="http://xmlns.oracle.com/webcenter/generalsettings/config">
+      <provider-class>oracle.apps.fnd.applcore.common.GeneralSettingsProviderImpl</provider-class>
+   </adf-webcenter-generalsettings-config>
+   <adf-desktopintegration-servlet-config xmlns="http://xmlns.oracle.com/adf/desktopintegration/servlet/config">
+      <controller-state-manager-class>oracle.adf.desktopintegration.controller.impl.ADFcControllerStateManager</controller-state-manager-class>
+   </adf-desktopintegration-servlet-config>
+   <adf-doclib-config xmlns="http://xmlns.oracle.com/webcenter/doclib/config" primaryConnectionName="FusionAppsContentRepository" />
+   <!--rcv:rcv-config xmlns="http://xmlns.oracle.com/adf/rcs/viewer/adf-config">
+    <catalog-selector class-name="oracle.apps.projects.performanceReporting.trackAndManage.ui.bean.TrackAndManageCatalogSelector"/>
+    <default-catalog catalog-name="trackAndManage-catalog"/>
+  </rcv:rcv-config-->
+   <cust:customizableComponentSecurity>
+      <cust:enableSecurity value="true" />
+      <cust:customActions>
+         <cust:customAction icon="/images/refresh_ena.png" text="Refresh" location="menu" action="refresh" tooltip="Refresh" />
+      </cust:customActions>
+   </cust:customizableComponentSecurity>
+   <adf-mds-config xmlns="http://xmlns.oracle.com/adf/mds/config" version="11.1.1.000">
+      <mds-config xmlns="http://xmlns.oracle.com/mds/config" version="11.1.1.000">
+         <cust-config>
+            <match path="/oracle/apps/ess/">
+               <customization-class name="oracle.as.scheduler.metadata.EssCC" />
+            </match>
+            <!-- CRM only: publicViewEcsf and mobilerepos -->
+            <!--match path="/oracle/apps/crmSearch/publicViewEcsf/">
+                  <customization-class name="oracle.apps.fnd.applcore.customization.IndustryCC"/>
+                  <customization-class name="oracle.apps.fnd.applcore.customization.SiteCC"/>
+            </match>
+            <match path="/persdef/oracle/apps/crmSearch/publicViewEcsf/">
+                 <customization-class name="oracle.apps.fnd.applcore.customization.IndustryCC"/>
+                 <customization-class name="oracle.apps.fnd.applcore.customization.SiteCC"/>
+            </match> 
+            <match path="/sessiondef/oracle/apps/crmSearch/publicViewEcsf/">
+                <customization-class name="oracle.apps.fnd.applcore.customization.IndustryCC"/>
+                <customization-class name="oracle.apps.fnd.applcore.customization.SiteCC"/>
+            </match>
+            <match path="/mobilerepos/">
+               <customization-class name="oracle.apps.fnd.applcore.customization.SiteCC"/>
+            </match-->
+            <!-- end of CRM only content -->
+            <match path="/">
+               <customization-class name="oracle.apps.fnd.applcore.customization.GlobalCC" />
+               <customization-class name="oracle.apps.fnd.applcore.customization.ProductFamilyCC" />
+               <customization-class name="oracle.apps.fnd.applcore.customization.ProductCC" />
+               <!-- fscm only HedRoleCustomizationCC -->
+               <customization-class name="oracle.apps.hed.campusCommunity.shared.common.publicModel.customization.HedRoleCustomizationCC" />
+               <customization-class name="oracle.apps.fnd.applcore.customization.IndustryCC" />
+               <customization-class name="oracle.apps.fnd.applcore.customization.SiteCC" />
+               <!-- CRM only: ExternalOrInternalCC, JobRoleCC -->
+               <!--customization-class name="oracle.apps.crmCommon.core.publicExt.customizations.ExternalOrInternalCC"/>
+               <customization-class name="oracle.apps.crmCommon.core.publicExt.customizations.JobRoleCC"/-->
+               <!-- HCM only: HcmCountryCC, HcmOrganizationCC, HcmTimecardLayoutCC -->
+               <!--customization-class name="oracle.apps.hcm.common.core.HcmCountryCC"/>
+               <customization-class name="oracle.apps.hcm.common.core.HcmOrganizationCC"/>
+               <customization-class name="oracle.apps.hcm.common.core.HcmTimeCardLayoutCC"/-->
+               <customization-class name="oracle.apps.fnd.applcore.customization.UserCC" />
+            </match>
+         </cust-config>
+         <persistence-config>
+            <metadata-store-usages>
+               <metadata-store-usage id="globalStore-by-adfconfigfilter" default-cust-store="true" deploy-target="true">
+                  <metadata-store class-name="oracle.mds.persistence.stores.db.DBMetadataStore">
+                     <property name="jndi-datasource" value="jdbc/mds/mds-ApplicationMDSDBDS" />
+                     <property name="partition-name" value="FAGlobal" />
+                     <property name="repository-name" value="mds-ApplicationMDSDB" />
+                  </metadata-store>
+               </metadata-store-usage>
+               <metadata-store-usage id="ess-cp-store-usage-by-adfconfigfilter" deploy-target="false">
+                  <metadata-store class-name="oracle.mds.persistence.stores.db.DBMetadataStore">
+                     <property name="partition-name" value="extJobTypes" />
+                     <property name="repository-name" value="mds-ESS_MDS_DS" />
+                     <property name="jndi-datasource" value="jdbc/mds-ESS_MDS_DS" />
+                  </metadata-store>
+               </metadata-store-usage>
+               <metadata-store-usage id="metadata-from-hosting-app" deploy-target="false">
+                  <metadata-store class-name="oracle.mds.persistence.stores.db.DBMetadataStore">
+                     <property name="jndi-datasource" value="jdbc/mds/mds-ApplicationMDSDBDS" />
+                     <property name="repository-name" value="mds-ApplicationMDSDB" />
+                     <property name="partition-name" value="globalEss" />
+                  </metadata-store>
+               </metadata-store-usage>
+            </metadata-store-usages>
+            <metadata-namespaces>
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/resourcebundles" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/menu" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/collab/forum/scopedMD" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/content/templates/registry" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/xliffBundles" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/extensions" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/app/orderCapture" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/WEB-INF/cust/apps" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/fnd/mdscache" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/pages">
+                  <namespace-restriction type="CUSTOMIZATIONS" />
+               </namespace>
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/portletappscope" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/mobilerepos" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/rc/metadata" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/share/customizationsets" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/persdef/" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/as/ess/core" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/people/scopedMD" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/fnd/applcore/profiles/profileService/mds" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/sales/businessFunction/profiles/profileService/mds" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/lifecycle" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/fnd/applcore/audit/auditService/mds" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/script/config/whitelist">
+                  <namespace-restriction type="CUSTOMIZATIONS" />
+               </namespace>
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/persdef" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/sessiondef/oracle/apps/ess/custom" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/app" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/resourcebundles/" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/xliffBundles/" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/fnd/applcore/dataSecurity/dataSecurityService/mds" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/search/scopedMD" />
+               <namespace metadata-store-usage="metadata-from-hosting-app" path="/oracle/apps/ess" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/sales/mobile">
+                  <namespace-restriction type="CUSTOMIZATIONS" />
+               </namespace>
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/businesseditor/model/util" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/pageDefs">
+                  <namespace-restriction type="CUSTOMIZATIONS" />
+               </namespace>
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/rules" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/cust/apps" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/resourcebundles" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/fnd/applcore/setid/setIdService/mds" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/shared/oracle/wcps" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/app/crm/analytics" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/customerCenter/application360/customer360/customerService/meta/oracle/apps/meta" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/rc" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/lock" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/fnd/applcore/taxonomy/taxonomyService/mds" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/cust" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/sessiondef/" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/customerCenter/application360/contact360/contactService/meta/oracle/apps/meta" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/sessiondef" />
+               <namespace metadata-store-usage="ess-cp-store-usage-by-adfconfigfilter" path="/oracle/as/ess/ext" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/rc/metadata/OrderManagement" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/lifecycle/importexport" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/udapageservicetemplates" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/persdef/oracle/apps/ess/custom" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/resourcebundles/" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/META-INF" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/WEB-INF/mobile">
+                  <namespace-restriction type="CUSTOMIZATIONS" />
+               </namespace>
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/meta" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/portlet" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/rc/meta" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/share/prefs" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/doclib/scopedMD" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/collab/smarttag/scopedMD" />
+            </metadata-namespaces>
+            <auto-purge seconds-to-live="3600" />
+            <content-config>
+               <match path="/oracle/apps/meta/skins/">
+                  <content-options isStreamed="true" />
+               </match>
+               <match path="/mobilerepos/bin">
+                  <content-options isStreamed="true" />
+               </match>
+               <match path="/sessiondef/" file-extension="json">
+                  <content-options isStreamed="true" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/apps/crmCommon/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/apps/sales/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/apps/marketing/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/app/service/ ">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/apps/partnerFinder/publicUi/page/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/app/customerCenter/extensibility360/extensibility/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/apps/partnerMgmt/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/app/salescatalog/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match path="/oracle/apps/fnd/mdscache/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/apps/outlookEdition/metadata/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/apps/cdm/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/app/territories/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/app/partnerMgmt/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/persdef/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match path="/sessiondef/" restrictionType="CUSTOMIZATIONS">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/app/lead/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/app/CrmCommon/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/apps/menu/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match path="/oracle/apps/extensions/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/apps/customerCenter/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match path="/oracle/apps/ta/jaudit/test/">
+                  <content-options content-type="xml-structured" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/app/crm/analytics/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/apps/orderCapture/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match restrictionType="CUSTOMIZATIONS" path="/oracle/app/sales/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match file-extension="rules">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match file-extension="xsd" path="/">
+                  <content-options isStreamed="false" />
+               </match>
+            </content-config>
+         </persistence-config>
+         <type-config>
+            <type-definitions>
+               <classpath>schema/Trigger.xsd</classpath>
+               <classpath>schema/Schedule.xsd</classpath>
+               <classpath>schema/Workshift.xsd</classpath>
+               <classpath>schema/Specialization.xsd</classpath>
+               <classpath>schema/JobSet.xsd</classpath>
+               <classpath>schema/JobDefinition.xsd</classpath>
+               <classpath>schema/Incompatibility.xsd</classpath>
+               <classpath>schema/TriggerExpression.xsd</classpath>
+               <classpath>schema/WorkAssignment.xsd</classpath>
+               <classpath>schema/JobType.xsd</classpath>
+               <classpath>schema/Exclusion.xsd</classpath>
+            </type-definitions>
+         </type-config>
+         <!-- CRM only: event-notification -->
+         <event-notification>
+            <!--match type-local-name="Association"
+               type-namespace="http://xmlns.oracle.com/bc4j">
+          <event-listener-class name="oracle.apps.cdm.hubBase.metadata.HubBasePrivateObjMetadataChangeListener"/>
+          <event-listener-class name="oracle.apps.cdm.hubBase.metadata.HubBasePublicObjMetadataChangeListener"/>
+        </match-->
+            <match path="/oracle/apps/ess" type-namespace="urn:oasis:names:tc:xliff:document:1.1" type-local-name="xliff">
+               <event-listener-class name="oracle.as.scheduler.translation.mds.EssOverrideBundleChangeListener" />
+            </match>
+         </event-notification>
+         <cache-config>
+            <max-size-kb>100000</max-size-kb>
+         </cache-config>
+      </mds-config>
+      <sessiondef-config>
+         <package value="oracle.apps.cdm.hubBase.deduplication.model.view;sessiondef;oracle.apps.financials.receivables.revenue.adjustments.uiModel.view.link" />
+      </sessiondef-config>
+   </adf-mds-config>
+</adf-config>

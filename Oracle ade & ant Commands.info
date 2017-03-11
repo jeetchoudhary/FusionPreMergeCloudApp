@@ -3,6 +3,8 @@
 
 ##2 Command to run junits on particular project
     ant -f build-po.xml -Dtest.lrg=true test test-report -Dlrg=prc_po_lrg -Dtest.project='PrcPoCommonPoProtectedModelTest'  -Ddb.host=indl76040.in.oracle.com -Ddb.port=1522 -Ddb.sid=in76040 -Ddb.user=fusion -Ddb.pass=fusion | & tee test.out
+	SMC DB UT03 : fusion/fusion@slcao718.us.oracle.com:1565/ems4139
+	POLRG DB : fusion/fusion@blr2201984.idc.oracle.com:1602/poidcdb
 
 ##3 Command For Incremental Build 
     ant -f $ADE_VIEW_ROOT/fusionapps/prc/build.xml incrementalBuild -Dtransactions=jjikumar_bug-24806188 -Dpatchcore.excludedListeners=oracle.apps.ateam.patch.service.OHSDiffListener

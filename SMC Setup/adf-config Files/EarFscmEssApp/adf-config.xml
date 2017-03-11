@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adf-config xmlns="http://xmlns.oracle.com/adf/config" xmlns:adf="http://xmlns.oracle.com/adf/config/properties" xmlns:config="http://xmlns.oracle.com/bc4j/configuration" xmlns:doclibC="http://xmlns.oracle.com/webcenter/doclib/config" xmlns:jndiC="http://xmlns.oracle.com/adf/jndi/config" xmlns:mdsC="http://xmlns.oracle.com/adf/mds/config" xmlns:pe="http://xmlns.oracle.com/adf/pageeditor/config" xmlns:sec="http://xmlns.oracle.com/adf/security/config">
+   <sec:adf-security-child xmlns="http://xmlns.oracle.com/adf/security/config">
+      <CredentialStoreContext credentialStoreLocation="../../src/META-INF/jps-config.xml" credentialStoreClass="oracle.adf.share.security.providers.jps.CSFCredentialStore" />
+      <sec:JaasSecurityContext initialContextFactoryClass="oracle.adf.share.security.JAASInitialContextFactory" authorizationEnforce="true" dataSecurityProviderClass="oracle.apps.fnd.applcore.dataSecurity.util.FndDataSecurityProvider" jaasProviderClass="oracle.adf.share.security.providers.jps.JpsSecurityContext" authenticationRequire="true" />
+   </sec:adf-security-child>
+   <adf-adfm-config xmlns="http://xmlns.oracle.com/adfm/config" xmlns:adfm="http://xmlns.oracle.com/adfm/config" xmlns:mds="http://xmlns.oracle.com/mds/config" xmlns:wpsC="http://xmlns.oracle.com/webcenter/framework/service">
+      <defaults useBindVarsForViewCriteriaLiterals="true">
+         <amconfig-defaults>
+            <config:AM-Pooling jbo.dofailover="true" />
+         </amconfig-defaults>
+      </defaults>
+      <startup>
+         <amconfig-overrides>
+            <config:Database jbo.locking.mode="optimistic" />
+         </amconfig-overrides>
+      </startup>
+   </adf-adfm-config>
+   <adf:adf-properties-child xmlns="http://xmlns.oracle.com/adf/config/properties">
+      <adf-property name="adfAppUID" value="FscmEss.oracle.apps.fscm" />
+      <adf-property name="partition_customizations_by_application_id" value="true" />
+      <adf-property name="federatedApplicationIdentifier" value="ORA_FSCM_ESSAPP" />
+   </adf:adf-properties-child>
+   <adf-controller-config xmlns="http://xmlns.oracle.com/adf/controller/config">
+      <adf-scope-ha-support>true</adf-scope-ha-support>
+   </adf-controller-config>
+   <adf-doclib-config xmlns="http://xmlns.oracle.com/webcenter/doclib/config" primaryConnectionName="FusionAppsContentRepository" />
+   <jndiC:adf-jndi-config>
+      <jndiC:ConnectionsJndiContext initialContextFactoryClass="oracle.adf.share.jndi.InitialContextFactoryImpl" backingStoreClass="oracle.adf.share.jndi.MDSBackingStore" backingStoreURL="META-INF/connections.xml">
+         <jndiC:contextEnv name="_cache_application_scope_" value="true" />
+      </jndiC:ConnectionsJndiContext>
+   </jndiC:adf-jndi-config>
+   <adf-mds-config xmlns="http://xmlns.oracle.com/adf/mds/config" version="11.1.1.000">
+      <mds-config xmlns="http://xmlns.oracle.com/mds/config" version="11.1.1.000">
+         <cust-config>
+            <match path="/oracle/apps/ess/">
+               <customization-class name="oracle.as.scheduler.metadata.EssCC" />
+            </match>
+            <match path="/">
+               <customization-class name="oracle.apps.fnd.applcore.customization.GlobalCC" />
+               <customization-class name="oracle.apps.fnd.applcore.customization.ProductFamilyCC" />
+               <customization-class name="oracle.apps.fnd.applcore.customization.ProductCC" />
+               <customization-class name="oracle.apps.fnd.applcore.customization.IndustryCC" />
+               <customization-class name="oracle.apps.fnd.applcore.customization.SiteCC" />
+               <customization-class name="oracle.apps.fnd.applcore.customization.UserCC" />
+            </match>
+         </cust-config>
+         <persistence-config>
+            <metadata-store-usages>
+               <metadata-store-usage id="ess-cp-store-usage" deploy-target="false">
+                  <metadata-store class-name="oracle.mds.persistence.stores.db.DBMetadataStore">
+                     <property name="repository-name" value="mds-ESS_MDS_DS" />
+                     <property name="jndi-datasource" value="jdbc/mds-ESS_MDS_DS" />
+                     <property name="partition-name" value="extJobTypes" />
+                  </metadata-store>
+               </metadata-store-usage>
+               <metadata-store-usage id="globalStore-by-adfconfigfilter" deploy-target="false">
+                  <metadata-store class-name="oracle.mds.persistence.stores.db.DBMetadataStore">
+                     <property name="jndi-datasource" value="jdbc/mds/mds-ApplicationMDSDBDS" />
+                     <property name="partition-name" value="FAGlobal" />
+                     <property name="repository-name" value="mds-ApplicationMDSDB" />
+                  </metadata-store>
+               </metadata-store-usage>
+               <metadata-store-usage id="metadata-from-hosting-app" default-cust-store="true" deploy-target="true">
+                  <metadata-store class-name="oracle.mds.persistence.stores.db.DBMetadataStore">
+                     <property name="jndi-datasource" value="jdbc/mds/mds-ApplicationMDSDBDS" />
+                     <property name="repository-name" value="mds-ApplicationMDSDB" />
+                     <property name="partition-name" value="globalEss" />
+                  </metadata-store>
+               </metadata-store-usage>
+               <metadata-store-usage id="mdsstore" deploy-target="false">
+                  <metadata-store class-name="oracle.mds.persistence.stores.db.DBMetadataStore">
+                     <property name="repository-name" value="mds-ApplicationMDSDB" />
+                     <property name="partition-name" value="DiagnosticsUI-Assembly" />
+                     <property name="jndi-datasource" value="jdbc/mds/mds-ApplicationMDSDBDS" />
+                  </metadata-store>
+               </metadata-store-usage>
+            </metadata-store-usages>
+            <metadata-namespaces>
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/rules" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/resourcebundles" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/extensions" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/cust" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/apps/fnd/mdscache" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/portletappscope" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/as/ess/core" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/sessiondef" />
+               <namespace metadata-store-usage="ess-cp-store-usage" path="/oracle/as/ess/ext" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/lifecycle/importexport" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/webcenter/lifecycle" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/META-INF" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/persdef" />
+               <namespace metadata-store-usage="globalStore-by-adfconfigfilter" path="/oracle/adf/portlet" />
+               <namespace metadata-store-usage="metadata-from-hosting-app" path="/oracle/apps/ess" />
+               <namespace path="/oracle/apps/fnd/appltest/diagfwk/ess" metadata-store-usage="mdsstore" />
+            </metadata-namespaces>
+            <auto-purge seconds-to-live="3600" />
+            <content-config>
+               <match path="/oracle/apps/fnd/mdscache/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match path="/persdef/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match path="/sessiondef/">
+                  <content-options content-type="xml-stream" />
+               </match>
+               <match path="/oracle/apps/extensions/">
+                  <content-options content-type="xml-stream" />
+               </match>
+            </content-config>
+         </persistence-config>
+         <type-config>
+            <type-definitions>
+               <classpath>schema/Schedule.xsd</classpath>
+               <classpath>schema/Trigger.xsd</classpath>
+               <classpath>schema/Workshift.xsd</classpath>
+               <classpath>schema/Specialization.xsd</classpath>
+               <classpath>schema/JobDefinition.xsd</classpath>
+               <classpath>schema/JobSet.xsd</classpath>
+               <classpath>schema/Incompatibility.xsd</classpath>
+               <classpath>schema/TriggerExpression.xsd</classpath>
+               <classpath>schema/WorkAssignment.xsd</classpath>
+               <classpath>schema/JobType.xsd</classpath>
+               <classpath>schema/Exclusion.xsd</classpath>
+            </type-definitions>
+         </type-config>
+         <cache-config>
+            <max-size-kb>100000</max-size-kb>
+         </cache-config>
+      </mds-config>
+      <sessiondef-config>
+         <package value="sessiondef" />
+      </sessiondef-config>
+   </adf-mds-config>
+</adf-config>
