@@ -7,7 +7,7 @@ module.exports = function (app) {
 	require('./MessageProcessor');
 	require('./MessageBroker');
 	require('amqplib/callback_api');
-	var exec = require('child_process').exec;
+	require('child_process').exec;
 	var fuseConfig = require('../config/configuration');
 	var TransData = require('../app/models/TransData');
 	var Databases = require('../app/models/DBData');
@@ -252,7 +252,7 @@ module.exports = function (app) {
 			runJunits: req.body.runJunits
 		});
 
-		var queryResult = TransData.find({ $or: [{ name: req.body.name, currentStatus: 'Running' }, { name: req.body.name, currentStatus: 'Queued' }] }, function (err, transData) {
+		TransData.find({ $or: [{ name: req.body.name, currentStatus: 'Running' }, { name: req.body.name, currentStatus: 'Queued' }] }, function (err, transData) {
 			if (err) {
 				logger.error('error occured while fetching running transactions :', err);
 			}
