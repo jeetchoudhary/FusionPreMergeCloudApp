@@ -45,7 +45,8 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                 }
             ],
             selectedOption: { id: '1', name: 'Select Family', product: 'Select Product' }
-        }
+        },
+        submissionMethod:'UI'
     };
     $scope.errorMsg = "";
     $scope.projectList = [];
@@ -93,8 +94,8 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                     }
                 ],
                 selectedOption: { id: '1', name: 'Select Family', product: 'Select Product' }
-            }
-
+            },
+            submissionMethod:'UI'
         };
         $scope.errorMsg = "";
         if ($scope.junitSelectedList.length !== 0) {

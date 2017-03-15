@@ -176,11 +176,11 @@ var processTransaction = function (transData) {
 	if (!bugNo) {
 		bugNo = 24806188;
 	}
-	var familyName = '';
-	if(trans.family){
+	var familyName = 'po';
+	if(trans.productFamilyName){
+		familyName = trans.productFamilyName.toLowerCase();
+	}else if(trans.family){
 		familyName = trans.family.selectedOption.product.name.toLowerCase();
-	}else{
-		familyName = 'po';
 	}
 	 
 	var familyBuildFile = getProductFamilyBuildFile(familyName);

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #*********************************************
 # Created by jitender choudhary on 13/12/2016.
-# Version 1.0
+# Version 1.2
 #*********************************************
 
 
@@ -30,7 +30,8 @@ parser.add_option('-d', '--db', action="store", dest="dbString",help="Database S
 parser.add_option('-t', '--trans', action="store", dest="transName",help="Transaction Name on which you want to run script", default="")
 parser.add_option('-e', '--email', action="store", dest="emailID",help="Email ID on which you want to get email", default="")
 parser.add_option('-u', '--updatebug', action="store", dest="updateBug",help="Will update bug with the result if value given is Y , default value is N ", default="Y")
-parser.add_option('-j', '--junits', action="store", dest="runJunits",help="Should automated unit tests run on this transaction , default value in N", default="Y")
+parser.add_option('-j', '--junits', action="store", dest="runJunits",help="Should automated unit tests run on this transaction , default value in N , Please make sure if this is selected as Y and transaction is outside of PO then db details are also given", default="Y")
+parser.add_option('-f', '--family', action="store", dest="family",help="This param is mendatory for transactions outside PO,e.g po,pon,poq,inv,rcv etc.", default="po")
 
 options, args = parser.parse_args()
 
@@ -88,6 +89,7 @@ print ("Email To Notify         : "+email)
 print ("Update Bug with result  : "+options.updateBug)
 print ("Run Automated Unit Test : "+options.runJunits)
 print ("Database Used           : "+options.dbString)
+print ("Transaction Family      : "+options.family)
 print ("********************************************")
 print ("***********Saving the transaction***********")
 if isInsideView == 'Y':
@@ -107,16 +109,19 @@ data = {
            "updateBug":options.updateBug,
            "runJunits":options.runJunits,
            "allowDBOverride":allowDBOverride,
-           "dbString": options.dbString
+           "dbString": options.dbString,
+           "submissionMethod" : 'CL',
+           "productFamilyName" : options.family
 }
 
 req = urllib2.Request(url)
 req.add_header('Content-Type', 'application/json')
 try:
   response = urllib2.urlopen(req, json.dumps(data))
-  print ("********************************************")
-  print ("****Transaction Submitted for Validation****")
-  print ("********************************************")
+  print ("*******************************************************************")
+  print ("****Transaction Submitted for Validation***************************")
+  print ("****Transaction Status can be checked at slc04kxc.us.oracle.com****")
+  print ("*******************************************************************")
 except: 
   print ('Another request for the same transaction is already submitted')
 
