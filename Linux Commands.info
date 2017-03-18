@@ -37,6 +37,7 @@
     17. Last 5 Lines of file : tail -n 5 a.txt
     18. find . -name "*.jar" -exec cp -t ~/Desktop/temp/ {} +
 	19. Replace all occurance of prc with fa in all files : sed -i 's/prc/fa/' *
+	20. /usr/sbin/userdel -r oradba
 
 ##6 Shell Command Shortcuts
 	1. Ctrl + R    : use to reverse lookup in the history of commands
@@ -50,7 +51,3 @@
 	9. Ctrl + Shift + C : Copy
 	10.Ctrl + Shift + P : Paste
     11.Ctrl + G : Display Line Numbers in Vi Editor
-
-
-
-

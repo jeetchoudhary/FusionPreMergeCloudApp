@@ -28,7 +28,7 @@
 	11. ade savetrans
 	12. finchecker
 	13. ade settransproperty -prop README_BUGFIX_FUNCT_DESC -cfile ~/Desktop/functional_readme.txt -txn jjikumar_rfi_backport_25039169_11.1.11.1.0
-	14. orareview -u -r ymahajan,shagarla,smathrus,rshshankd,pswargam,uramidi
+	14. orareview -u -r ymahajan,shagarla,smathrus,rshshank,pswargam,uramidi
 	15. /usr/local/packages/mergereq/mergereq -y -m venkat.sanjay@oracle.com
 	16. ade refreshview -latest
 	17. Merge

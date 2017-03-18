@@ -249,7 +249,8 @@ module.exports = function (app) {
 			endtime: '',
 			DBString: req.body.dbString,
 			updateBug: req.body.updateBug,
-			runJunits: req.body.runJunits
+			runJunits: req.body.runJunits,
+			submissionMethod : req.body.submissionMethod
 		});
 
 		TransData.find({ $or: [{ name: req.body.name, currentStatus: 'Running' }, { name: req.body.name, currentStatus: 'Queued' }] }, function (err, transData) {
