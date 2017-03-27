@@ -20,3 +20,23 @@
 ##5 Table for online report in DCM Submittion : PO_ONLINE_REPORT_TEXT
 
 ##6 Query for tab combination of user : select DEFAULT_CODE_COMB_ID from per_all_assignments_m where PERSON_ID='24';
+
+##7 PRC DB List:
+	slc09xht.us.oracle.com:1559/jikumar
+	slc09xht.us.oracle.com:1595/jjikumar
+	slc09xht.us.oracle.com:1563/slc09xht
+	slcak360.us.oracle.com:1543/slc10usm
+
+##6 Check If Profile Option is enabled :
+	SELECT OPT.PROFILE_OPTION_NAME,
+		   OPT_VAL.LEVEL_NAME,
+		   OPT_VAL.LEVEL_VALUE,
+		   LEV_VAL.USERNAME,
+		   OPT_VAL.PROFILE_OPTION_VALUE
+	FROM FUSION.FND_PROFILE_OPTION_VALUES OPT_VAL,
+		 FUSION.FND_PROFILE_OPTIONS OPT,
+		 FUSION.PER_USERS LEV_VAL
+	WHERE OPT_VAL.PROFILE_OPTION_ID = OPT.PROFILE_OPTION_ID
+	  AND OPT.PROFILE_OPTION_NAME IN ('PO_COPY_REQ_LINE_DFF_TO_PO', 'PO_COPY_REQ_HDR_DFF_TO_PO')
+	  AND OPT_VAL.LEVEL_VALUE = LEV_VAL.USER_GUID(+)
+	ORDER BY OPT.PROFILE_OPTION_NAME, LEV_VAL.USERNAME;
