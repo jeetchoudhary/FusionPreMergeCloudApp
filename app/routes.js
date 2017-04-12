@@ -289,7 +289,7 @@ module.exports = function (app) {
 	});
 
     app.post('/api/transactions/list', function (req, res) {
-		TransData.find({ "currentStatus": req.body.transState }, function (err, transData) {
+		TransData.find({ "currentStatus": req.body.transState }).sort('submittedtime').limit(100).exec(function (err, transData) {
 			if (err) {
 				logger.error('error occured while fetching running transactions: ', err);
 				throw err;

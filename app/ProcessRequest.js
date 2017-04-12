@@ -82,6 +82,9 @@ var checkAnyDBAvaliablityandProcess = function (transaction) {
 
 var processSubmitRequest = function (transactionString) {
     var transaction = JSON.parse(transactionString);
+    if(!transaction.dbString){
+        transaction.dbString = 'fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar';
+    }
     var dbSplitIndex = transaction.dbString.indexOf('@') + 1;
     var dbDomain = transaction.dbString.substring(dbSplitIndex, dbSplitIndex + 3);
     var adeDomain = transaction.adeServerUsed.substring(0, 3);

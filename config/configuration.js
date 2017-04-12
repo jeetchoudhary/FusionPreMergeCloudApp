@@ -8,7 +8,7 @@ module.exports = {
 	adeServerUrl : 'slc05gsa.us.oracle.com;slc10geb.us.oracle.com;slc10xjk.us.oracle.com',
 	historyServerUrl : 'slc05gsa.us.oracle.com',
 	adeServerUser : 'jjikumar',
-	adeServerPass : 'P@ssword01',
+	adeServerPass : 'P@ssword05',
 	transactionMessageQueue : 'fusionPremerge',
 	fetchTrans : 'ade fetchtrans ',
 	describeTrans : 'ade describetrans',

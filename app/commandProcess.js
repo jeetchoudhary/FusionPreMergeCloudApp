@@ -96,7 +96,7 @@ var updateTransactionErrorStatus = function (transaction, logFile) {
 	});
 };
 
-var getProductFamilyBuildFile = function(familyName){
+var getProductFamilyBuildFile = function (familyName) {
 	switch (familyName) {
 		case 'po':
 			return 'fusionapps/prc/build-po.xml';
@@ -132,7 +132,7 @@ var updateErroredTransation = function (trans, logStream, logFile) {
 		dest.end();
 	});
 	source.on('error', function (err) {
-		logger.error('failed to move transaction logs to Archived',err);
+		logger.error('failed to move transaction logs to Archived', err);
 	});
 	updateTransactionErrorStatus(trans, logFile);
 	new SSH({
@@ -177,15 +177,21 @@ var processTransaction = function (transData) {
 		bugNo = 24806188;
 	}
 	var familyName = 'po';
-	if(trans.productFamilyName){
-		familyName = trans.productFamilyName.toLowerCase();
-	}else if(trans.family){
-		familyName = trans.family.selectedOption.product.name.toLowerCase();
+	try {
+		if (trans.productFamilyName) {
+			familyName = trans.productFamilyName.toLowerCase();
+		} else if (trans.family) {
+			familyName = trans.family.selectedOption.product.name.toLowerCase();
+		}
 	}
-	 
+	catch (err) {
+		console.log('Error while getting family name from the transaction setting family to default po');
+	}
+
+
 	var familyBuildFile = getProductFamilyBuildFile(familyName);
 	logger.info('familyBuildFile got resolved to  : ', familyBuildFile);
-	
+
 	if (familyName == 'po') {
 		if (trans.runJunits === 'Y') {
 			var dummyLRGCommand = ' ant -f build-po.xml -Dtest.lrg=true test test-report -Dlrg=prc_po_lrg -Dtest.project=\'PrcPoPublicViewEcsfTest\' -Ddb.host=slc09xht.us.oracle.com -Ddb.port=1595 -Ddb.sid=jjikumar -Ddb.user=fusion -Ddb.pass=fusion ';
@@ -195,9 +201,9 @@ var processTransaction = function (transData) {
 			checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
 		}
 		finScriptParams = checkInCommand + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) + ' -Dfamily=prc -DjunitBuildFile=/ade/' + viewName + '/fusionapps/prc/build-po.xml ';
-	}else{
+	} else {
 		checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
-		finScriptParams = checkInCommand + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) + ' -Dfamily='+familyName+' -DjunitBuildFile=/ade/' + viewName +'/'+familyBuildFile ;
+		finScriptParams = checkInCommand + ' -DupdateBug=' + trans.updateBug + ' -DrunJUnits=' + (trans.runJunits === 'Y' ? 1 : 0) + ' -Dfamily=' + familyName + ' -DjunitBuildFile=/ade/' + viewName + '/' + familyBuildFile;
 	}
 
 	if (trans.junitSelectedList) {
@@ -268,7 +274,7 @@ var processTransaction = function (transData) {
 				dest.end();
 			});
 			source.on('error', function (err) {
-				logger.error('failed to move transaction logs to Archived',err);
+				logger.error('failed to move transaction logs to Archived', err);
 			});
 		},
 		err: function (stderr) {
