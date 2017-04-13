@@ -104,11 +104,11 @@
 	 2../uPatchManager BUILD_EMS_CONFIG -EMS_ENV_NAME=JJIKUMAR_SMC_JIKUMAR  -UPATCH_CONFIG=/home/jjikumar/Desktop/jikumar_upatchConfig.xml
 	 3../uPatchManager VALIDATE -UPATCH_CONFIG=/home/jjikumar/Desktop/jikumar_upatchConfig.xml 
 	 4../uPatchManager -UPATCH_CONFIG=/home/jjikumar/Desktop/jikumar_upatchConfig.xml  BOOTSTRAP -ADMIN_EMAIL_ADDR="jitender.k.kumar@oracle.com" 
-	 6../uPatch -INSTANCE=//slc09xht.us.oracle.com:1559/jikumar -ROLE=admin -ROLE_PASSWORD=admin INSTALL_ALL -COMPONENT_SOURCE=FAINTEG_MAIN_PLATFORMS_170401.1258
+	 6../uPatch -INSTANCE=//slc09xht.us.oracle.com:1559/jikumar -ROLE=admin -ROLE_PASSWORD=admin INSTALL_ALL -COMPONENT_SOURCE=FAINTEG_MAIN_PLATFORMS_170411.1252
 	 7../uPatch -INSTANCE=//slc09xht.us.oracle.com:1559/jikumar -ROLE=admin -ROLE_PASSWORD=admin 
 	 8.uPatch[ADMIN]> 
-					APPLY_FA_JARS -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170403.0101.S
-					APPLY_FA_LABEL -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170403.0101.S -PATCHING_PROFILE=SEEDED1
+					APPLY_FA_JARS -LABEL=FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64_170412.0839.S
+					APPLY_FA_LABEL -LABEL=FUSIONAPPS_PT.V2MIBPRCX_LINUX.X64_170412.0839.S -PATCHING_PROFILE=SEEDED1
 
 	## Standalone UPatch DB Creation Steps
 		1.  source DB.env
@@ -117,16 +117,22 @@
 		4.  ./uPatchManager BUILD_SIMPLE_CONFIG -DB_HOST=indl76041.in.oracle.com -DB_SID=in76041 -DB_PORT=1522 -DB_USER=oradba -DB_PASS=oradba123 -DB_ORACLEHOME=/scratch/oradba/db/tech_st/12.1.0 -UPATCH_CONFIG=/home/jjikumar/Desktop/in76041_upatchConfig.xml
 		5.  ./uPatchManager BOOTSTRAP -ADMIN_EMAIL_ADDR="jitender.k.kumar@oracle.com" -UPATCH_CONFIG=/home/jjikumar/Desktop/in76041_upatchConfig.xml
 		6.  ./uPatch -INSTANCE=//indl76041.in.oracle.com:1522/in76041 -ROLE=admin -ROLE_PASSWORD=admin INSTALL_ALL -COMPONENT_SOURCE=FAINTEG_MAIN_PLATFORMS_170401.1258 -PUSH_COMPONENT_CODE=Y -UPATCH_CONFIG=/home/jjikumar/Desktop/in76041_upatchConfig.xml
-		7.  ./uPatch APPLY_FA_LABEL -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170403.0101.S -PUSH_COMPONENT_CODE=Y -PATCHING_PROFILE=SEEDED1
-		8.  ./uPatch APPLY_FA_JARS -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170403.0101.S -PUSH_COMPONENT_CODE=Y
+		7.  ./uPatch APPLY_FA_JARS -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170403.0101.S -PUSH_COMPONENT_CODE=Y -PURGE_FA_JARS=DEPLOY 
+		8.  ./uPatch APPLY_FA_LABEL -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170403.0101.S -PUSH_COMPONENT_CODE=Y -PATCHING_PROFILE=SEEDED1
+		
 		
 	## Patch Transaction on DB 
 		1. ade useview <your view>
 		2. mkdir /scratch/jjikumar/transactionUPatch
-		3. cd /net/slcai797/scratch/upatch/LATEST/bin
+		3. cd /net/slcai797.us.oracle.com/scratch/upatch/LATEST/bin
 		4. ./uPatchManager BUILD_PATCH_FROM_VIEW -DESTINATION_DIR=/scratch/jjikumar/transactionUPatch
 		5. ./uPatch -INSTANCE=//slc09xht.us.oracle.com:1559/jikumar -ROLE=admin -ROLE_PASSWORD=admin 
 			APPLY_PATCH -PATCH=/net/slc10xjk.us.oracle.com/scratch/jjikumar/transactionUPatch/9149182251780.zip -NOTIFY_EMAIL="jitender.k.kumar@oracle.com"
+			
+		SET_QUEUE_ONLINE -QUEUE_NAME=PATCHING_OPERATIONS -COMMENT=c
+		REMOVE_REQUEST_BY_ID -REQUEST_ID=
+		SHOW_REQUEST_DETAILS -REQUEST_ID=149131193491
+		REMOVE_REQUEST_BY_AGE -DAYS_OLDER_THAN=1 -INCLUDE_PATCHINGQUEUE_REQUESTS=Y
 			
 
 Please find the steps from OWSM side :

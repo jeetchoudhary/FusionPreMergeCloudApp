@@ -1,0 +1,73 @@
+ PATCHING_OPERATIONS: Operation types relating to patching
+  APPLY_ATGPFUPGRADE : Upgrades the ATGPF aspects of the FUSION database using the currently installed APPLTOP ATGPF Code
+  APPLY_FA_JARS : Applying [FA Jars]
+  APPLY_FA_LABEL : Applying Patch from [FA LABEL]
+  APPLY_PATCH (PATCH): Submit a patch submission request
+  APPLY_SCHEDULED_LABEL : Scheduled Request to Apply latest Label
+  GET_PATCHINGRESULTS_LOGS (GETLOG): Request to pull patching results logs to client dir
+  PERFORM_ADPATCH_FORCEFAIL : Performs adpatch and fapmgr operations to cleanup a failed patch
+  SHOW_PATCHINGPROFILE : List all the patching profiles defined in uPatch
+  SHOW_PATCHINGRESULTS_FILEDETAILS : Shows actual errors/output associated with a patching request
+  SHOW_PATCHINGRESULTS_FILES : Lists artifacts in a patching request
+
+ QUEUE_OPERATIONS: Operation types relating to queue manipulations
+  SET_QUEUE_ADMINONLY : Change queue status to ONLY process ADMIN requests
+  SET_QUEUE_HIGHPRIORITY : Change queue status to ONLY process ADMIN, FORCE_APPLY, HIGH prioirty requests
+  SET_QUEUE_LOCKED : Lock queue for ALL requests
+  SET_QUEUE_OFFLINE : Change queue status to ONLY process ADMIN and FORCE_APPLY requests
+  SET_QUEUE_ONLINE : Change queue status to process ALL requests
+  SET_QUEUE_WINDOW_CLOSED : Sets the Requested Queue window CLOSED for the given time duration
+  SET_QUEUE_WINDOW_OPEN : Sets the requested Queue window OPEN for the given time duration
+  SHOW_QUEUE_STATUS : Get current status of a uPatch queue
+  SHOW_QUEUE_WINDOW : Shown the summary of the Queue Window for the requested Queue
+
+ REPORTING_OPERATIONS: Operation types which summarise data and/or operations
+  ABORT_REQUEST : Aborts a particular request
+  SHOW_CONNECTION : Shows the Session details associated with the uPatch instance
+  SHOW_DATABASE_LEVEL : Shows the details and sources of the last FUSION database build event (e.g. Starter, CDRM)
+  SHOW_ERROR_DETAILS (SHOWERR): Show the complete info about the error
+  SHOW_INSTALLCOMPONENT_STATUS : List all Installed Components
+  SHOW_LABEL : Lists all available labels on appltop
+  SHOW_PATCH_TIMINGS : Shows patch analysis stats
+  SHOW_QUEUE_REQUESTS (QUEUE): Show an ordered list of requests whose tasks target a given queue
+  SHOW_REQUEST (REQS): Show requests issued to the uPatch system
+  SHOW_REQUEST_DETAILS (DETAILS): Show the output from a specific request
+  SHOW_REQUEST_ROLES (SRRO): Show All Roles and corresponding Requests
+  SHOW_REQUEST_SCHEDULES (SCHEDS): Show the details of requests scheduled in the system
+  SHOW_SYSTEM_STATUS (STATUS): Shows the status of all uPatch System Services
+
+ SERVER_CONTROL: Operation types relating to Controlling Server
+  FORCE_STOP_SERVER : Forcing server to stop
+  SHOW_SERVER_STATUS : Gather the status of an APPLTOP uPatchServer
+  START_SERVER : Start the uPatch server procs on the given instance
+  STOP_SERVER : Stop the uPatch server procs on the given instance
+
+ SERVER_OPERATIONS: Operation types relating to server
+  PERFORM_SYSTEM_HOUSEKEEPING : Collection of all System Housekeeping operations
+  REGISTER_LABEL : Registers all available labels in the db
+  REMOVE_REQUEST_BY_AGE : Removes the Records from Database tables for REQUESTS with given age
+  REMOVE_REQUEST_BY_ID : Removes the Records from Database Tables with REQUEST_ID provided
+  REMOVE_SERVER_EXPIREDLOGS : Purge all expired logs from the filesystem on the APPLTOP
+  SHOW_RESOURCEUSAGE : Display the latest filesystem, memory and processes information
+
+ SETUP_OPERATIONS: Operation types relating to installation and setup
+  DEREGISTER_INSTALLCOMPONENT : Deregister Install Component
+  INSTALL_ADPATCH : Install the requested AutoPatch code onto the APPLTOP
+  INSTALL_ALL : Install the requested MIDDLEWARE, FUSIONAPPS and ADRCU code to the APPLTOP
+  INSTALL_LANGUAGE : Activates an NLS language upon the Fusionapps DB
+  INSTALL_MWCODE : Install the requested MIDDLEWARE code onto the APPLTOP
+  INSTALL_SERVER : Install the requested UPATCH code onto the APPLTOP
+  REGISTER_INSTALLCOMPONENT : Register Install Component
+
+ SNAPSHOT_OPERATIONS: Operation types relating to DB snapshots
+  PERFORM_DATABASESNAPSHOT : request type to snapshot the FUSION database instance
+  SHOW_DATABASESNAPSHOT : Shows all the DB snapshot requests
+  SHOW_DATABASESNAPSHOT_CHANGES : Shows all changes between snapshot 1 and snapshot2
+  SHOW_DATABASESNAPSHOT_DETAILS : Shows the DB snapshot request details
+
+ SUPPORT_OPERATIONS: Operations relating to uPatch Support
+  PERFORM_SYSTEM_HEALTHCHECKS : Runs system health status testing
+  RAISE_SUPPORTTICKET (RAISE): Registers a new Support Ticket
+
+ SYSTEM_TESTING: Internal system tests
+  PERFORM_SYSTEM_MESSAGETESTS : Runs s
