@@ -1,0 +1,53 @@
+1.	cd $AVR/fusionapps;
+2.	ade resetdeplabel FABUILDTOOLS_PT.V2MIB_LINUX_170414.0000 //         ade resetdeplabel    FABUILDTOOLS_PT.V2MIB_LINUX_170420.1649
+3.	ade expand $AVR/fusionapps/ -recurse; //jdev repatchBuildHome force
+4.	ant uploadDomainConfig -Denvid=IN76040;
+5.	cd prc;
+6.	ant -f build-prc.xml sharedlib ;
+7.	ant -f build-sp.xml sharedlib ;
+8.	ant -f build-prcEss.xml sharedlib;
+9.	ant -DearsToDeploy=EarProcurement,EarSupplierPortal,EarProcurementEss generateSharedLibs
+10. ant -Denvid=IN76040 -DearsToDeploy=EarProcurement,EarSupplierPortal,EarProcurementEss -DmergeJazn=true -DpreserveAppRoleGuid=true -DuploadConfig=true -DdeploySetupApp=true j2eeConsolidatedDeploy| tee build.log
+11.	cp $AVR/fusionapps/jlib/AdfAtkHomePageFuseProtectedModel.jar $AVR/fusionapps/sharedLibs/deploy/oracle.apps.fa.model.ear/APP-INF/lib
+				OR
+	<target name="sharedlib" xmlns:custom="antlib:oracle.anttasks">
+		<macro_shared_lib_manifest jws="${basedir}/components/procurement/Procurement.jws">
+			<extraIncludes>
+				<fileset dir="${basedir}/jlib">
+					<include name="AdfAtkHomePageFuseProtectedModel.jar"/>
+				</fileset>
+			</extraIncludes>
+		</macro_shared_lib_manifest>
+	</target>
+12.	ant -Denvid=IN76040 -DearsToDeploy=EarProcurement,EarSupplierPortal,EarProcurementEss  -DskipGenerateApps=true  j2eeConsolidatedDeploy | tee build.log
+13. import root_menu.xml
+	$MW_HOME/oracle_common/common/bin/wlst.sh
+	connect('weblogic', 'weblogic1', 't3://indl76040.in.oracle.com:7011')
+	importMetadata(application='EarFscmUIApp', server='AdminServer',fromLocation='/scratch/jjikumar/view_storage/jjikumar_SMC_Server_MIB/fusionapps/atf/components/helpPortal/mds/resource/src',docs="/oracle/apps/menu/**")
+	
+
+14. To MergeJazn // Require only in case we want to mergejazn
+	cd fusionaps/
+	ant -Denvid=IN76040 -DearsToDeploy=EarProcurement,EarSupplierPortal,EarProcurementEss mergeFAPolicies -DpreserveAppRoleGuid=true -DoverWritePolicies=true
+		//check latest created dir in /tmp for intermidiate files
+		//check deploytask.xml
+
+15. To Merge mergeFMWPolicies
+	ant -Denvid=IN76040 mergeFMWPolicies -DpreserveAppRoleGuid=true -DoverWritePolicies=true
+	
+	
+	 hostname:7011/catx/  to check deployed clocation
+
+ 
+ 
+ FNDSESSIONN GUID CHANGE TO JAZN
+ 
+	
+	
+	/ade_autofs/ud21_fa/FABUILDTOOLS_PT.V2MIB_LINUX.rdd/170414.0000/fabuildtools/lib/deploytasks.xml check for mergeFAPolicies is not false
+	
+	
+	
+	ant -Denvid=POSMC -DearsToDeploy=EarProcurement,EarSupplierPortal,EarProcurementEss mergeFAPolicies -DpreserveAppRoleGuid=true //-DoverWritePolicies=true
+	
+	ant -Denvid=POSMC mergeFMWPolicies -DpreserveAppRoleGuid=true //-DoverWritePolicies=true

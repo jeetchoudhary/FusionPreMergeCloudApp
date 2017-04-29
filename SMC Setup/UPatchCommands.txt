@@ -71,3 +71,46 @@
 
  SYSTEM_TESTING: Internal system tests
   PERFORM_SYSTEM_MESSAGETESTS : Runs s
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Processing uPatchManager Request:
+ Command: HELP
+    -UPATCH_COMMAND: *
+
+
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Help for [*]
+
+ CLIENT_OPERATIONS: Operation types supported by this version of the client
+  CLEAR: Clear the terminal screen
+  HELP: Show uPatch client command help information
+  SET_OUTPUT: Define request output settings
+  SET_SESSION: Set a parameter associated with the current session
+  SHOW_HELP: Show uPatch client command help information
+  SHOW_SESSION: Show the currently defined session values
+
+ CONFIG_MANAGEMENT: Requests to manage the creation and updates to uPatch configuration files
+  BUILD_EMS_CONFIG: Lookup the details for an EMS environment and auto-configure
+  BUILD_SIMPLE_CONFIG: Build a simple single host and user configuration file
+  SHOW_CONFIG: Show the contents of a uPatch Configuration from filesystem
+  VALIDATE: Validate a uPatch Configuration File from filesystem
+
+ INSTANCE_MANAGEMENT: Requests to manage the creation or removal of uPatch on an instance
+  BOOTSTRAP: Install uPatch on an Instance
+  DESTROY: To completely remove a uPatch Installation from an Instance
+
+ PATCH_MANAGEMENT: Requests to manage the creation of new patches for use in uPatch
+  BUILD_NLS_TRANSACTION_PATCH: Create a new KO NLS patch using PFCORE tools from a view
+  BUILD_PATCH: Create a new patch using PFCORE tools
+  BUILD_PATCH_FROM_VIEW: Create a new patch using PFCORE tools from a view
+  BUILD_TRANSLATION_PATCH: Create a new translation patch using PFCORE tools

@@ -48,10 +48,10 @@
 
 9. Deploy SOA Composites
 	a) If got Error PDocument not found in MetadataStore
-		mkdir -p $MW_HOME_STANDALONE/applications/prc/deploy/soa_shared
-		pushd $MW_HOME_STANDALONE/applications/prc/deploy/soa_shared
-		jar xvf $ADE_VIEW_ROOT/fusionapps/prc/deploy/soa_shared.mar
-		popd
+		mkdir -p $MW_HOME_STANDALONE/applications/prc/deploy/soa_shared;
+		pushd $MW_HOME_STANDALONE/applications/prc/deploy/soa_shared;
+		jar xvf $ADE_VIEW_ROOT/fusionapps/prc/deploy/soa_shared.mar;
+		popd;
 		bounce the servers
 	b)cd $ADE_VIEW_ROOT/fusionapps/prc
 	c)ant prepare_soa_shared_repository
@@ -60,19 +60,19 @@
 	f)Create deployPlan.xml file: ant -f build.xml generateSOADeployPlan -Ddeploy.appinfo=AppInfo.xml
 	g)ant -f build.xml deploySOASharedRepository -Ddeploy.appinfo=AppInfo.xml
 	h)ant -f $JDEV_HOME/bin/ant-sca-deploy.xml -DserverURL=http://slc10gby.us.oracle.com:7111 -DsarLocation=$ADE_VIEW_ROOT/fusionapps/jlib/common_soa_shared/soa_shared.zip -Duser=weblogic -Dpassword=weblogic1
-	i) Deploy Composites , cd prc
-		cd $ADE_VIEW_ROOT/fusionapps/prc
-        ant -f build.xml family_publish
-		cd $ADE_VIEW_ROOT/fusionapps
-        ade mkprivate */deploy/soa_shared_deleted.mar
-        ant regenerateSoaSharedDeletedMar
+	i) Deploy Composites , cd prc;
+		cd $ADE_VIEW_ROOT/fusionapps/prc;
+        ant -f build.xml family_publish;
+		cd $ADE_VIEW_ROOT/fusionapps;
+        ade mkprivate */deploy/soa_shared_deleted.mar;
+        ant regenerateSoaSharedDeletedMar;
 		bounce soa server
 		ant -f build.xml deploySOAComposite -Ddeploy.appinfo=AppInfo.xml -Ddeploy.configplan=deployPlan.xml -Ddeploy.composite=./deploy/sca_PrcPoApprovalComposite.jar -Ddeploy.skipmar=true
 		ant -f build.xml deploySOAComposite -Ddeploy.appinfo=AppInfo.xml -Ddeploy.configplan=deployPlan.xml -Ddeploy.composite=./deploy/sca_PrcPorManageReqApprovalComposite.jar -Ddeploy.skipmar=true
 	j) $MW_HOME_STANDALONE/soa/common/bin/wlst.sh
 		connect('weblogic','weblogic1','t3://slc10gby.us.oracle.com:7111')
-		sca_importUpdates('http://slc10gby.us.oracle.com:7111','/scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/prc/po/noship/approvalRules/PoApproval_Rules_Metadata.jar','PrcPoApprovalComposite','1.0')
-		sca_importUpdates('http://slc10gby.us.oracle.com:7111','/scratch/ropal/view_storage/ropal_REL_13_SMC_Server/fusionapps/prc/por/noship/approvalRules/ReqApproval_Rules_Metadata.jar','PrcPorManageReqApprovalComposite','1.0')
+		sca_importUpdates('http://slc10gby.us.oracle.com:7111','/scratch/ropal/view_storage/ropal_Server/fusionapps/prc/po/noship/approvalRules/PoApproval_Rules_Metadata.jar','PrcPoApprovalComposite','1.0')
+		sca_importUpdates('http://slc10gby.us.oracle.com:7111','/scratch/ropal/view_storage/ropal_Server/fusionapps/prc/por/noship/approvalRules/ReqApproval_Rules_Metadata.jar','PrcPorManageReqApprovalComposite','1.0')
 
 ##Application URLS
 	http://slc10gby.us.oracle.com:7011/console
@@ -117,7 +117,7 @@
 		4.  ./uPatchManager BUILD_SIMPLE_CONFIG -DB_HOST=indl76041.in.oracle.com -DB_SID=in76041 -DB_PORT=1522 -DB_USER=oradba -DB_PASS=oradba123 -DB_ORACLEHOME=/scratch/oradba/db/tech_st/12.1.0 -UPATCH_CONFIG=/home/jjikumar/Desktop/in76041_upatchConfig.xml
 		5.  ./uPatchManager BOOTSTRAP -ADMIN_EMAIL_ADDR="jitender.k.kumar@oracle.com" -UPATCH_CONFIG=/home/jjikumar/Desktop/in76041_upatchConfig.xml
 		6.  ./uPatch -INSTANCE=//indl76041.in.oracle.com:1522/in76041 -ROLE=admin -ROLE_PASSWORD=admin INSTALL_ALL -COMPONENT_SOURCE=FAINTEG_MAIN_PLATFORMS_170401.1258 -PUSH_COMPONENT_CODE=Y -UPATCH_CONFIG=/home/jjikumar/Desktop/in76041_upatchConfig.xml
-		7.  ./uPatch APPLY_FA_JARS -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170403.0101.S -PUSH_COMPONENT_CODE=Y -PURGE_FA_JARS=DEPLOY 
+		7.  ./uPatch APPLY_FA_JARS -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170403.0101.S -PUSH_COMPONENT_CODE=Y -PURGE_FA_JARS=DEPLOY
 		8.  ./uPatch APPLY_FA_LABEL -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170403.0101.S -PUSH_COMPONENT_CODE=Y -PATCHING_PROFILE=SEEDED1
 		
 		
@@ -128,6 +128,9 @@
 		4. ./uPatchManager BUILD_PATCH_FROM_VIEW -DESTINATION_DIR=/scratch/jjikumar/transactionUPatch
 		5. ./uPatch -INSTANCE=//slc09xht.us.oracle.com:1559/jikumar -ROLE=admin -ROLE_PASSWORD=admin 
 			APPLY_PATCH -PATCH=/net/slc10xjk.us.oracle.com/scratch/jjikumar/transactionUPatch/9149182251780.zip -NOTIFY_EMAIL="jitender.k.kumar@oracle.com"
+			
+			./uPatchManager BUILD_PATCH -ADE_VIEW_ROOT=/ade_autofs/ud62_fa/FUSIONAPPS_PT.V2MIBPRC_LINUX.X64.rdd/170414.1800.S -PATCH_MANIFEST=/home/jjikumar/faildSeedData.txt -DESTINATION_DIR=/scratch/jjikumar/transactionUPatch
+			APPLY_PATCH -PATCH=/net/slc10xjk.us.oracle.com/scratch/jjikumar/transactionUPatch/9149261189704.zip -NOTIFY_EMAIL="jitender.k.kumar@oracle.com"  -PATCHING_PROFILE=SEEDED3
 			
 		SET_QUEUE_ONLINE -QUEUE_NAME=PATCHING_OPERATIONS -COMMENT=c
 		REMOVE_REQUEST_BY_ID -REQUEST_ID=

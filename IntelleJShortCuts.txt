@@ -1,0 +1,28 @@
+You can quickly find all places where a particular class, method or variable is used in the whole project by positioning the caret at the symbol's name or at its usage in code and pressing Alt+F7 (Edit | Find | Find Usages in the popup menu).
+To quickly see the documentation for a class or method at caret, press Ctrl+Q (View | Quick Documentation).
+To navigate to the declaration of a class, method or variable used somewhere in the code, position the caret at the usage and press Ctrl+B (Navigate | Declaration). You can also click the mouse on usages with the Ctrl key pressed to jump to declarations.
+
+You can quickly navigate in the currently edited file with Ctrl+F12 (Navigate | File Structure).
+It shows the list of members of the current class. Select an element you want to navigate to and press the Enter key or the F4 key.
+To easily locate an item in the list, just start typing its name.
+
+You can easily rename your classes, methods and variables with automatic correction of all places where they are used.
+To try it, place the caret at the symbol you want to rename, and press Shift+F6 (Refactor | Rename). Type the new name in the popup window that appears, or select one of the suggested names, and press Enter.
+
+When using Code Completion, you can accept the currently highlighted selection in the popup list with Tab key.
+Unlike accepting with the Enter key, the selected name will overwrite the rest of the name to the right of the caret. This can be especially useful for replacing one method or variable name with another.
+
+Using Alt+Insert (Code | Generate) in the editor, you can easily generate getter and setter methods for any fields of your class.
+
+
+The Escape key in any tool window moves the focus to the editor.
+Shift+Escape moves the focus to the editor and also hides the current (or last active) tool window.
+The F12 key moves the focus from the editor to the last focused tool window.
+
+
+When you want to catch exceptions thrown by some code fragment, select it in the editor, press Ctrl+Alt+T (Code | Surround With) and choose try / catch. The catch blocks for all the exceptions thrown inside the block will be generated automatically.
+You can customize the bodies of the generated catch blocks on the Code tab of File | Settings | File and Code Templates.
+Use other items in the list to surround with other constructs.
+
+
+alt+insert to create a new class
