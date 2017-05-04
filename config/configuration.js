@@ -5,8 +5,8 @@
 module.exports = {
 	dburl : 'mongodb://localhost/fusionTransactions',
 	messageQueueURL : 'amqp://localhost',
-	adeServerUrl : 'slc05gsa.us.oracle.com;slc10geb.us.oracle.com;slc10xjk.us.oracle.com',
-	historyServerUrl : 'slc05gsa.us.oracle.com',
+	adeServerUrl : 'slc12cku.us.oracle.com;slc12ckv.us.oracle.com;slc12ckw.us.oracle.com;slc12ckx.us.oracle.com;slc12cky.us.oracle.com',
+	historyServerUrl : 'slc12cku.us.oracle.com',
 	adeServerUser : 'jjikumar',
 	adeServerPass : 'P@ssword05',
 	transactionMessageQueue : 'fusionPremerge',

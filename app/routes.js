@@ -240,6 +240,10 @@ module.exports = function (app) {
 	});
 
     app.post('/api/submit', function (req, res) {
+		if(!req.body.name){
+			logger.error('NO Transaction Name Specified ', req);
+			res.status(501).send({ response: "no transaction name specifiec" });
+		}
 		var currentTransactionData = new TransData({
 			name: req.body.name,
 			submittedBy: req.body.email,
