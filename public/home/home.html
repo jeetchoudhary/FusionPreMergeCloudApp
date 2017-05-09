@@ -28,10 +28,12 @@
                         <label for="transaction-family" class="col-sm-2 col-md-2 control-label">Family</label>
                         <div id="productFamilyDetails">
                             <div class="btn-group" style="float: left;margin-left: 15px;">
-                                <select class="btn btn-default dropdown-toggle" name="familySelect" id="familySelectID" ng-options="option.name for option in transaction.family.availableOptions track by option.id" ng-model="transaction.family.selectedOption"></select>
+                                <select class="btn btn-default dropdown-toggle" name="familySelect" id="familySelectID" ng-options="option.name for option in transaction.family.availableOptions track by option.id"
+                                    ng-model="transaction.family.selectedOption"></select>
                             </div>
                             <div class="btn-group" style="float: left;margin-left: 15px;" ng-hide="transaction.family.selectedOption.id == 1">
-                                <select class="btn btn-default dropdown-toggle" name="productSelect" id="productSelectID" ng-options="option.name for option in transaction.family.selectedOption.productList track by option.id" ng-model="transaction.family.selectedOption.product"></select>
+                                <select class="btn btn-default dropdown-toggle" name="productSelect" id="productSelectID" ng-options="option.name for option in transaction.family.selectedOption.productList track by option.id"
+                                    ng-model="transaction.family.selectedOption.product"></select>
                             </div>
 
                             <div class="col-lg-6" style="float: right" ng-show="transaction.family.selectedOption.id == 2 ">
@@ -110,10 +112,15 @@
                         <div ng-show='transactionSubmitform.$submitted && (transactionSubmitform.email.$dirty && transactionSubmitform.dbstring.$dirty && transactionSubmitform.transaction.$dirty)'
                             class="form-group">
                             <div class="alert alert-success" role="alert">Transaction Submitted Successfully</div>
+                        </div>
                     </div>
-            </div>
-            <span style="color: red" ng-show="errorMsg">{{errorMsg}}</span>
-            <!--<div ng-show="transaction.validationStatus==='completed'">
+                    <div class="alert alert-danger" ng-show="errorMsg">
+                        <strong>{{errorMsg}}</strong> 
+                    </div>
+                    <div class="alert alert-danger">
+                        <strong>Backport Transactions</strong> are not supported by this tool.
+                    </div>
+                    <!--<div ng-show="transaction.validationStatus==='completed'">
                         <div class="panel panel-default" style="margin-left:80px">
                             <div class="panel-heading" style="font-weight: bold;color: blueviolet">Please Verify the details of the transaction Mentioned below and submit for PreMerge Scan</div>
                             <table class="table">
@@ -140,9 +147,9 @@
                             <input type="submit" class="btn btn-success btn-circle" id="btn-submit" value="Validate Transaction">
                         </div>
                     </div>-->
-            <!--   <span style="color:red" ng-show="transaction.isValid && !transaction.errorMsg.transactionError">Work In Progress..I am working on it right now soon you will be able to submit it</span> -->
-            </form>
+                    <!--   <span style="color:red" ng-show="transaction.isValid && !transaction.errorMsg.transactionError">Work In Progress..I am working on it right now soon you will be able to submit it</span> -->
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </div>

@@ -101,7 +101,7 @@
 
 ## Set up UPatch DB :
 	 1. cd /net/slcai797/scratch/upatch/LATEST/bin
-	 2../uPatchManager BUILD_EMS_CONFIG -EMS_ENV_NAME=JJIKUMAR_SMC_JIKUMAR  -UPATCH_CONFIG=/home/jjikumar/Desktop/jikumar_upatchConfig.xml
+	 2../uPatchManager BUILD_EMS_CONFIG -EMS_ENV_NAME=JJIKUMAR_SMC_JIKUMAR -ADMIN_EMAIL_ADDR="jitender.k.kumar@oracle.com" -UPATCH_CONFIG=/home/jjikumar/Desktop/jikumar_upatchConfig.xml
 	 3../uPatchManager VALIDATE -UPATCH_CONFIG=/home/jjikumar/Desktop/jikumar_upatchConfig.xml 
 	 4../uPatchManager -UPATCH_CONFIG=/home/jjikumar/Desktop/jikumar_upatchConfig.xml  BOOTSTRAP -ADMIN_EMAIL_ADDR="jitender.k.kumar@oracle.com" 
 	 6../uPatch -INSTANCE=//slc09xht.us.oracle.com:1559/jikumar -ROLE=admin -ROLE_PASSWORD=admin INSTALL_ALL -COMPONENT_SOURCE=FAINTEG_MAIN_PLATFORMS_170411.1252
@@ -114,7 +114,7 @@
 		1.  source DB.env
 		2.  orapwd file=$ORACLE_HOME/dbs/orapw$ORACLE_SID password=manager
 		3. 	cd /net/slcai797.us.oracle.com/scratch/upatch/LATEST/bin
-		4.  ./uPatchManager BUILD_SIMPLE_CONFIG -DB_HOST=indl76041.in.oracle.com -DB_SID=in76041 -DB_PORT=1522 -DB_USER=oradba -DB_PASS=oradba123 -DB_ORACLEHOME=/scratch/oradba/db/tech_st/12.1.0 -UPATCH_CONFIG=/home/jjikumar/Desktop/in76041_upatchConfig.xml
+		4.  ./uPatchManager BUILD_SIMPLE_CONFIG -ADMIN_EMAIL_ADDR="jitender.k.kumar@oracle.com" -DB_HOST=indl76041.in.oracle.com -DB_SID=in76041 -DB_PORT=1522 -DB_USER=oradba -DB_PASS=oradba123 -DB_ORACLEHOME=/scratch/oradba/db/tech_st/12.1.0 -UPATCH_CONFIG=/home/jjikumar/Desktop/in76041_upatchConfig.xml
 		5.  ./uPatchManager BOOTSTRAP -ADMIN_EMAIL_ADDR="jitender.k.kumar@oracle.com" -UPATCH_CONFIG=/home/jjikumar/Desktop/in76041_upatchConfig.xml
 		6.  ./uPatch -INSTANCE=//indl76041.in.oracle.com:1522/in76041 -ROLE=admin -ROLE_PASSWORD=admin INSTALL_ALL -COMPONENT_SOURCE=FAINTEG_MAIN_PLATFORMS_170401.1258 -PUSH_COMPONENT_CODE=Y -UPATCH_CONFIG=/home/jjikumar/Desktop/in76041_upatchConfig.xml
 		7.  ./uPatch APPLY_FA_JARS -LABEL=FUSIONAPPS_PT.V2MIBPRC_LINUX.X64_170403.0101.S -PUSH_COMPONENT_CODE=Y -PURGE_FA_JARS=DEPLOY

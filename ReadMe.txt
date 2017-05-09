@@ -24,15 +24,15 @@
 9. To insert DB SeedData :  
         db.databases.insert({
             "release" : "13",
-            "alias": "REL13(jjikumar)" ,
-            "connectionString":"fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar",
+            "alias": "REL13_SMC_JIKUMAR)" ,
+            "connectionString":"fusion/fusion@slc09xht.us.oracle.com:1559/jikumar",
             "currentStatus":"UNUSED"
             });
 
         db.databases.insert({
             "release" : "13",
-            "alias": "REL13(slc10usm)" ,
-            "connectionString":"fusion/fusion@slcak360.us.oracle.com:1543/slc10usm",
+            "alias": "REL13_SMC_JJIKUMAR" ,
+            "connectionString":"fusion/fusion@slcak360.us.oracle.com:1595/jjikumar",
             "currentStatus":"UNUSED"
             });
 
@@ -82,3 +82,7 @@ Sonar setup
 4. /scratch/shared/sonar/sonarqube-6.2/bin/linux-x86-64/startsonar.sh
 5. setenv _JAVA_OPTIONS "-Xmx3g"
 6. sonar-scanner
+
+
+#start mongodb as service
+mongod  --logpath=C:\customInstalls\mongoDBLogs\log.txt --install
