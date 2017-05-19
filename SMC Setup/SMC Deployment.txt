@@ -74,6 +74,19 @@
 		sca_importUpdates('http://slc10gby.us.oracle.com:7111','/scratch/ropal/view_storage/ropal_Server/fusionapps/prc/po/noship/approvalRules/PoApproval_Rules_Metadata.jar','PrcPoApprovalComposite','1.0')
 		sca_importUpdates('http://slc10gby.us.oracle.com:7111','/scratch/ropal/view_storage/ropal_Server/fusionapps/prc/por/noship/approvalRules/ReqApproval_Rules_Metadata.jar','PrcPorManageReqApprovalComposite','1.0')
 
+		
+## Upgrade Ess schema to resolve ESS app warning state :
+	1) $MW_HOME_STANDALONE/oracle_common/bin/psa  (psa tool UI will come on this command)
+	2) Select "Oracle Enterprise Scheduler" and click Next
+	3) Enter DB info and click Connec (sys as sysdba/manager)
+	4) Select Schema User Name as "FUSION_MDS_ESS" with password "fusion_mds_ess" and click next.
+	5) Update Schema Password to "fusion_ora_ess" as the schema is "FUSION_ORA_ESS" now, click Next.
+	6) Click upgrade and finish and bounce the server.
+	
+	
+	
+	
+	
 ##Application URLS
 	http://slc10gby.us.oracle.com:7011/console
 	http://slc10gby.us.oracle.com:7011/fscmUI/faces/FuseWelcome
@@ -223,13 +236,6 @@ select * from PRC_FUSION_SOAINFRA.WFTASKDISPLAY;
 
 
 
-
-
-
-
-
-
-
 beginRepositorySession()
 deletePolicySet('ws-service')
 validatePolicySet()
@@ -302,11 +308,6 @@ commitRepositorySession()
 
 
 
-
-
-
-
-
 ----------create policy----------------
 beginRepositorySession()  
 createPolicySet('default-domain-ws-ALL_DOMAINS','ws-service','Domain("*")')
@@ -345,11 +346,7 @@ validatePolicySet()
 commitRepositorySession()
 
 
-
 listPolicySets()
-
-
-
 
 
 

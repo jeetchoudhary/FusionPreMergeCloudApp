@@ -170,7 +170,7 @@ var processTransaction = function (transData) {
 	var createViewCommand = 'ade createview ' + viewName + ' -series ' + series + ' -latest';
 	var useViewCommand = 'ade useview -silent ' + viewName + ' -exec ';
 	var begintrans = useViewCommand + ' \" ade begintrans ' + transName + ' && ';
-	var fetchTransCommand = begintrans + 'ade fetchtrans ' + trans.name + ' &&  ';
+	var fetchTransCommand = begintrans + 'ade grabtrans ' + trans.name + ' &&  ';
 	var checkInCommand;
 	var finScriptParams;
 	if (!bugNo) {
