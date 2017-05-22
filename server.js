@@ -32,7 +32,11 @@ db.on('error', console.error.bind(console, 'Server : Could not connect to databa
 db.once('open', function() {
  logger.info('Server : Application connected to database , server is about to start ');
 });
-
+// To redirect all the request from this server to another server uncomment below lines
+// fusionAPP.get('*',function(req,res){  
+//       //if(req.socket.localPort==80)
+//          res.redirect('http://slc12ckt.us.oracle.com/');
+// })
 fusionAPP.use(bodyParser.json()); 
 fusionAPP.use(bodyParser.json({ type: 'application/vnd.api+json' })); 
 fusionAPP.use(bodyParser.urlencoded({ extended: true }));

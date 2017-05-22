@@ -77,11 +77,13 @@ Sonar setup
 	SELECT @@global.max_allowed_packet;
 	SET @@global.max_allowed_packet =  500 * 1024 * 1024;
 	commit;
-3. edit sonar.preperties file
+3. edit /scratch/shared/sonar/sonarqube-6.2/conf/sonar.properties file
    sonar.web.javaAdditionalOpts=-Dhttps.proxyHost=www-proxy.us.oracle.com -Dhttps.proxyPort=80 -Dhttps.proxySet=true -Dhttps.nonProxyHosts=*.oracle.com|*.oraclecorp.com
-4. /scratch/shared/sonar/sonarqube-6.2/bin/linux-x86-64/startsonar.sh
-5. setenv _JAVA_OPTIONS "-Xmx3g"
-6. sonar-scanner
+   sonar.jdbc.url=jdbc:mysql://slc04kxc.us.oracle.com:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&useSSL=false
+4. /scratch/shared/sonar/sonarqube-6.2/bin/linux-x86-64/sonar.sh start 
+5. login to sonar qube url (http://slc10xjk.us.oracle.com:9007/projects or http://slc10xjk.us.oracle.com:9000/projects) using admin/admin
+6. setenv _JAVA_OPTIONS "-Xmx3g"
+7. sonar-scanner
 
 
 #start mongodb as service
