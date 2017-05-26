@@ -108,12 +108,10 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div ng-show='transactionSubmitform.$submitted && (transactionSubmitform.email.$dirty && transactionSubmitform.dbstring.$dirty && transactionSubmitform.transaction.$dirty)'
-                            class="form-group">
-                            <div class="alert alert-success" role="alert">Transaction Submitted Successfully</div>
-                        </div>
+                     <div class="alert alert-success" ng-show='transactionSubmitform.$submitted && (transactionSubmitform.email.$dirty && transactionSubmitform.dbstring.$dirty && transactionSubmitform.transaction.$dirty)'>
+                        <strong>Transaction Submitted Successfully</strong> 
                     </div>
+
                     <div class="alert alert-danger" ng-show="errorMsg">
                         <strong>{{errorMsg}}</strong>
                     </div>

@@ -15,7 +15,7 @@ var exec = require('child_process').exec;
 mongoose.Promise = global.Promise;
 mongoose.connect(fuseConfig.dburl);
 var db = mongoose.connection;
-var mailSubject = '"FusionPrcCloud-premerge Validation Complete"';
+
 
 db.once('open', function () {
 	logger.info('Server : Child process is connected to the database ');
@@ -120,7 +120,8 @@ var getProductFamilyBuildFile = function (familyName) {
 
 var updateErroredTransation = function (trans, logStream, logFile) {
 	var errorMessage = "Problem Occured while running Validation script on transaction : " + trans.name + " , Error :" + trans.description.error;
-	var errorMailCommand = 'echo ' + '\"' + errorMessage + '\"' + ' | mutt -s ' + mailSubject + ' ' + trans.email;
+	var emailSubject = getEmailSubject(trans);
+	var errorMailCommand = 'echo ' + '\"' + errorMessage + '\"' + ' | mutt -s ' + emailSubject + ' ' + trans.email;
 	logStream.write("Problem Occured while running Validation script on transaction : " + trans.name + " Error :" + trans.description.error);
 	logStream.end();
 	var source = fs.createReadStream(fuseConfig.transactionActiveLogLocation + logFile);
@@ -150,6 +151,21 @@ var updateErroredTransation = function (trans, logStream, logFile) {
 		}
 	}).start();
 };
+
+var getEmailBody = function(trans){
+	var validationRelativePathServer = trans.transactionDetailedLocation.substr(trans.transactionDetailedLocation.lastIndexOf('/'));
+	var validationSummaryFile = validationRelativePathServer.substr(0,validationRelativePathServer.length-2);
+	var emailBody ='"'+'Premerge validation completed for your transaction ' + trans.name + 
+					'.\\nYou can verify the summary of the validation at ' + trans.transactionDetailedLocation+validationSummaryFile+'.txt'+
+					'.\\nYou can verify the detailed result of the validation at ' + trans.transactionDetailedLocation+
+					'"';
+	return emailBody;
+}
+
+var getEmailSubject = function(trans){
+	var mailSubject = '"FusionPrcCloud-premerge Validation Complete for ADE transaction '+ trans.name +'"';
+	return mailSubject;
+}
 
 var processTransaction = function (transData) {
 	var trans = JSON.parse(transData);
@@ -215,12 +231,16 @@ var processTransaction = function (transData) {
 	var destroyTransCommand = useViewCommand + ' \"  ade settransproperty -p BUG_NUM -r && ade destroytrans -force ' + transName + endDelimeter;
 	var exeCommand = finScriptParams + endDelimeter;
 	var detailedTransactionOutputLocation = 'http://slc12ckt.us.oracle.com:81/' + transName + '_1'
-	var emailBody = 'Premerge validation completed for your transaction ' + trans.name + '. you can verify the result of the validation at ' + detailedTransactionOutputLocation;
 	trans.transactionDetailedLocation = detailedTransactionOutputLocation;
-	var sendmailCommand = 'echo ' + emailBody + ' | mutt -s ' + mailSubject + ' -b ' + CC + ' ' + trans.email;
+	var emailBody = getEmailBody(trans);
+	var emailSubject = getEmailSubject(trans);
+	var sendmailCommand = 'echo ' + emailBody + ' | mutt -s ' + emailSubject + ' -b ' + CC + ' ' + trans.email;
 	var premergeResultLocalLocation = __dirname + '\\..\\History\\Archived\\' + transName + '_1\\';
 	var preMergeResCopyCommand = 'scp -i ' + fuseConfig.sshPublicKeyLocation + ' -r ' + fuseConfig.adeServerUser + '@' + trans.adeServerUsed + ':' + premergeOutLoc + ' ' + premergeResultLocalLocation;
 	var permergeResultMainOutputFile = premergeResultLocalLocation + transName + '.txt';
+
+	logger.info('******************************************************************************************************************************************************');
+	logger.info('Email Body : ', emailBody);
 	logger.info('******************************************************************************************************************************************************');
 	logger.info('command to copy data : ', preMergeResCopyCommand);
 	logger.info('******************************************************************************************************************************************************');
@@ -286,7 +306,7 @@ var processTransaction = function (transData) {
 			logger.info("permergeResultMainOutputFile : " + permergeResultMainOutputFile);
 			setTimeout(function () {
 				updateTransactionStatus(trans, 'Archived', fuseConfig.transactionArchivedLogLocation + logFile, permergeResultMainOutputFile);
-			}, 15000);
+			}, 30000);
 		},
 		err: function (stderr) {
 			logger.info(stderr);

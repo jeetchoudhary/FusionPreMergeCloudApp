@@ -83,7 +83,16 @@ Sonar setup
 4. /scratch/shared/sonar/sonarqube-6.2/bin/linux-x86-64/sonar.sh start 
 5. login to sonar qube url (http://slc10xjk.us.oracle.com:9007/projects or http://slc10xjk.us.oracle.com:9000/projects) using admin/admin
 6. setenv _JAVA_OPTIONS "-Xmx3g"
-7. sonar-scanner
+7. create /scratch/views/jjikumar_REL13/fusionapps/prc/components/procurement/po/sonar-project.properties with below entries :
+	sonar.projectKey=Fusion:prc
+	# this is the name and version displayed in the SonarQube UI. Was mandatory prior to SonarQube 6.1.
+	sonar.projectName=Fusion Prc Po
+	sonar.projectVersion=1.0
+	# Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
+	# This property is optional if sonar.modules is set.
+	sonar.sources=.
+	sonar.java.binaries=.
+8. sonar-scanner
 
 
 #start mongodb as service

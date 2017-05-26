@@ -7,7 +7,7 @@
 7.	ant -f build-sp.xml sharedlib ;
 8.	ant -f build-prcEss.xml sharedlib;
 9.	ant -DearsToDeploy=EarProcurement,EarSupplierPortal,EarProcurementEss generateSharedLibs
-10. ant -Denvid=IN76040 -DearsToDeploy=EarProcurement,EarSupplierPortal,EarProcurementEss -DmergeJazn=true -DpreserveAppRoleGuid=true -DskipMergeJars=true -DuploadConfig=true -DdeploySetupApp=true j2eeConsolidatedDeploy| tee build.log
+10. ant -Denvid=IN76040 -DearsToDeploy=EarProcurement,EarSupplierPortal,EarProcurementEss -DmergeJazn=true -DpreserveAppRoleGuid=true -DskipMergeJars=true -DskipGenerateApps=true -DuploadConfig=true -DdeploySetupApp=true j2eeConsolidatedDeploy| tee build.log
 11.	cp $AVR/fusionapps/jlib/AdfAtkHomePageFuseProtectedModel.jar $AVR/fusionapps/sharedLibs/deploy/oracle.apps.fa.model.ear/APP-INF/lib
 				OR
 	<target name="sharedlib" xmlns:custom="antlib:oracle.anttasks">
