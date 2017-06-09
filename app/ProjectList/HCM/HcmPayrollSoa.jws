@@ -1,0 +1,27 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jws:workspace xmlns:jws="http://xmlns.oracle.com/ide/project">
+   <hash n="adrs-workspace-properties">
+      <value n="adrs-instance-binding" v="DefaultServer"/>
+   </hash>
+   <value n="application-package-prefix" v="oracle.apps"/>
+   <hash n="component-versions">
+      <value n="oracle.adf.share.dt.migration.jps.JaznCredStoreMigratorHelper" v="11.1.1.0.0;11.1.1.1.0"/>
+      <value n="oracle.adfdt.controller.adfc.source.migration.SavePointDataSourceForWLSMigrator" v="11.1.1.1.0"/>
+      <value n="oracle.adfdtinternal.model.ide.security.wizard.AdfSecurityMigrator" v="11.1.1.0.0.11;11.1.1.1.0.13"/>
+      <value n="oracle.ide.model.Project" v="11.1.1.0.0;11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.deploy.ear.OarMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.deploy.mar.MarMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.runner.oc4j.EmbeddedServerMigratorHelper" v="11.1.1.0.0"/>
+      <value n="oracle.jdevimpl.webservices.WebServicesMigratorHelper" v="11.1.1.0.0"/>
+      <value n="oracle.jdevimpl.xml.oc4j.ds.DataSourcesMigratorHelper" v="11.1.1.0.0"/>
+      <value n="oracle.jdevimpl.xml.oc4j.jps.JpsConfigMigratorHelper" v="11.1.1.0.0;11.1.1.1.0.1"/>
+      <value n="oracle.jdevimpl.xml.wl.WeblogicMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.mds.internal.dt.ide.migrator.MDSConfigMigratorHelper" v="11.1.1.0.0;11.1.1.1.0"/>
+      <value n="oracle.webcenter.internal.dt.migration.WebCenterWorkspaceMigrator" v="11.1.1.0.0.080820.1400;11.1.1.0.0.081216.0654;11.1.1.1.0.090223.1146;11.1.1.1.0.090318.0800;11.1.1.1.0.090402.0800;11.1.1.1.0.090416.1600;11.1.1.1.0.090505.1600;11.1.1.1.0.090618.1120;11.1.1.2.0.100216.2200;11.1.1.4.0.100820.0800;11.1.1.4.0.100903.0800;11.1.1.4.0.101019.0800"/>
+   </hash>
+   <list n="listOfChildren">
+      <hash><url n="URL" path="pay/processFlows/flowTaskComposite/HcmProcFlowCoreFlowTaskComposite.jpr"/></hash>
+      <hash><url n="URL" path="pay/processFlows/soa/resource/HcmProcFlowTopSoaResource.jpr"/></hash>
+      <hash><url n="URL" path="pay/processFlows/workflowComposite/HcmProcFlowCoreWorkflowComposite.jpr"/></hash>
+   </list>
+</jws:workspace>

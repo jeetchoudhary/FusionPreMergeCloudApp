@@ -1,0 +1,2380 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jws:workspace xmlns:jws="http://xmlns.oracle.com/ide/project">
+   <hash n="adrs-workspace-properties">
+      <value n="adrs-instance-binding" v="DefaultServer"/>
+   </hash>
+   <value n="application-package-prefix" v="oracle.apps.hcm"/>
+   <url n="application-source-directory" path="src/"/>
+   <hash n="component-versions">
+      <value n="oracle.adf.share.dt.migration.jps.JaznCredStoreMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.adfdt.controller.adfc.source.migration.SavePointDataSourceForWLSMigrator" v="11.1.1.1.0"/>
+      <value n="oracle.adfdtinternal.model.ide.security.wizard.AdfSecurityMigrator" v="11.1.1.1.0.13"/>
+      <value n="oracle.ide.model.Project" v="11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.deploy.ear.OarMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.deploy.mar.MarMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.xml.oc4j.jps.JpsConfigMigratorHelper" v="11.1.1.1.0.1"/>
+      <value n="oracle.jdevimpl.xml.wl.WeblogicMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.mds.internal.dt.ide.migrator.MDSConfigMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.webcenter.internal.dt.migration.WebCenterWorkspaceMigrator" v="11.1.1.1.0.090416.1600;11.1.1.1.0.090505.1600;11.1.1.1.0.090618.1120;11.1.1.2.0.100216.2200;11.1.1.4.0.100820.0800;11.1.1.4.0.100903.0800;11.1.1.4.0.101019.0800"/>
+   </hash>
+   <list n="listOfChildren">
+      <hash><url n="URL" path="absences/plans/dbSchema/HcmAbsencesPlansDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="absences/plans/model/HcmAbsencesPlansModel.jpr"/></hash>
+      <hash><url n="URL" path="absences/plans/ui/HcmAbsencesPlansUi.jpr"/></hash>
+      <hash><url n="URL" path="absences/plans/uiModel/HcmAbsencesPlansUiModel.jpr"/></hash>
+      <hash><url n="URL" path="absences/plans/uiModelTest/HcmAbsencesPlansUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="absences/resource/HcmAbsencesTopPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="benefits/analytics/publicEntity/HcmBenefitsAnalyticsPublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="benefits/analytics/publicView/HcmBenefitsAnalyticsPublicView.jpr"/></hash>
+      <hash><url n="URL" path="benefits/core/dbSchema/HcmBenefitsCoreDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="benefits/core/protectedModel/HcmBenefitsCoreProtectedModel.jpr"/></hash>
+      <hash><url n="URL" path="benefits/core/protectedUiModel/HcmBenefitsCoreProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="benefits/core/protectedUiModelTest/HcmBenefitsCoreProtectedUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="benefits/core/publicEntity/HcmBenefitsCorePublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="benefits/core/publicUi/HcmBenefitsCorePublicUi.jpr"/></hash>
+      <hash><url n="URL" path="benefits/core/publicView/HcmBenefitsCorePublicView.jpr"/></hash>
+      <hash><url n="URL" path="benefits/core/relationService/HcmBenefitsCoreRelationService.jpr"/></hash>
+      <hash><url n="URL" path="benefits/core/ui/HcmBenefitsCoreUi.jpr"/></hash>
+      <hash><url n="URL" path="benefits/core/uiTest/HcmBenefitsCoreUiTest.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/dbSchema/HcmBenefitsElectionsDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/diagnosticExternal/HcmBenefitsElectionsDiagnosticExternal.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/electionsService/HcmBenefitsElectionsService.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/protectedModel/HcmBenefitsElectionsProtectedModel.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/protectedUiModel/HcmBenefitsElectionsProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/protectedUiModelTest/HcmBenefitsElectionsProtectedUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/publicEntity/HcmBenefitsElectionsPublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/publicUi/HcmBenefitsElectionsPublicUi.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/publicView/HcmBenefitsElectionsPublicView.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/ui/HcmBenefitsElectionsUi.jpr"/></hash>
+      <hash><url n="URL" path="benefits/elections/uiTest/HcmBenefitsElectionsUiTest.jpr"/></hash>
+      <hash><url n="URL" path="benefits/eligibility/dbSchema/HcmBenefitsEligibilityDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="benefits/eligibility/protectedModel/HcmBenefitsEligibilityProtectedModel.jpr"/></hash>
+      <hash><url n="URL" path="benefits/eligibility/protectedUiModel/HcmBenefitsEligibilityProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="benefits/eligibility/ui/HcmBenefitsEligibilityUi.jpr"/></hash>
+      <hash><url n="URL" path="benefits/events/protectedModel/HcmBenefitsEventsProtectedModel.jpr"/></hash>
+      <hash><url n="URL" path="benefits/fuse/publicUiFuse/HcmBenefitsFusePublicUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="benefits/fuse/publicUiModelFuse/HcmBenefitsFusePublicUiModelFuse.jpr"/></hash>
+      <hash><url n="URL" path="benefits/nonWorker/protectedModel/HcmBenefitsNonWorkerProtectedModel.jpr"/></hash>
+      <hash><url n="URL" path="benefits/processes/dbSchema/HcmBenefitsProcessesDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="benefits/processes/protectedModel/HcmBenefitsProcessesProtectedModel.jpr"/></hash>
+      <hash><url n="URL" path="benefits/processes/protectedUiModel/HcmBenefitsProcessesProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="benefits/processes/publicEntity/HcmBenefitsProcessesPublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="benefits/processes/publicUi/HcmBenefitsProcessesPublicUi.jpr"/></hash>
+      <hash><url n="URL" path="benefits/processes/ui/HcmBenefitsProcessesUi.jpr"/></hash>
+      <hash><url n="URL" path="benefits/resource/HcmBenefitsTopPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="eligibility/dbSchema/HcmEligibilityDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="eligibility/protectedModel/HcmEligibilityProtectedModel.jpr"/></hash>
+      <hash><url n="URL" path="eligibility/protectedUiModel/HcmEligibilityProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="eligibility/protectedUiModelTest/HcmEligibilityProtectedUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="eligibility/publicEntity/HcmEligibilityPublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="eligibility/publicModel/HcmEligibilityPublicModel/HcmEligibilityPublicModel.jpr"/></hash>
+      <hash><url n="URL" path="eligibility/publicView/HcmEligibilityPublicView.jpr"/></hash>
+      <hash><url n="URL" path="eligibility/resource/HcmEligibilityPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="eligibility/ui/HcmEligibilityUi.jpr"/></hash>
+      <hash><url n="URL" path="extract/model/HcmExtractModel.jpr"/></hash>
+      <hash><url n="URL" path="extract/setup/model/HcmExtractSetupModel.jpr"/></hash>
+      <hash><url n="URL" path="extract/setup/ui/HcmExtractSetupUi.jpr"/></hash>
+      <hash><url n="URL" path="extract/setup/uiModel/HcmExtractSetupUiModel.jpr"/></hash>
+      <hash><url n="URL" path="extract/setup/uiModelTest/HcmExtractSetupUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="extract/transaction/HcmBenefitsExtractTransacUiModel/HcmBenefitsExtractTransacUiModel.jpr"/></hash>
+      <hash><url n="URL" path="extract/transaction/model/HcmBenefitsExtractTransacModel/HcmBenefitsExtractTransacModel.jpr"/></hash>
+      <hash><url n="URL" path="extract/transaction/ui/HcmBenefitsExtractTransacUi.jpr"/></hash>
+      <hash><url n="URL" path="extract/uiModel/HcmExtractUiModel.jpr"/></hash>
+      <hash><url n="URL" path="FAGlobal/HcmBenefitsFAGlobal.jpr"/></hash>
+      <hash><url n="URL" path="HcmBenefitsTopMVTest/HcmBenefitsTopMVTest.jpr"/></hash>
+      <hash><url n="URL" path="HcmEligibilityMigration/HcmEligibilityMigration.jpr"/></hash>
+      <hash><url n="URL" path="HcmPlanDesignMiscPublicModelTest/HcmPlanDesignMiscPublicModelTest.jpr"/></hash>
+      <hash><url n="URL" path="HcmPlanDesignMiscPublicViewTest/HcmPlanDesignMiscPublicViewTest.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/analytics/publicEntity/HcmPlanDesignAnalyticsPublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/analytics/publicView/HcmPlanDesignAnalyticsPublicView.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/core/model/HcmPlanDesignCoreModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/core/publicModel/HcmPlanDesignCorePublicModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/core/publicUi/HcmPlanDesignCorePublicUi.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/lifeEvents/dbSchema/HcmPlanDesignLifeEventsDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/lifeEvents/model/HcmPlanDesignLifeEventsModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/lifeEvents/publicEntity/HcmPlanDesignLifeEventsPublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/lifeEvents/publicView/HcmPlanDesignLifeEventsPublicView.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/lifeEvents/ui/HcmPlanDesignLifeEventsUi.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/lifeEvents/uiModel/HcmPlanDesignLifeEventsUiModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/lifeEvents/uiModelTest/HcmPlanDesignLifeEventsUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/misc/dbSchema/HcmPlanDesignMiscDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/misc/model/HcmPlanDesignMiscModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/misc/protectedModel/HcmPlanDesignMiscProtectedModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/misc/protectedUiModel/HcmPlanDesignMiscProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/misc/publicEntity/HcmPlanDesignMiscPublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/misc/publicUi/HcmPlanDesignMiscPublicUi.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/misc/publicView/HcmPlanDesignMiscPublicView.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/misc/ui/HcmPlanDesignMiscUi.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/misc/uiModel/HcmPlanDesignMiscUiModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/misc/uiModelTest/HcmPlanDesignMiscUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/plans/dbSchema/HcmPlanDesignPlansDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/plans/diagnosticExternal/HcmPlanDesignPlansDiagnosticExternal.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/plans/model/HcmPlanDesignPlansModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/plans/publicEntity/HcmPlanDesignPlansPublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/plans/publicView/HcmPlanDesignPlansPublicView.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/plans/ui/HcmPlanDesignPlansUi.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/plans/uiModel/HcmPlanDesignPlansUiModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/plans/uiModelTest/HcmPlanDesignPlansUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/plans/UiTest/HcmPlanDesignPlansUiTest.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/rates/dbSchema/HcmPlanDesignRatesDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/rates/model/HcmPlanDesignRatesModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/rates/publicEntity/HcmPlanDesignRatesPublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/rates/publicView/HcmPlanDesignRatesPublicView.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/rates/ui/HcmPlanDesignRatesUi.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/rates/uiModel/HcmPlanDesignRatesUiModel.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/rates/uiModelTest/HcmPlanDesignRatesUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="planDesigns/resource/HcmPlanDesignTopPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="RESTWebService/RESTWebService.jpr"/></hash>
+      <hash><url n="URL" path="SuperEss/SuperEss.jpr"/></hash>
+      <hash><url n="URL" path="SuperWeb/SuperWeb.jpr"/></hash>
+   </list>
+   <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
+      <hash n="DefaultProfile">
+         <value n="ProfileName" v="EarHcmBenefits"/>
+      </hash>
+      <hash n="profileDefinitions">
+         <hash n="EarHcmBenefits">
+            <hash n="archiveOptions">
+               <value n="hasManifest" v="false"/>
+            </hash>
+            <value n="defaultConnection"/>
+            <hash n="dependencies">
+               <list n="dependencyList">
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="HcmBenefits.jws"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="MarHcmBenefits"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="benefits/dataLoader/service/HcmDataLoaderBenefitsService.jpr"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="SvcHcmDataLoaderBenefitsService_Common"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="benefits/dataLoader/service/HcmDataLoaderBenefitsService.jpr"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="SvcHcmDataLoaderBenefitsService_MiddleTier"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="benefits/elections/electionsService/HcmBenefitsElectionsService.jpr"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="SvcBenefitsElectionsService_MiddleTier"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="HcmEligibilityMigration/HcmEligibilityMigration.jpr"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="SvcHcmEligibilityMigration_MiddleTier"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="RESTWebService/RESTWebService.jpr"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="RESTWebService"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="SuperEss/SuperEss.jpr"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="EjbSuperEss"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="SuperWeb/SuperWeb.jpr"/>
+                     <value n="pathInEar" v=""/>
+                     <value n="profileName" v="WarHcmBenefits"/>
+                  </hash>
+               </list>
+            </hash>
+            <url n="earURL" path="../../deploy/EarHcmBenefits.ear"/>
+            <value n="enterpriseAppName" v="HcmBenefits"/>
+            <hash n="fileGroups">
+               <list n="groups">
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <value n="type" v="9"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="Application Descriptors"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="META-INF/orion-application.xml"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/temp/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.svn/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/CVS/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.ade_path"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.data/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.cdi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.contrib"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.keep"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.rvi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".jsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".tags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".dtags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jht"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jjt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jxt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="internalName" v="ear-metainf"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="../../../jlib/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="fusionapps/jlib"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="AdfHcmTalentCommonPublicModelComponents.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmConnectModelCryptocommon.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfPeExtPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCoreIntegrationsPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmSuccessionTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkforceModelingTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEngmtVideoSharePublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEngmtVideoSharePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEngmtVideoShareProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEngmtVideoShareModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEngmtLearnPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmRatesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmRatesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmRatesTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkReportingPaneProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkReportingPanePublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkHelpPortalAnnouncementProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkHomePageFuseProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkDevPortalPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkHomePagePublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfCrmCommonSearchPublicCore.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonDataLoaderModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompRecentItemsPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicService.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfCrmCommonCurrenciesPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFtaServerPublicModelRESTful.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkContextAddressPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmMyOrganizationPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinFunSharedPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCompTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkWatchListPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkWatchListPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkWatchListProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFeaturePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkHelpPortalUAPProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkEssMetaDataProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkEssMetaDataPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfResourcesPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEmploymentRespExtProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompObjectsPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompNotesPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompNotesPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmUsersPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmUsersPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmTalentBusinessObjectsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmTalentBusinessObjectsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleImagesProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleContextualInfoProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkContextAddressProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompSchedulesPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmSocialTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAppCmmnCompSchedulesPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAbsencesTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEmploymentTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAbsMgmtTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmActionsTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAddressesPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBatchProcessTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmDashTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmDocsOfRecordTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEligibilityPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmExtractsTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmFormulaTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLegislativeDataGroupsPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLocationsPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmObjectGroupsPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrganizationsPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayEventTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmProfileTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmSecurityPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmTreesPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmUserTablesPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAsmCommonSetupPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAsmMigratorPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfAtkHelpPortalPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationResourcesPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinLeLegalEntitiesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinLeLegalEntitiesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkGradesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkGradesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkPositionsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkPositionsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfCrmCommonCorePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlLedgerDefnPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlLedgerDefnPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlShrdComnLookupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlShrdComnLookupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationGeographiesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationGeographiesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationPartiesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationPartiesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationTopPublicModelCommon.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmActionsSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmActionsSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAddressesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAddressesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonCorePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonFfPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonHrCorePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonPayPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEmploymentCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEmploymentCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEventsProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLocationsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLocationsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgBusinessUnitsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgBusinessUnitsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgWarehouseParametersPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgWarehouseParametersPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrganizationsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrganizationsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmProfileCommonPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmProfileContentLibraryPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmProfileContentLibraryPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmTalentCommonPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkJobsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkJobsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkGradesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkGradesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkPositionsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkPositionsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlCurrManageRatePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlLedgerDefnPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlLedgerDefnPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlShrdComnLookupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFinGlShrdComnLookupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationGeographiesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationGeographiesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationPartiesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationPartiesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfFoundationTopPublicModelCommon.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmActionsSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmActionsSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAddressesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAddressesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonCorePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonFfPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonHrCorePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonPayPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEmploymentCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEmploymentCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEventsProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLocationsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLocationsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgBusinessUnitsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgBusinessUnitsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgWarehouseParametersPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgWarehouseParametersPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrganizationsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrganizationsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmProfileCommonPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmProfileContentLibraryPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmProfileContentLibraryPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmTalentCommonPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkJobsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkJobsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLegConfigSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLegConfigSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLegConfigSetupTopPublicResource.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmSocialCommonPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="territories/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="hcmPillar/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="hcm/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="fscm/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="META-INF/orion-application.xml"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/temp/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/classes/jsp_servlet/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlLibs/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.svn/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/CVS/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.ade_path"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.data/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.cdi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.contrib"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.keep"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.rvi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".jsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".tags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".dtags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jht"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jjt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jxt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+
+                        </list>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="../../jlib/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="fusionapps/hcm/jlib"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="AdfHcmSocialProfilesProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEligibilityMigration.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonTransactionModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmDocsOfRecordSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmDocsOfRecordSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmDocsOfRecordCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmDocsOfRecordCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmDocsOfRecordCoreProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmDocsOfRecordCoreProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEligibilityPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEligibilityProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEligibilityProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLegislativeDataGroupsUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEmploymentCoreProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                                                            <value n="pattern" v="AdfHcmCommonExtendedLookupsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLegislativeDataGroupsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLegislativeDataGroupsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgWarehouseParametersPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgWarehouseParametersPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPerformanceCommonPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPerformanceSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPerformanceSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkGradesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkGradesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkPositionsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkPositionsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmMyOrganizationProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsProcessesEssModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkCommonPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkCommonPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLocationsProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonExtendedLookupsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCommonExtendedLookupsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLegislativeDataGroupsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLegislativeDataGroupsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmOrgWarehouseParametersPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+<value n="pattern" v="AdfHcmOrgWarehouseParametersPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPerformanceCommonPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPerformanceSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPerformanceSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkGradesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkGradesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkPositionsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmWorkPositionsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="territories/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="hcmPillar/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="hcm/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="fscm/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="META-INF/orion-application.xml"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/temp/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/classes/jsp_servlet/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlLibs/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.svn/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/CVS/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.ade_path"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.data/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.cdi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.contrib"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.keep"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.rvi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".jsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".tags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".dtags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jht"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jjt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jxt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="jlib/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="fusionapps/hcm/components/hcmBenefits/jlib"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="AdfHcmExtractSetupUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmExtractSetupModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsExtractTransacModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsExtractTransacUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAbsencesPlansModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAbsencesPlansUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignCoreModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignLifeEventsModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignLifeEventsUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignMiscModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignMiscUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignPlansModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignPlansUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignRatesModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignRatesUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="territories/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="hcmPillar/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="hcm/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="fscm/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="META-INF/orion-application.xml"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/temp/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/classes/jsp_servlet/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlLibs/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.svn/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/CVS/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.ade_path"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.data/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.cdi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.contrib"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.keep"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.rvi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".jsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".tags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".dtags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jht"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jjt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jxt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="../../../jlib/hcmPillar/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="fusionapps/jlib/hcmPillar"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="AdfHcmLocCAPersonDataModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmSpreadsheetLoaderUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmConfigMatrixCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmConfigMatrixCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayDeductionValuesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayDeductionValuesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayDeductionSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayDeductionSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLocUSPersonDataModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmGblAbsencesTypesSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCompSalarySetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmCompSalarySetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmConfigMatrixCoreProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmConfigMatrixCoreProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignMiscProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignMiscProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLoc*PublicView*"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmExtractModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmExtractUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBatchProcessCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBatchProcessCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmLocUSPersonAddressesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsElectionsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEmploymentCoreProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleSearchProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleProcessProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleCoreProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPeopleCoreProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsNonWorkerProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsEventsProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsElectionsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayBalSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayBalSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAbsMgmtAbsencesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAbsMgmtAbsencesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsElectionsProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsElectionsProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsEligibilityProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsEligibilityProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsProcessesProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsProcessesProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsProcessesPublicEssModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEligibilityPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEligibilityPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmFormulaCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmFormulaCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignCorePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignLifeEventsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignLifeEventsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignMiscPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignMiscPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignPlansPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignPlansPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignRatesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignRatesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementSetupProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementResultsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementResultsProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementEntriesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementEntriesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementEntriesProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementEntriesProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayBalSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayBalResultsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayBalResultsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayBalExceptionsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayBalExceptionsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmExtractsSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmExtractsSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmFormulaCoreProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmFormulaCoreProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsProcessesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsElectionsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsCoreProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsCoreProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAddressesPublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAddressesProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayBalSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAbsMgmtAbsencesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmAbsMgmtAbsencesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsElectionsProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsElectionsProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsEligibilityProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsEligibilityProtectedUiModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsProcessesProtectedModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmBenefitsProcessesPublicEssModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEligibilityPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmEligibilityPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmFormulaCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmFormulaCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayCorePublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayCorePublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementSetupPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPayElementSetupPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignCorePublicModel.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignLifeEventsPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignLifeEventsPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignMiscPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignMiscPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignPlansPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignPlansPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignRatesPublicEntity.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfHcmPlanDesignRatesPublicView.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="territories/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="hcmPillar/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="hcm/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="fscm/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="META-INF/orion-application.xml"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/temp/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/classes/jsp_servlet/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlLibs/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.svn/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/CVS/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.ade_path"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.data/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.cdi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.contrib"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.keep"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.rvi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".jsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".tags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".dtags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jht"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jjt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jxt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="../../../extensions/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="fusionapps/extensions"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="ExtHcmCustomization.jar"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/temp/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/classes/jsp_servlet/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlLibs/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.svn/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/CVS/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.ade_path"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.data/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.cdi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.contrib"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.keep"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.rvi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".jsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".tags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".dtags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jht"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jjt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jxt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="conf/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="APP-INF/classes"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="wf_client_config.xml"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/temp/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/classes/jsp_servlet/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlLibs/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.svn/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/CVS/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.ade_path"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.data/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.cdi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.contrib"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.keep"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.rvi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".jsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".tags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".dtags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jht"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jjt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jxt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/classes"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="../../../../fatp/bouncy_castle/1.45/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="Third Party Libs"/>
+                     <hash n="filters">
+                        <list n="rules"/>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="../../../jlib/crmextnjlib/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="fusionapps/jlib/crmextnjlib"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="AdfExtnContentPublicUiEventAction.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnOutlookConfiguratorPublicUi.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnMobileConfiguratorPublicUi.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnCustomSetMigrationPublicUiTemplates.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnCustomSetMigrationPublicUiSPE.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnCustomSetMigrationPublicUiCmmnObjects.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnContentPublicUiBase.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnConfiguratorPublicUi.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="AdfExtnCommonBusinessProcessHumanWorkflowUi.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/temp/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="WEB-INF/classes/jsp_servlet/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlsjsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".wlLibs/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.svn/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/CVS/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.ade_path"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/.data/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.cdi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.contrib"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.keep"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**.rvi"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".jsps/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".tags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v=".dtags/"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jht"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jjt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**/*.jxt"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="../../../jlib/gsicomnextnjlib/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v=" fusionapps/jlib/gsicomnextnjlib"/>
+                     <hash n="filters">
+                        <list n="rules"/>
+                     </hash>
+                     <value n="targetWithinJar" v="APP-INF/lib"/>
+                     <value n="type" v="1"/>
+                  </hash>
+               </list>
+            </hash>
+            <hash n="libraryDependencies">
+               <value n="IncludeLibrariesFromOtherContainers" v="true"/>
+            </hash>
+            <value n="profileClass" v="oracle.jdeveloper.deploy.ear.EarProfile"/>
+            <value n="profileName" v="EarHcmBenefits"/>
+         </hash>
+         <hash n="HcmBenefitsElectionsService_SvcBenefitsElectionsService">
+            <hash n="archiveOptions">
+               <value n="hasManifest" v="false"/>
+            </hash>
+            <hash n="dependencies">
+               <list n="dependencyList">
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="benefits/elections/electionsService/HcmBenefitsElectionsService.jpr"/>
+                     <value n="profileName" v="SvcBenefitsElectionsService_MiddleTier"/>
+                  </hash>
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="HcmBenefits.jws"/>
+                     <value n="profileName" v="AutoGeneratedMar"/>
+                  </hash>
+               </list>
+            </hash>
+            <url n="earURL" path="deploy/HcmBenefitsElectionsService_SvcBenefitsElectionsService.ear"/>
+            <value n="enterpriseAppName" v="HcmBenefitsElectionsService_SvcBenefitsElectionsService"/>
+            <hash n="fileGroups">
+               <list n="groups">
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <value n="type" v="9"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="Application Descriptors"/>
+                     <hash n="filters">
+                        <list n="rules"/>
+                     </hash>
+                     <value n="internalName" v="ear-metainf"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <value n="displayName" v="Application Libraries"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="internalName" v="libraries"/>
+                     <value n="targetWithinJar" v="lib"/>
+                     <value n="type" v="3"/>
+                  </hash>
+               </list>
+            </hash>
+            <hash n="libraryDependencies">
+               <value n="IncludeLibrariesFromOtherContainers" v="true"/>
+            </hash>
+            <value n="profileClass" v="oracle.jdeveloper.deploy.ear.EarProfile"/>
+            <value n="profileName" v="HcmBenefitsElectionsService_SvcBenefitsElectionsService"/>
+         </hash>
+         <hash n="HcmDataLoaderBenefitsService_SvcHcmDataLoaderBenefitsService">
+            <hash n="archiveOptions">
+               <value n="hasManifest" v="false"/>
+            </hash>
+            <hash n="dependencies">
+               <list n="dependencyList">
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="benefits/dataLoader/service/HcmDataLoaderBenefitsService.jpr"/>
+                     <value n="profileName" v="SvcHcmDataLoaderBenefitsService_MiddleTier"/>
+                  </hash>
+               </list>
+            </hash>
+            <url n="earURL" path="deploy/HcmDataLoaderBenefitsService_SvcHcmDataLoaderBenefitsService.ear"/>
+            <value n="enterpriseAppName" v="HcmDataLoaderBenefitsService_SvcHcmDataLoaderBenefitsService"/>
+            <hash n="fileGroups">
+               <list n="groups">
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <value n="type" v="9"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="Application Descriptors"/>
+                     <hash n="filters">
+                        <list n="rules"/>
+                     </hash>
+                     <value n="internalName" v="ear-metainf"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <value n="displayName" v="Application Libraries"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="internalName" v="libraries"/>
+                     <value n="targetWithinJar" v="lib"/>
+                     <value n="type" v="3"/>
+                  </hash>
+               </list>
+            </hash>
+            <hash n="libraryDependencies">
+               <value n="IncludeLibrariesFromOtherContainers" v="true"/>
+            </hash>
+            <value n="profileClass" v="oracle.jdeveloper.deploy.ear.EarProfile"/>
+            <value n="profileName" v="HcmDataLoaderBenefitsService_SvcHcmDataLoaderBenefitsService"/>
+         </hash>
+         <hash n="HcmEligibilityMigration_SvcHcmEligibilityMigration">
+            <hash n="archiveOptions">
+               <value n="hasManifest" v="false"/>
+            </hash>
+            <hash n="dependencies">
+               <list n="dependencyList">
+                  <hash>
+                     <value n="adapterClass" v="oracle.jdevimpl.deploy.common.DefaultProfileDependable"/>
+                     <url n="ownerURL" path="HcmEligibilityMigration/HcmEligibilityMigration.jpr"/>
+                     <value n="profileName" v="SvcHcmEligibilityMigration_MiddleTier"/>
+                  </hash>
+               </list>
+            </hash>
+            <url n="earURL" path="deploy/HcmEligibilityMigration_SvcHcmEligibilityMigration.ear"/>
+            <value n="enterpriseAppName" v="HcmEligibilityMigration_SvcHcmEligibilityMigration"/>
+            <hash n="fileGroups">
+               <list n="groups">
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <value n="type" v="9"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="Application Descriptors"/>
+                     <hash n="filters">
+                        <list n="rules"/>
+                     </hash>
+                     <value n="internalName" v="ear-metainf"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <value n="displayName" v="Application Libraries"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="**"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="internalName" v="libraries"/>
+                     <value n="targetWithinJar" v="lib"/>
+                     <value n="type" v="3"/>
+                  </hash>
+               </list>
+            </hash>
+            <hash n="libraryDependencies">
+               <value n="IncludeLibrariesFromOtherContainers" v="true"/>
+            </hash>
+            <value n="profileClass" v="oracle.jdeveloper.deploy.ear.EarProfile"/>
+            <value n="profileName" v="HcmEligibilityMigration_SvcHcmEligibilityMigration"/>
+         </hash>
+         <hash n="MarHcmBenefits">
+            <hash n="archiveOptions">
+               <value n="compressed" v="true"/>
+               <value n="hasManifest" v="false"/>
+            </hash>
+            <hash n="fileGroups">
+               <list n="groups">
+                  <hash>
+                     <list n="contributors"/>
+                     <value n="displayName" v="User Metadata"/>
+                     <hash n="filters"/>
+                     <value n="internalName" v="user-metadata"/>
+                     <value n="type" v="1"/>
+                  </hash>
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <url n="location" path="mds/"/>
+                           <value n="type" v="1"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="MAR Group"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="oracle/apps/meta/"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="internalName" v=""/>
+                     <value n="targetWithinJar"/>
+                     <value n="type" v="1"/>
+                  </hash>
+               </list>
+            </hash>
+            <url n="jarURL" path="../../deploy/MarHcmBenefits.mar"/>
+            <hash n="libraryDependencies">
+               <value n="IncludeLibrariesFromOtherContainers" v="true"/>
+            </hash>
+            <value n="profileClass" v="oracle.jdeveloper.deploy.mar.MetadataProfile"/>
+            <value n="profileName" v="MarHcmBenefits"/>
+         </hash>
+      </hash>
+      <list n="profileList">
+         <string v="EarHcmBenefits"/>
+         <string v="HcmBenefitsCorePersonService_SvcBenefitsCorePersonService"/>
+         <string v="HcmBenefitsElectionsService_SvcBenefitsElectionsService"/>
+         <string v="HcmDataLoaderBenefitsService_SvcHcmDataLoaderBenefitsService"/>
+         <string v="HcmEligibilityMigration_SvcHcmEligibilityMigration"/>
+         <string v="MarHcmBenefits"/>
+      </list>
+      <value n="Security-Deployment-Migrate-Users-And-Groups-Key" v="false"/>
+      <value n="Security-Deployment-Overwrite-Credentials-Key" v="true"/>
+      <value n="Weblogic-JDBC-Auto-Sync-Key" v="true"/>
+   </hash>
+   <hash n="oracle.mds.internal.dt.ide.CustOptions">
+      <list n="customizationLibraries">
+         <hash/>
+      </list>
+   </hash>
+</jws:workspace>

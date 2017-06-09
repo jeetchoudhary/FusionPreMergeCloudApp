@@ -65,7 +65,7 @@ module.exports = function (app) {
 			childrenStartData = fileData.substring(fileData.indexOf('<list n="listOfChildren">'));
 			childrenList = childrenStartData.substring(0, childrenStartData.indexOf('</list>') + 7);
 			aFileNameParts = childrenList.split(".jpr");
-			for (fileName in aFileNameParts) {
+			for (var i in aFileNameParts) {
 				if (aFileNameParts[i].lastIndexOf('path=') != -1) {
 					projectPath = 'fusionapps/prc/components/procurementEss/' + aFileNameParts[i].substring(aFileNameParts[i].lastIndexOf('path=') + 6);
 					if (projectPath.substring(projectPath.length - 4) == 'Test') {

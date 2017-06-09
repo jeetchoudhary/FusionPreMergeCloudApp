@@ -1,0 +1,103 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jws:workspace xmlns:jws="http://xmlns.oracle.com/ide/project">
+   <hash n="adrs-workspace-properties">
+      <value n="adrs-instance-binding" v="DefaultServer"/>
+   </hash>
+   <value n="application-package-prefix" v="oracle.apps.hcm.engagement"/>
+   <url n="application-source-directory" path="src/"/>
+   <value n="appTemplateId" v="adfWebappApplicationTemplate"/>
+   <hash n="CodeCoverage">
+      <list n="instrumented-paths"/>
+   </hash>
+   <hash n="component-versions">
+      <value n="oracle.adf.share.dt.migration.jps.JaznCredStoreMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.adfdt.controller.adfc.source.migration.SavePointDataSourceForWLSMigrator" v="11.1.1.1.0"/>
+      <value n="oracle.adfdtinternal.model.ide.security.wizard.AdfSecurityMigrator" v="11.1.1.1.0.13"/>
+      <value n="oracle.ide.model.Project" v="11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.deploy.ear.OarMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.deploy.mar.MarMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.jdevimpl.xml.oc4j.jps.JpsConfigMigratorHelper" v="11.1.1.1.0.1"/>
+      <value n="oracle.jdevimpl.xml.wl.WeblogicMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.mds.internal.dt.ide.migrator.MDSConfigMigratorHelper" v="11.1.1.0.5313"/>
+      <value n="oracle.webcenter.internal.dt.migration.WebCenterWorkspaceMigrator" v="11.1.1.4.0.101019.0800"/>
+   </hash>
+   <list n="listOfChildren">
+      <hash><url n="URL" path="contests/dbSchema/HcmEngmtContestsDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="contests/publicModel/HcmEngmtContestsPublicModel.jpr"/></hash>
+      <hash><url n="URL" path="contests/publicModelTest/HcmEngmtContestsPublicModelTest.jpr"/></hash>
+      <hash><url n="URL" path="contests/publicUi/HcmEngmtContestsPublicUi.jpr"/></hash>
+      <hash><url n="URL" path="contests/publicUiFuse/HcmEngmtContestsPublicUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="contests/publicUiTap/HcmEngmtContestsPublicUiTap.jpr"/></hash>
+      <hash><url n="URL" path="contests/resource/HcmEngmtContestsPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/dbSchema/HcmEngmtLearnCommonDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/fwk/model/hcmEngmtLearnCommonFwkModel/HcmEngmtLearnCommonFwkModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/fwk/model/hcmEngmtLearnCommonFwkModelTest/HcmEngmtLearnCommonFwkModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/hcmEngmtLearnCommonPublicResource/HcmEngmtLearnCommonPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/integration/model/HcmEngmtLearnCommonIntModel/HcmEngmtLearnCommonIntModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/integration/model/HcmEngmtLearnCommonIntModelTest/HcmEngmtLearnCommonIntModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/model/hcmEngmtLearnCommonModel/HcmEngmtLearnCommonModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/model/hcmEngmtLearnCommonModelTest/HcmEngmtLearnCommonModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/protectedUiModel/hcmEngmtLearnCommonProtectedUiModel/HcmEngmtLearnCommonProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/protectedUiModel/hcmEngmtLearnCommonProtectedUiModelTest/HcmEngmtLearnCommonProtectedUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/publicUi/HcmEngmtLearnCommonPublicUi.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/rec/model/hcmEngmtLearnCommonRecModel/HcmEngmtLearnCommonRecModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/rec/model/hcmEngmtLearnCommonRecModelTest/HcmEngmtLearnCommonRecModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/taskmenu/HcmEngmtLearnTaskMenuPublicUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/ui/hcmEngmtLearnCommonUiFuse/HcmEngmtLearnCommonUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/util/model/HcmEngmtLearnCommonUtilModel/HcmEngmtLearnCommonUtilModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/common/util/model/HcmEngmtLearnCommonUtilModelTest/HcmEngmtLearnCommonUtilModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/hcmEngmtLearnCorePublicResource/HcmEngmtLearnCorePublicResource.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/model/hcmEngmtLearnCoreModel/HcmEngmtLearnCoreModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/model/hcmEngmtLearnCoreModelTest/HcmEngmtLearnCoreModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/protectedUiModel/hcmEngmtLearnCoreProtectedUiModel/HcmEngmtLearnCoreProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/protectedUiModel/hcmEngmtLearnCoreProtectedUiModelTest/HcmEngmtLearnCoreProtectedUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/publicUi/hcmEngmtLearnCorePublicUiFuse/HcmEngmtLearnCorePublicUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/restModel/hcmEngmtLearnRestModel/HcmEngmtLearnRestModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/restModel/hcmEngmtLearnRestModelTest/HcmEngmtLearnRestModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/scorm/model/hcmEngmtLearnCoreScormModel/HcmEngmtLearnCoreScormModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/scorm/model/hcmEngmtLearnCoreScormModelTest/HcmEngmtLearnCoreScormModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/scorm/protectedUiModel/hcmEngmtLearnCoreScormProtectedUiModel/HcmEngmtLearnCoreScormProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/scorm/protectedUiModel/hcmEngmtLearnCoreScormProtectedUiModelTest/HcmEngmtLearnCoreScormProtectedUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/scorm/ui/hcmEngmtLearnCoreScormUiFuse/HcmEngmtLearnCoreScormUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="learn/core/ui/hcmEngmtLearnCoreUiFuse/HcmEngmtLearnCoreUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="learn/learner/modelTest/HcmEngmtLearnLearnerProtectedUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/learner/protectedUiModel/HcmEngmtLearnLearnerProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/learner/uiFuse/HcmEngmtLearnLearnerUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="learn/learningitem/HcmEngmtLearnTopLearningAssignmentNtfsUi/HcmEngmtLearnTopLearningAssignmentNtfsUi.jpr"/></hash>
+      <hash><url n="URL" path="learn/learningitem/HcmEngmtLearnTopLearningIncidentNtfsUi/HcmEngmtLearnTopLearningIncidentNtfsUi.jpr"/></hash>
+      <hash><url n="URL" path="learn/learningitem/HcmEngmtLearnTopLearningItemNtfsUi/HcmEngmtLearnTopLearningItemNtfsUi.jpr"/></hash>
+      <hash><url n="URL" path="learn/learningitem/HcmEngmtLearnTopLearningItemVisibilityNtfsUi/HcmEngmtLearnTopLearningItemVisibilityNtfsUi.jpr"/></hash>
+      <hash><url n="URL" path="learn/learningitem/HcmEngmtLearnTopMassLearningAssignmentNtfsUi/HcmEngmtLearnTopMassLearningAssignmentNtfsUi.jpr"/></hash>
+      <hash><url n="URL" path="learn/resource/HcmEngmtLearnPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="learn/setup/hcmEngmtLearnSetupPublicResource/HcmEngmtLearnSetupPublicResource.jpr"/></hash>
+      <hash><url n="URL" path="learn/setup/model/hcmEngmtLearnSetupModel/HcmEngmtLearnSetupModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/setup/model/hcmEngmtLearnSetupModelTest/HcmEngmtLearnSetupModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/setup/protectedUiModel/hcmEngmtLearnSetupProtectedUiModel/HcmEngmtLearnSetupProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/setup/protectedUiModel/hcmEngmtLearnSetupProtectedUiModelTest/HcmEngmtLearnSetupProtectedUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/setup/ui/hcmEngmtLearnSetupUiFuse/HcmEngmtLearnSetupUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="learn/specialist/protectedUiModel/HcmEngmtLearnSpecProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="learn/specialist/protectedUiModelTest/HcmEngmtLearnSpecProtectedUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="learn/specialist/uiFuse/HcmEngmtLearnSpecUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/dbSchema/HcmEngmtVideoShareDbSchema.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/HcmEngmtVideoSharePrescriptionNtfsUi/HcmEngmtVideoSharePrescriptionNtfsUi.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/jwPlayerConfig/HcmEngmtVideoShareJWPlayerConfigUi.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/model/HcmEngmtVideoShareModel.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/protectedUiModel/HcmEngmtVideoShareProtectedUiModel.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/protectedUiModelTest/HcmEngmtVideoShareProtectedUiModelTest.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/publicEntity/HcmEngmtVideoSharePublicEntity.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/publicModel/HcmEngmtVideoSharePublicModel.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/publicModelTest/HcmEngmtVideoSharePublicModelTest.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/publicUi/HcmEngmtVideoSharePublicUi.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/publicUiFuse/HcmEngmtVideoSharePublicUiFuse.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/publicUiTap/HcmEngmtVideoSharePublicUiTap.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/publicView/HcmEngmtVideoSharePublicView.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/resource/HcmEngmtVideoSharePublicResource.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/ui/HcmEngmtVideoShareUi.jpr"/></hash>
+      <hash><url n="URL" path="videoshare/uiFuse/HcmEngmtVideoShareUiFuse.jpr"/></hash>
+   </list>
+   <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
+      <hash n="profileDefinitions"/>
+      <list n="profileList"/>
+      <value n="Weblogic-JDBC-Auto-Sync-Key" v="false"/>
+   </hash>
+</jws:workspace>
