@@ -45,11 +45,11 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                 },
                 {
                     id: '4', name: 'HCM', productList: [
-                        { id: '1', name: 'Absences' },
-                        { id: '2', name: 'CommonSoa' },
-                        { id: '3', name: 'Benefits' },
+                        { id: '1', name: 'configMatrix' },
+                        { id: '2', name: 'expressions' },
+                        { id: '3', name: 'globalAbsences' },
 
-                    ], product: { id: '1', name: 'Absences' }
+                    ], product: { id: '1', name: 'configMatrix' }
                 }
             ],
             selectedOption: { id: '1', name: 'Select Family', product: 'Select Product' }
@@ -102,11 +102,11 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                     },
                     {
                         id: '4', name: 'HCM', productList: [
-                            { id: '1', name: 'Absences' },
-                            { id: '2', name: 'CommonSoa' },
-                            { id: '3', name: 'Benefits' },
+                            { id: '1', name: 'configMatrix' },
+                            { id: '2', name: 'expressions' },
+                            { id: '3', name: 'globalAbsences' },
 
-                        ], product: { id: '1', name: 'Absences' }
+                        ], product: { id: '1', name: 'configMatrix' }
                     }
                 ],
                 selectedOption: { id: '1', name: 'Select Family', product: 'Select Product' }
