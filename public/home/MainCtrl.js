@@ -42,6 +42,14 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                         { id: '3', name: 'WSH' },
 
                     ], product: { id: '1', name: 'INV' }
+                },
+                {
+                    id: '4', name: 'HCM', productList: [
+                        { id: '1', name: 'Absences' },
+                        { id: '2', name: 'CommonSoa' },
+                        { id: '3', name: 'Benefits' },
+
+                    ], product: { id: '1', name: 'Absences' }
                 }
             ],
             selectedOption: { id: '1', name: 'Select Family', product: 'Select Product' }
@@ -91,6 +99,14 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                             { id: '3', name: 'WSH' },
 
                         ], product: { id: '1', name: 'INV' }
+                    },
+                    {
+                        id: '4', name: 'HCM', productList: [
+                            { id: '1', name: 'Absences' },
+                            { id: '2', name: 'CommonSoa' },
+                            { id: '3', name: 'Benefits' },
+
+                        ], product: { id: '1', name: 'Absences' }
                     }
                 ],
                 selectedOption: { id: '1', name: 'Select Family', product: 'Select Product' }

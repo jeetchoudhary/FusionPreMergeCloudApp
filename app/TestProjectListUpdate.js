@@ -1,4 +1,6 @@
-
+var logger = require('./LoggingConfig');
+var fs = require('fs');
+var ProjectList = require('../app/models/ProjectListData');
 var updateTestProjectListHCM = function (projectNames, workSpaceFileName, projectPrefix) {
     try {
         var fileData = fs.readFileSync(workSpaceFileName).toString();

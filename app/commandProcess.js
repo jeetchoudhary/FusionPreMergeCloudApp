@@ -109,12 +109,14 @@ var getProductFamilyBuildFile = function (familyName) {
 		case 'poz':
 			return 'fusionapps/prc/build-poz.xml';
 		case 'inv':
+			return 'fusionapps/scm/build-log.xml';
 		case 'rcv':
+			return 'fusionapps/scm/build-log.xml';
 		case 'wsh':
 			return 'fusionapps/scm/build-log.xml';
 		default:
-			logger.log('Did not find any build file for  ' + familyName + ' so using default famile po.');
-			return 'fusionapps/prc/build-po.xml';
+			logger.log('Did not find any build file for  ' + familyName + ' so using default famile as HCM.');
+			return 'fusionapps/hcm/build.xml';
 	}
 }
 
