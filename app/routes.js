@@ -8,6 +8,7 @@ module.exports = function (app) {
 	require('./MessageBroker');
 	require('amqplib/callback_api');
 	require('child_process').exec;
+	//require('./TestProjectListUpdate.js');
 	var fuseConfig = require('../config/configuration');
 	var TransData = require('../app/models/TransData');
 	var Databases = require('../app/models/DBData');
