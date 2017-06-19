@@ -308,7 +308,7 @@ var processTransaction = function (transData) {
 			logger.info("permergeResultMainOutputFile : " + permergeResultMainOutputFile);
 			setTimeout(function () {
 				updateTransactionStatus(trans, 'Archived', fuseConfig.transactionArchivedLogLocation + logFile, permergeResultMainOutputFile);
-			}, 30000);
+			}, 60000);
 		},
 		err: function (stderr) {
 			logger.info(stderr);

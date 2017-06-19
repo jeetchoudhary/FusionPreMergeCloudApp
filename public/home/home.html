@@ -31,12 +31,12 @@
                                 <select class="btn btn-default dropdown-toggle" name="familySelect" id="familySelectID" ng-options="option.name for option in transaction.family.availableOptions track by option.id"
                                     ng-model="transaction.family.selectedOption"></select>
                             </div>
-                            <div class="btn-group" style="float: left;margin-left: 15px;" ng-hide="transaction.family.selectedOption.id == 1">
+                            <!--<div class="btn-group" style="float: left;margin-left: 15px;" ng-hide="transaction.family.selectedOption.id == 1">
                                 <select class="btn btn-default dropdown-toggle" name="productSelect" id="productSelectID" ng-options="option.name for option in transaction.family.selectedOption.productList track by option.id"
                                     ng-model="transaction.family.selectedOption.product"></select>
-                            </div>
+                            </div>-->
 
-                            <div class="col-lg-6" style="float: right" ng-show="transaction.family.selectedOption.id == 2 ">
+                            <!--<div class="col-lg-6" style="float: right" ng-show="transaction.family.selectedOption.id == 2 ">
                                 <label for="dbstring1" class="col-sm-2 col-md-2 control-label">DB</label>
                                 <div class="input-group" id="dbstring1">
                                     <input type="text" class="form-control" id="dbstring" name="dbstring" ng-model="transaction.dbString" required placeholder="Something like.. username/password@slc09lwn.us.oracle.com:1522/jjikumar">
@@ -50,6 +50,13 @@
                                 </div>
                             </div>
                             <div class="col-lg-6" style="float: right" ng-show="transaction.family.selectedOption.id != 2 && transaction.family.selectedOption.id !=1 ">
+                                <label for="dbstring1" class="col-sm-2 col-md-2 control-label">DB</label>
+                                <div class="input-group" id="dbstring1" style="width: 80%;float: right;">
+                                    <input type="text" style="border-radius: 4px" class="form-control" id="dbstring" name="dbstring" ng-model="transaction.dbString"
+                                        required placeholder="Something like.. username/password@slc09lwn.us.oracle.com:1522/jjikumar">
+                                </div>
+                            </div>-->
+                            <div class="col-lg-6" style="float: right">
                                 <label for="dbstring1" class="col-sm-2 col-md-2 control-label">DB</label>
                                 <div class="input-group" id="dbstring1" style="width: 80%;float: right;">
                                     <input type="text" style="border-radius: 4px" class="form-control" id="dbstring" name="dbstring" ng-model="transaction.dbString"
@@ -118,9 +125,9 @@
                     <div class="alert alert-danger">
                         <strong>Backport Transactions</strong> are not supported by this tool.
                     </div>
-                    <div class="alert alert-info">
+                    <!--<div class="alert alert-info">
                         <strong>Important Info!</strong> Please update your bookmark to new URL for this tool. http://slc04kxc.us.oracle.com will soon be decommissioned
-                    </div>
+                    </div>-->
                     <!--<div ng-show="transaction.validationStatus==='completed'">
                         <div class="panel panel-default" style="margin-left:80px">
                             <div class="panel-heading" style="font-weight: bold;color: blueviolet">Please Verify the details of the transaction Mentioned below and submit for PreMerge Scan</div>
