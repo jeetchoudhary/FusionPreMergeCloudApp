@@ -212,7 +212,7 @@ var processTransaction = function (transData) {
 
 	if (familyName == 'po') {
 		if (trans.runJunits === 'Y') {
-			var dummyLRGCommand = ' ant -f build-po.xml -Dtest.lrg=true test test-report -Dlrg=prc_po_lrg -Dtest.project=\'PrcPoPublicViewEcsfTest\' -Ddb.host=slc09xht.us.oracle.com -Ddb.port=1595 -Ddb.sid=jjikumar -Ddb.user=fusion -Ddb.pass=fusion ';
+			var dummyLRGCommand = ' ant -f build-po.xml -Dtest.lrg=true test test-report -Dlrg=prc_po_lrg -Dtest.project=\'PrcPoPublicViewEcsfTest\' -Ddb.host=slc09xht.us.oracle.com -Ddb.port=1559 -Ddb.sid=jikumar -Ddb.user=fusion -Ddb.pass=fusion ';
 			checkInCommand = fetchTransCommand + 'ade ci -all &&  ade savetrans && ade settransproperty -p BUG_NUM -v ' + bugNo + ' && cd prc && ' + dummyLRGCommand + ' && cd /scratch/views/' + viewName +
 				'/fusionapps/ && ade expand -recurse prc && ade mkprivate prc/*  && echo preMergeValidationStarted && yes n | /ade/' + viewName + '/fatools/opensource/jauditFixScripts/FinPreMerge/bin/fin_premerge.ksh' + ' -d ' + trans.dbString;
 		} else {

@@ -39,6 +39,6 @@
 	Open /ade_autofs/ud21_fa/FABUILDTOOLS_PT.V2MIB_LINUX.rdd/170414.0000/fabuildtools/lib/deploytasks.xml 
 	and check for mergeFAPolicies is not false
 18. Find merged jar name from jar name check below file for the entry :
-	fusionapps/build_metadata.xml
+	fusionapps/build_metadata/mergedJarManifest.xml
 19. change <auth-method>CLIENT-CERT,BASIC</auth-method>  to <auth-method>CLIENT-CERT,FORM</auth-method>  in below file
 	mw_home_standalone/user_projects/domains/fusion_domain/smcapps/EarFscmUIApp.ear/EarUi.war/WEB-INF/web.xml

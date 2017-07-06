@@ -83,7 +83,7 @@ var checkAnyDBAvaliablityandProcess = function (transaction) {
 var processSubmitRequest = function (transactionString) {
     var transaction = JSON.parse(transactionString);
     if(!transaction.dbString){
-        transaction.dbString = 'fusion/fusion@slc09xht.us.oracle.com:1595/jjikumar';
+        transaction.dbString = 'fusion/fusion@slc09xht.us.oracle.com:1559/jikumar';
     }
     var dbSplitIndex = transaction.dbString.indexOf('@') + 1;
     var dbDomain = transaction.dbString.substring(dbSplitIndex, dbSplitIndex + 3);
@@ -93,18 +93,20 @@ var processSubmitRequest = function (transactionString) {
     }
     logger.info('transaction.runJunits : ', transaction.runJunits);
     logger.info('transaction.allowDBOverride : ', transaction.allowDBOverride);
-    if (transaction.runJunits === 'Y') {
-        if (transaction.allowDBOverride === 'N') {
-            processTimeout = setInterval(checkParticularDBAvaliablityandProcess, 1000 * 30, transaction);
-        }
-        else {
-            processTimeout = setInterval(checkAnyDBAvaliablityandProcess, 1000 * 30, transaction);
-        }
-    }
-    else {
-        transaction.DBServerUsed = transaction.dbString;
+    // if (transaction.runJunits === 'Y') {
+    //     if (transaction.allowDBOverride === 'N') {
+    //         processTimeout = setInterval(checkParticularDBAvaliablityandProcess, 1000 * 30, transaction);
+    //     }
+    //     else {
+    //         processTimeout = setInterval(checkAnyDBAvaliablityandProcess, 1000 * 30, transaction);
+    //     }
+    // }
+    // else {
+    //     transaction.DBServerUsed = transaction.dbString;
+    //     serveRequest(transaction);
+    // }
+    transaction.DBServerUsed = transaction.dbString;
         serveRequest(transaction);
-    }
 };
 
 processSubmitRequest(process.argv[2]);
