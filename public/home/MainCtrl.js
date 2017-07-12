@@ -165,6 +165,24 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         }
     });
 
+     $('#transactionname').change(function () {
+        var value = $('#transactionname').val();
+        var backportTransErrorMsg = 'Backport Transactions are not supported';
+        if (value) {
+            if(value.includes('_rfi_backport_')){
+                $scope.errorMsg = backportTransErrorMsg;
+            }else if($scope.errorMsg==backportTransErrorMsg){
+                $scope.errorMsg='';
+            }
+             $scope.$apply();
+        } else {
+            if($scope.errorMsg==backportTransErrorMsg){
+                $scope.errorMsg='';
+            }
+             $scope.$apply();
+        }
+    });
+
     $scope.updateProjectList = function () {
         var series = { val: 'Procurement' };
         console.log('updating list of procects for series :', series);

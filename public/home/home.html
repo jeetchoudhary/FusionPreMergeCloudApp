@@ -111,7 +111,7 @@
                         <div class="form-group">
                             <div class="col-md-4 col-sm-4 col-lg-4 control-label text-right" style="margin-left: 300px">
                                 <input type="submit" class="btn btn-success btn-circle" id="btn-submit" value="Submit Transaction" ng-disabled="(transactionSubmitform.transaction.$dirty && transactionSubmitform.transaction.$invalid) ||
-                                    (transactionSubmitform.email.$dirty && transactionSubmitform.email.$invalid) || (transactionSubmitform.dbstring.$dirty && transactionSubmitform.dbstring.$invalid) ">
+                                    (transactionSubmitform.email.$dirty && transactionSubmitform.email.$invalid) || (transactionSubmitform.dbstring.$dirty && transactionSubmitform.dbstring.$invalid) || errorMsg">
                             </div>
                         </div>
                     </div>
@@ -122,9 +122,9 @@
                     <div class="alert alert-danger" ng-show="errorMsg">
                         <strong>{{errorMsg}}</strong>
                     </div>
-                    <div class="alert alert-danger">
+                    <!-- <div class="alert alert-danger">
                         <strong>Backport Transactions</strong> are not supported by this tool.
-                    </div>
+                    </div> -->
                     <!--<div class="alert alert-info">
                         <strong>Important Info!</strong> Please update your bookmark to new URL for this tool. http://slc04kxc.us.oracle.com will soon be decommissioned
                     </div>-->
