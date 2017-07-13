@@ -111,7 +111,7 @@
                         <div class="form-group">
                             <div class="col-md-4 col-sm-4 col-lg-4 control-label text-right" style="margin-left: 300px">
                                 <input type="submit" class="btn btn-success btn-circle" id="btn-submit" value="Submit Transaction" ng-disabled="(transactionSubmitform.transaction.$dirty && transactionSubmitform.transaction.$invalid) ||
-                                    (transactionSubmitform.email.$dirty && transactionSubmitform.email.$invalid) || (transactionSubmitform.dbstring.$dirty && transactionSubmitform.dbstring.$invalid) || errorMsg">
+                                    (transactionSubmitform.email.$dirty && transactionSubmitform.email.$invalid) || (transactionSubmitform.dbstring.$dirty && transactionSubmitform.dbstring.$invalid) || errorMsg || (!dbValidation)">
                             </div>
                         </div>
                     </div>

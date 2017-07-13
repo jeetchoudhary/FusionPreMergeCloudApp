@@ -207,7 +207,10 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                     return;
                 });
             }
-        } 
+        }else{
+            $scope.dbValidation = true;
+            $scope.$apply();
+        }
     });
 
     $scope.updateProjectList = function () {
