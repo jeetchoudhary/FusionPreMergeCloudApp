@@ -54,9 +54,10 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
             ],
             selectedOption: { id: '1', name: 'Select Family', product: 'Select Product' }
         },
-        submissionMethod:'UI'
+        submissionMethod: 'UI'
     };
     $scope.errorMsg = "";
+    $scope.dbValidation = true;
     $scope.projectList = [];
     $scope.allProjectList = [];
     $scope.junitSelectedList = [];
@@ -111,7 +112,7 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
                 ],
                 selectedOption: { id: '1', name: 'Select Family', product: 'Select Product' }
             },
-            submissionMethod:'UI'
+            submissionMethod: 'UI'
         };
         $scope.errorMsg = "";
         if ($scope.junitSelectedList.length !== 0) {
@@ -165,22 +166,48 @@ angular.module('MainCtrl', []).controller('MainController', function ($rootScope
         }
     });
 
-     $('#transactionname').change(function () {
+    $('#transactionname').change(function () {
         var value = $('#transactionname').val();
         var backportTransErrorMsg = 'Backport Transactions are not supported';
         if (value) {
-            if(value.includes('_rfi_backport_')){
+            if (value.includes('_rfi_backport_')) {
                 $scope.errorMsg = backportTransErrorMsg;
-            }else if($scope.errorMsg==backportTransErrorMsg){
-                $scope.errorMsg='';
+            } else if ($scope.errorMsg == backportTransErrorMsg) {
+                $scope.errorMsg = '';
             }
-             $scope.$apply();
+            $scope.$apply();
         } else {
-            if($scope.errorMsg==backportTransErrorMsg){
-                $scope.errorMsg='';
+            if ($scope.errorMsg == backportTransErrorMsg) {
+                $scope.errorMsg = '';
             }
-             $scope.$apply();
+            $scope.$apply();
         }
+    });
+
+    $('#dbstring').change(function () {
+        var value = $('#dbstring').val();
+        var invalidDBErrorMsg = 'Please make sure DB details are correct';
+        if (value) {
+            value = value.trim();
+            var dbDetail = {val : value.substring(value.indexOf('@') + 1) };
+            if (value == dbDetail.val) {
+                $scope.dbValidation = false;
+                $scope.$apply();
+                return;
+            } else {
+                $http.post('/api/info/dbtns', dbDetail).success(function (response) {
+                    if(response)
+                        $scope.dbValidation = response.status;
+                    else
+                        $scope.dbValidation = false;
+                    console.log("RESPONSE CAME ",response);
+                    return;
+                }).error(function (err) {
+                    $scope.dbValidation = false;
+                    return;
+                });
+            }
+        } 
     });
 
     $scope.updateProjectList = function () {

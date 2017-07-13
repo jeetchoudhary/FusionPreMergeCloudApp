@@ -122,6 +122,9 @@
                     <div class="alert alert-danger" ng-show="errorMsg">
                         <strong>{{errorMsg}}</strong>
                     </div>
+                    <div class="alert alert-danger" ng-show="!dbValidation">
+                        <strong>DB String is not valid, Please Make sure the the DB is up and running </strong>
+                    </div>
                     <!-- <div class="alert alert-danger">
                         <strong>Backport Transactions</strong> are not supported by this tool.
                     </div> -->

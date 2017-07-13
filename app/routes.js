@@ -240,6 +240,40 @@ module.exports = function (app) {
 		});
 	});
 
+	app.post('/api/info/dbtns', function (req, res) {
+		var dbString = req.body.val;
+		var dbValidationCommand = "cd && source DB.env && tnsping "+dbString;
+		var dbValidationOutput = "";
+		logger.info("Command to validate DB : ",dbValidationCommand);
+		new SSH({
+			host: fuseConfig.oraServerURL,
+			user: fuseConfig.oraServerUser,
+			pass: fuseConfig.oraServerPass
+		}).exec(dbValidationCommand, {
+			out: function (stdout) {
+				dbValidationOutput += stdout;
+				logger.info(stdout);
+			},
+			err: function (stderr) {
+				logger.info(stderr);
+
+			}
+		}).exec("echo hello", {
+			out: function (stdout) {
+				if(dbValidationOutput.includes('OK')){
+					res.status(200).json({ status: "true" });
+				}else{
+					res.status(500).json({ status: "false" });
+				}
+			},
+			err: function (stderr) {
+				res.status(500).json({ status: "false" });
+				return false;
+			}
+		}).start();
+
+	});
+
     app.post('/api/submit', function (req, res) {
 		if(!req.body.name){
 			logger.error('NO Transaction Name Specified ', req);
