@@ -120,6 +120,11 @@ var getProductFamilyBuildFile = function (familyName) {
 	}
 }
 
+var constructPrcToolUserExpectCommandScript = function(){
+	var expectCommand = "echo -e '#!/usr/bin/expect -f\nset timeout -1\nspawn sudo -u prctool -i\nmatch_max 100000\nexpect -exact \"\[sudo\] password for "+fuseConfig.adeServerUser+
+						": \"\nsend -- \""+fuseConfig.adeServerPass+"\\r\"\nsend -- \"ade lsviews\\r\"\nexpect eof'  > jeet.test";
+}
+
 var updateErroredTransation = function (trans, logStream, logFile) {
 	var errorMessage = "Problem Occured while running Validation script on transaction : " + trans.name + " , Error :" + trans.description.error;
 	var emailSubject = getEmailSubject(trans);
